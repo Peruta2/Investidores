@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSS - Cálculo da Contribuição</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8;
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        
+        .grid-medias {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .card-media {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .card-media h3 {
+            margin: 0 0 10px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-media .valor {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        .card-media p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+        }
+
+        .tabela-historico {
+            width: 100%;
+            max-width: 650px;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            margin-top: 15px;
+        }
+        .tabela-historico th, .tabela-historico td {
+            padding: 10px 15px;
+            text-align: left;
+        }
+        .tabela-historico th {
+            background-color: #334155;
+            color: #f8fafc;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .tabela-historico tr {
+            border-bottom: 1px solid #334155;
+        }
+        .tabela-historico tr:last-child {
+            border-bottom: none;
+        }
+        .tabela-historico td {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .destaque-alerta {
+            background-color: rgba(239, 68, 68, 0.1);
+            font-weight: bold;
+        }
+        .destaque-alerta td {
+            color: #f87171;
+        }
+        .destaque-atencao {
+            background-color: rgba(234, 179, 8, 0.1);
+            font-weight: bold;
+        }
+        .destaque-atencao td {
+            color: #facc15;
+        }
+        .destaque-liquidez {
+            background-color: rgba(74, 222, 128, 0.1);
+            font-weight: bold;
+        }
+        .destaque-liquidez td {
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>INSS - Cálculo da Contribuição</h1>
+    <p>O cálculo do INSS é feito de forma progressiva sobre cada faixa salarial do trabalhador. Para simplificar esse processo, você pode aplicar a alíquota da sua faixa diretamente sobre o salário bruto e subtrair a parcela a deduzir correspondente.</p>
+
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>Fórmula Base do Cálculo</h3>
+            <div class="valor">INSS = [Salário × Alíquota] - Parcela a Deduzir</div>
+            <p>Aplique o salário bruto (R$) na alíquota (%) da tabela e retire o valor fixado de dedução.</p>
+        </div>
+    </div>
+
+    <h2>Tabela de Contribuição Progressiva</h2>
+    <p>Identifique a faixa salarial correspondente para extrair a alíquota e o desconto fixo da regra:</p>
+
+    <table class="tabela-historico">
+        <thead>
+            <tr>
+                <th>Salário de Contribuição (R$)</th>
+                <th>Alíquota</th>
+                <th>Parcela a Deduzir (R$)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Até R$ 1.621,00</td>
+                <td>7,5%</td>
+                <td>Isento</td>
+            </tr>
+            <tr class="destaque-liquidez">
+                <td>De R$ 1.621,01 a R$ 2.902,84</td>
+                <td>9,0%</td>
+                <td>R$ 24,32</td>
+            </tr>
+            <tr class="destaque-atencao">
+                <td>De R$ 2.902,85 a R$ 4.354,27</td>
+                <td>12,0%</td>
+                <td>R$ 111,40</td>
+            </tr>
+            <tr class="destaque-alerta">
+                <td>De R$ 4.354,28 até o Teto de R$ 8.475,55</td>
+                <td>14,0%</td>
+                <td>R$ 198,49</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2>Teto de Desconto de Contribuição</h2>
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>Desconto Máximo CLT</h3>
+            <div class="valor">R$ 988,09</div>
+            <p>Nota: O valor retido em folha de pagamento para profissionais sob o regime CLT é limitado a este teto fixado por lei, independentemente de salários superiores.</p>
+        </div>
+    </div>
+
+</body>
+</html>

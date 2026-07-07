@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Navegação</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico aos outros painéis */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h3 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        /* Remove as bolinhas da lista padrão */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 12px; /* Espaço ideal entre os botões */
+        }
+        /* Estilização do Link transformado em Botão do Painel Escuro */
+        .btn-menu {
+            display: block;
+            background-color: #1e293b; /* Fundo dos cards do modelo */
+            color: #cbd5e1;
+            text-decoration: none; /* Remove o sublinhado */
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease; /* Transição suave */
+        }
+        /* Efeito ao passar o mouse adaptado ao tema azul/neon */
+        .btn-menu:hover {
+            background-color: rgba(56, 189, 248, 0.1); /* Fundo azul transparente */
+            color: #38bdf8; /* Texto no azul destaque */
+            border-color: #38bdf8; /* Borda acesa em azul */
+            transform: translateX(4px); /* Desloca o botão levemente para a direita */
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15); /* Brilho neon suave */
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Lista de Membros</h3>
+    <ul>
+        <li><a class="btn-menu" href="selic.html" target="janela_direita">🏛️ SELIC</a></li>
+        <li><a class="btn-menu" href="tesouro_direto.html" target="janela_direita">🛡️ Tesouro Direto</a></li>
+        <li><a class="btn-menu" href="reserva_emergencia.html" target="janela_direita">🛡️ Reserva de Emergência</a></li>
+        <li><a class="btn-menu" href="valuation.html" target="janela_direita">📈 Valuation</a></li>
+        <li><a class="btn-menu" href="Dividendos.html" target="janela_direita">💸 Dividendos</a></li>
+        <li><a class="btn-menu" href="inss.html" target="janela_direita">🧾 INSS</a></li>
+
+
+        <li><a class="btn-menu" href="https://1drv.ms" target="janela_direita">📊 Planejamento de Investimentos</a></li>
+    </ul>
+
+</body>
+</html>

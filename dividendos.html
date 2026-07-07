@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Corporativos: Anúncio de Dividendos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8; /* Azul destaque */
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        ul {
+            color: #cbd5e1;
+            font-size: 15px;
+            padding-left: 20px;
+            max-width: 800px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        
+        /* Grid para as Datas do Evento */
+        .grid-medias {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .card-media {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .card-media h3 {
+            margin: 0 0 10px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-media .valor {
+            font-size: 24px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        .card-media p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+        }
+
+        /* Estilização da Tabela de Simulação */
+        .tabela-historico {
+            width: 100%;
+            max-width: 500px;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            margin-top: 15px;
+        }
+        .tabela-historico th, .tabela-historico td {
+            padding: 10px 15px;
+            text-align: left;
+        }
+        .tabela-historico th {
+            background-color: #334155;
+            color: #f8fafc;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .tabela-historico tr {
+            border-bottom: 1px solid #334155;
+        }
+        .tabela-historico tr:last-child {
+            border-bottom: none;
+        }
+        .tabela-historico td {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Destaques personalizados baseados no modelo */
+        .destaque-alerta {
+            background-color: rgba(239, 68, 68, 0.1); /* Fundo vermelho suave */
+            font-weight: bold;
+        }
+        .destaque-alerta td {
+            color: #f87171; /* Texto vermelho suave */
+        }
+        .destaque-atencao {
+            background-color: rgba(234, 179, 8, 0.1); /* Fundo amarelo suave */
+            font-weight: bold;
+        }
+        .destaque-atencao td {
+            color: #facc15; /* Texto amarelo suave */
+        }
+        .destaque-liquidez {
+            background-color: rgba(74, 222, 128, 0.1); /* Fundo verde do modelo */
+            font-weight: bold;
+        }
+        .destaque-liquidez td {
+            color: #4ade80; /* Texto verde do modelo */
+        }
+        .destaque-texto-verde {
+            background-color: rgba(74, 222, 128, 0.1);
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Evento Corporativo: Anúncio de Dividendos</h1>
+    <p>Três datas cruciais são definidas no momento em que uma empresa ou fundo realiza o anúncio de pagamento de dividendos ao mercado:</p>
+
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>1. Posicionamento</h3>
+            <div class="valor">Data Com</div>
+            <p>O dia limite em que o ativo precisa estar na sua carteira para garantir o direito de receber os proventos.</p>
+        </div>
+        <div class="card-media">
+            <h3>2. Negociação</h3>
+            <div class="valor">Data Ex</div>
+            <p>O dia seguinte à Data Com. As aquisições feitas a partir deste momento não dão direito ao dividendo anunciado.</p>
+        </div>
+        <div class="card-media">
+            <h3>3. Recebimento</h3>
+            <div class="valor">Data Pagamento</div>
+            <p>O dia em que o dinheiro do dividendo é efetivamente depositado na conta do investidor.</p>
+        </div>
+    </div>
+
+    <h2>1. Detalhes da DATA COM</h2>
+    <p>É o dia em que o ativo tem que estar na carteira para ter o direito de receber o dividendo. <span class="destaque-texto-verde">É preciso "dormir", passar esse dia com o ativo na carteira.</span></p>
+    <p>Na Data Com o dinheiro sai do Caixa, diminuindo o valor da cota, e fica provisionado para pagamento dos dividendos. As empresas colocam esse dinheiro provisionado para render, como um CDI. Algumas pagam os dividendos com esses juros adicionais, enquanto outras não repassam esse rendimento e o reinvestem na empresa, voltando para o caixa.</p>
+
+    <h2>2. Detalhes da DATA EX</h2>
+    <p>A data ex é o dia após a data com. Nesta data, a aquisição de ativos não dá direito ao recebimento dos dividendos anunciados.</p>
+    <p>O reflexo causado na data ex, geralmente, é a queda do valor do ativo proporcional ao dividendo distribuído. Veja a simulação matemática do ajuste visualizado no mercado:</p>
+
+    <table class="tabela-historico">
+        <thead>
+            <tr>
+                <th>Indicador do Ativo</th>
+                <th>Valor Projetado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="destaque-atencao">
+                <td>Preço da Cota na Data Com</td>
+                <td>R$ 37,76</td>
+            </tr>
+            <tr class="destaque-liquidez">
+                <td>Valor a ser pago de Dividendo</td>
+                <td>R$ 2,60</td>
+            </tr>
+            <tr class="destaque-alerta">
+                <td>Abertura na Data Ex (Valor Corrigido)</td>
+                <td>R$ 35,16</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <p><em>* Nota importante: Isso não é uma regra fixa, mas é o comportamento que geralmente acontece. No decorrer da data ex, o mercado pode corrigir esse valor livremente durante o pregão.</em></p>
+    <p><span class="destaque-texto-verde">Atenção: A estratégia de tentar "fugir" da Data Com para comprar mais barato na Data Ex não é recomendada para quem investe com foco em longo prazo.</span></p>
+
+    <h2>3. Quanto Receber de Dividendos?</h2>
+    <p>O cálculo dos proventos varia de acordo com a classe do ativo financeiro avaliado:</p>
+    <ul>
+        <li><strong>Ações:</strong> O percentual é ditado pelo <strong>PAYOUT</strong> anunciado. Ele indica a fatia exata do Lucro Líquido que será convertida em proventos para o acionista.</li>
+        <li><strong>FIIs (Fundos Imobiliários):</strong> O dividendo possui periodicidade mensal e corresponde legalmente a <strong>95% do lucro líquido</strong> apurado no mês. Vale lembrar que a receita principal do fundo imobiliário é originada dos aluguéis dos imóveis.</li>
+    </ul>
+
+</body>
+</html>

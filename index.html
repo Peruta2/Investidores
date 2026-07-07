@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Navegação entre Frames</title>
+    <style>
+        .container-frames {
+            display: flex;
+            width: 100%;
+            height: 95vh;
+            gap: 15px;
+        }
+        iframe {
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            height: 100%;
+        }
+        /* Frame da esquerda (Menu de nomes/links) */
+        .frame-esquerdo {
+            width: 30%; 
+        }
+        /* Frame da direita (Onde os arquivos vão abrir) */
+        .frame-direito {
+            width: 70%; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-frames">
+        <!-- 1. O frame da esquerda carrega sua lista de nomes/links (ex: menu.html) -->
+        <iframe class="frame-esquerdo" src="menu.html"></iframe>
+        
+        <!-- 2. IMPORTANTE: Adicionamos o atributo name="janela_direita" neste frame -->
+        <iframe class="frame-direito" name="janela_direita" src="pagina_inicial.html"></iframe>
+    </div>
+
+</body>
+</html>
