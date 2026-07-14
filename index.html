@@ -2,38 +2,287 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Navegação entre Frames</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessoria Financeira | Portal Interno</title>
     <style>
-        .container-frames {
-            display: flex;
-            width: 100%;
-            height: 95vh;
-            gap: 15px;
+        /* Estilos Globais - Identidade Visual Financeira */
+        :root {
+            --azul-marinho: #0A192F;
+            --dourado: #C5A880;
+            --cinza-claro: #F4F6F9;
+            --branco: #FFFFFF;
+            --texto-escuro: #333333;
         }
-        iframe {
-            border: 2px solid #ccc;
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--cinza-claro);
+        }
+
+        /* Tela de Bloqueio (Senha) */
+        #tela-senha {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--azul-marinho);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: var(--branco);
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
             border-radius: 8px;
+            border: 1px solid var(--dourado);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .login-box h2 {
+            color: var(--dourado);
+            margin-bottom: 20px;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--dourado);
+            background: transparent;
+            color: var(--branco);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .login-box button {
+            background-color: var(--dourado);
+            color: var(--azul-marinho);
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .login-box button:hover {
+            background-color: #e5c495;
+        }
+
+        .erro-mensagem {
+            color: #ff6b6b;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Estrutura Principal (Pós-Login) */
+        #conteudo-principal {
+            display: none; /* Escondido até acertar a senha */
+            flex-direction: column;
             height: 100%;
         }
-        /* Frame da esquerda (Menu de nomes/links) */
-        .frame-esquerdo {
-            width: 30%; 
+
+        /* Menu Horizontal Superior */
+        nav {
+            background-color: var(--azul-marinho);
+            border-bottom: 3px solid var(--dourado);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        /* Frame da direita (Onde os arquivos vão abrir) */
-        .frame-direito {
-            width: 70%; 
+
+        .logo {
+            color: var(--dourado);
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .menu-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu-links button {
+            background: none;
+            border: 1px solid transparent;
+            color: var(--branco);
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .menu-links button:hover {
+            border-color: var(--dourado);
+            color: var(--dourado);
+        }
+
+        /* Container dos Dois Frames Verticais */
+        .container-frames {
+            display: flex;
+            flex: 1;
+            height: calc(100% - 60px);
+        }
+
+        /* Estilização dos Iframes (Lado a Lado) */
+        iframe {
+            border: none;
+            height: 100%;
+        }
+
+        #frame-esquerdo {
+            width: 30%;
+            border-right: 2px solid #e0e0e0;
+            background-color: var(--branco);
+        }
+
+        #frame-direito {
+            width: 70%;
+            background-color: var(--cinza-claro);
         }
     </style>
 </head>
 <body>
 
-    <div class="container-frames">
-        <!-- 1. O frame da esquerda carrega sua lista de nomes/links (ex: menu.html) -->
-        <iframe class="frame-esquerdo" src="menu.html"></iframe>
-        
-        <!-- 2. IMPORTANTE: Adicionamos o atributo name="janela_direita" neste frame -->
-        <iframe class="frame-direito" name="janela_direita" src="pagina_inicial.html"></iframe>
+    <!-- 1. TELA DE LOGIN / SENHA -->
+    <div id="tela-senha">
+        <div class="login-box">
+            <h2>SALA DOS INVESTIDORESL</h2>
+            <p style="margin-bottom: 20px; color: #aaa;">Acesso Restrito ao Painel</p>
+            <input type="password" id="input-senha" placeholder="Digite a senha de acesso">
+            <button onclick="verificarSenha()">Entrar</button>
+            <div id="erro" class="erro-mensagem">Senha incorreta. Tente novamente.</div>
+        </div>
     </div>
 
+    <!-- 2. CONTEÚDO PRINCIPAL (MENU + DOIS FRAMES) -->
+    <div id="conteudo-principal">
+        
+        <!-- Menu Horizontal -->
+        <nav>
+            <div class="logo">AMBIENTE DO INVESTIDOR</div>
+            <div class="menu-links">
+                <button onclick="mudarCanais('vazia.html', 'vazia.html')">Visão Geral</button>
+                <button onclick="mudarCanais('menu.html', 'pagina_inicial.html')">Teoria</button>
+                <button onclick="mudarCanais('vazia.html', 'vazia.html')">Carteira de Clientes</button>
+                <button onclick="mudarCanais('vazia.html', 'vazia.html')">Resultados</button>
+            </div>
+        </nav>
+
+        <!-- Dois Frames na Vertical (Lado a Lado) -->
+        <div class="container-frames">
+            <!-- Frame Esquerdo (Menu de apoio ou resumo) -->
+            <iframe id="frame-esquerdo" name="esquerdo" src="about:blank"></iframe>
+            
+            <!-- Frame Direito (Conteúdo principal ou relatórios) -->
+            <iframe id="frame-direito" name="direito" src="about:blank"></iframe>
+        </div>
+
+    </div>
+
+    <script>
+// Defina a sua senha aqui
+const SENHA_CORRETA = "admin123";
+
+// Executa automaticamente assim que a página index.html carrega/atualiza
+window.onload = function() {
+    verificarLoginExistente();
+};
+
+function verificarSenha() {
+    const senhaDigitada = document.getElementById('input-senha').value;
+    const erroMsg = document.getElementById('erro');
+
+    if (senhaDigitada === SENHA_CORRETA) {
+        // Grava o token de acesso no navegador do usuário
+        localStorage.setItem('painel_financeiro_logado', 'true');
+        
+        liberarAcesso();
+        
+        // Carrega as páginas iniciais padrão se for o primeiro acesso
+        mudarCanais('menu.html', 'about:blank'); 
+    } else {
+        erroMsg.style.display = 'block';
+        document.getElementById('input-senha').value = '';
+    }
+}
+
+// Verifica se o usuário já colocou a senha anteriormente antes de recarregar
+function verificarLoginExistente() {
+    const estaLogado = localStorage.getItem('painel_financeiro_logado');
+    
+    if (estaLogado === 'true') {
+        liberarAcesso();
+        recuperarPaginasAtuais();
+    }
+}
+
+// Esconde a tela de login e mostra o painel
+function liberarAcesso() {
+    document.getElementById('tela-senha').style.display = 'none';
+    document.getElementById('conteudo-principal').style.display = 'flex';
+}
+
+// Controla os frames e salva quais páginas estão abertas no momento
+function mudarCanais(urlEsquerda, urlDireita) {
+    const frameEsq = document.getElementById('frame-esquerdo');
+    const frameDir = document.getElementById('frame-direito');
+    
+    if (urlEsquerda) frameEsq.src = urlEsquerda;
+    if (urlDireita) frameDir.src = urlDireita;
+
+    // Salva o histórico atual para não perder ao dar F5
+    localStorage.setItem('ultima_pagina_esquerda', urlEsquerda);
+    localStorage.setItem('ultima_pagina_direita', urlDireita);
+}
+
+// Caso o usuário dê F5, essa função reabre exatamente onde ele estava
+function recuperarPaginasAtuais() {
+    const urlEsq = localStorage.getItem('ultima_pagina_esquerda') || 'menu.html';
+    const urlDir = localStorage.getItem('ultima_pagina_direita') || 'about:blank';
+    
+    document.getElementById('frame-esquerdo').src = urlEsq;
+    document.getElementById('frame-direito').src = urlDir;
+}
+
+// Opcional: Adicione um botão de "Sair" no seu menu chamando esta função se quiser deslogar
+function efetuarLogout() {
+    localStorage.removeItem('painel_financeiro_logado');
+    localStorage.removeItem('ultima_pagina_esquerda');
+    localStorage.removeItem('ultima_pagina_direita');
+    window.location.reload(); // Recarrega a página para voltar pro login
+}
+
+// Permite apertar 'Enter' para enviar a senha
+document.getElementById('input-senha').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        verificarSenha();
+    }
+});
+    </script>
 </body>
 </html>
