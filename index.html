@@ -205,6 +205,7 @@
     </div>
 
     <script>
+<script>
 // Defina a sua senha aqui
 const SENHA_CORRETA = "admin123";
 
@@ -218,8 +219,8 @@ function verificarSenha() {
     const erroMsg = document.getElementById('erro');
 
     if (senhaDigitada === SENHA_CORRETA) {
-        // Grava o token de acesso no navegador do usuário
-        localStorage.setItem('painel_financeiro_logado', 'true');
+        // CORREÇÃO: Usa sessionStorage para expirar ao fechar a aba/navegador
+        sessionStorage.setItem('painel_financeiro_logado', 'true');
         
         liberarAcesso();
         
@@ -231,9 +232,10 @@ function verificarSenha() {
     }
 }
 
-// Verifica se o usuário já colocou a senha anteriormente antes de recarregar
+// Verifica se o usuário já colocou a senha na sessão atual (permite F5)
 function verificarLoginExistente() {
-    const estaLogado = localStorage.getItem('painel_financeiro_logado');
+    // CORREÇÃO: Busca do sessionStorage
+    const estaLogado = sessionStorage.getItem('painel_financeiro_logado');
     
     if (estaLogado === 'true') {
         liberarAcesso();
@@ -255,26 +257,28 @@ function mudarCanais(urlEsquerda, urlDireita) {
     if (urlEsquerda) frameEsq.src = urlEsquerda;
     if (urlDireita) frameDir.src = urlDireita;
 
-    // Salva o histórico atual para não perder ao dar F5
-    localStorage.setItem('ultima_pagina_esquerda', urlEsquerda);
-    localStorage.setItem('ultima_pagina_direita', urlDireita);
+    // CORREÇÃO: Salva o histórico na sessão (limpa ao fechar a aba)
+    sessionStorage.setItem('ultima_pagina_esquerda', urlEsquerda);
+    sessionStorage.setItem('ultima_pagina_direita', urlDireita);
 }
 
 // Caso o usuário dê F5, essa função reabre exatamente onde ele estava
 function recuperarPaginasAtuais() {
-    const urlEsq = localStorage.getItem('ultima_pagina_esquerda') || 'menu.html';
-    const urlDir = localStorage.getItem('ultima_pagina_direita') || 'about:blank';
+    // CORREÇÃO: Busca do sessionStorage
+    const urlEsq = sessionStorage.getItem('ultima_pagina_esquerda') || 'vazia.html';
+    const urlDir = sessionStorage.getItem('ultima_pagina_direita') || 'about:blank';
     
     document.getElementById('frame-esquerdo').src = urlEsq;
     document.getElementById('frame-direito').src = urlDir;
 }
 
-// Opcional: Adicione um botão de "Sair" no seu menu chamando esta função se quiser deslogar
+// Botão de Logout limpa a sessão atual
 function efetuarLogout() {
-    localStorage.removeItem('painel_financeiro_logado');
-    localStorage.removeItem('ultima_pagina_esquerda');
-    localStorage.removeItem('ultima_pagina_direita');
-    window.location.reload(); // Recarrega a página para voltar pro login
+    // CORREÇÃO: Remove do sessionStorage
+    sessionStorage.removeItem('painel_financeiro_logado');
+    sessionStorage.removeItem('ultima_pagina_esquerda');
+    sessionStorage.removeItem('ultima_pagina_direita');
+    window.location.reload(); 
 }
 
 // Permite apertar 'Enter' para enviar a senha
@@ -283,6 +287,7 @@ document.getElementById('input-senha').addEventListener('keypress', function (e)
         verificarSenha();
     }
 });
-    </script>
+</script>
+
 </body>
 </html>
