@@ -224,7 +224,7 @@ function verificarSenha() {
         liberarAcesso();
         
         // Carrega as páginas iniciais padrão se for o primeiro acesso
-        mudarCanais('menu.html', 'about:blank'); 
+        mudarCanais('vazia.html', 'about:blank'); 
     } else {
         erroMsg.style.display = 'block';
         document.getElementById('input-senha').value = '';
