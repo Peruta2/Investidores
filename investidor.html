@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estratégias de Investimento e Valuation</title>
+    <title>Diretrizes do Investidor</title>
     <style>
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -26,6 +26,12 @@
             border-bottom: 1px solid #334155;
             padding-bottom: 8px;
         }
+        h3 {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
         p {
             color: #94a3b8;
             font-size: 15px;
@@ -41,7 +47,7 @@
             margin-bottom: 5px;
         }
         
-        /* Grid para os Cards de Métodos e Estratégias */
+        /* Grid para os Cards de Alocação por Perfil */
         .grid-medias {
             display: flex;
             gap: 20px;
@@ -55,7 +61,7 @@
             padding: 20px;
             border-radius: 10px;
             flex: 1;
-            min-width: 250px;
+            min-width: 200px;
         }
         .card-media h3 {
             margin: 0 0 10px 0;
@@ -65,7 +71,7 @@
             letter-spacing: 0.5px;
         }
         .card-media .valor {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #38bdf8;
         }
@@ -74,10 +80,10 @@
             font-size: 13px;
         }
 
-        /* Estilização da Tabela de Margem de Segurança */
+        /* Tabela de Categorias e Ativos */
         .tabela-historico {
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             border-collapse: collapse;
             background-color: #1e293b;
             border-radius: 8px;
@@ -106,30 +112,19 @@
             font-size: 14px;
         }
 
-        /* Destaques personalizados baseados no modelo */
+        /* Destaques personalizados herdados do modelo */
         .destaque-alerta {
             background-color: rgba(239, 68, 68, 0.1); /* Fundo vermelho suave */
             font-weight: bold;
-        }
-        .destaque-alerta td {
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
             color: #f87171; /* Texto vermelho suave */
-        }
-        .destaque-atencao {
-            background-color: rgba(234, 179, 8, 0.1); /* Fundo amarelo suave */
-            font-weight: bold;
-        }
-        .destaque-atencao td {
-            color: #facc15; /* Texto amarelo suave */
+            max-width: 770px;
+            margin-bottom: 20px;
         }
         .destaque-liquidez {
             background-color: rgba(74, 222, 128, 0.1); /* Fundo verde do modelo */
-            font-weight: bold;
-        }
-        .destaque-liquidez td {
-            color: #4ade80; /* Texto verde do modelo */
-        }
-        .destaque-texto-verde {
-            background-color: rgba(74, 222, 128, 0.1);
             font-weight: bold;
             padding: 2px 6px;
             border-radius: 4px;
@@ -139,35 +134,86 @@
 </head>
 <body>
 
-    <h1>Valuation</h1>
-    <p>Antes de começar a investir é necessario conhecer o Valuation do Ativo (Preço Teto Projetivo).</p>
-
-    <h2>Preço Teto Projetivo</h2>
-    <p>Com base Lucro Líquido nos resultados financeiros de um período do ano, exemplo: 1T26, 2T26... projeta seu crescimento no ano e um período posterior de 5 anos e no perpétuo. <span class="destaque-texto-verde">O resultado projetado mostra o Upside (margem de segurança) para investir ou não no Ativo, olhando para o futuro.</span></p>
+    <h1>Investidor</h1>
     
-    <h2>Diretriz para Margem de Segurança</h2>
+    <div class="destaque-alerta">
+        Um investidor com mais experiência não deve dar dicas de investimentos para amigos e familiares sem experiência. Essa conduta evita a responsabilização por oscilações no mercado financeiro.
+    </div>
+
+    <p>Antes de começar os investimentos, o investidor precisa estar pronto para um perfil arrojado:</p>
+
+    <h2>Estabeleça Metas Claras</h2>
+    <ul>
+        <li>Metas de pequeno, médio e longo prazo</li>
+        <li>Aposentadoria</li>
+        <li>Compra de Imóveis</li>
+        <li>Reserva de Emergência</li>
+        <li>Horizonte de Tempo</li>
+        <li>Situação Financeira</li>
+        <li>Capacidade de Poupar</li>
+        <li>Escolha de ativos</li>
+        <li>Tolerância a Risco</li>
+        <li>Suportar à volatilidade</li>
+        <li>Conhecimento sobre Investimento</li>
+        <li>Ter disciplina em aportes mensais</li>
+        <li>Gestão da Carteira</li>
+    </ul>
+
+    <h2>Tipos de Ativos</h2>
+    <ul>
+        <li>Diversificação, sistema de alocação estratégica</li>
+        <li>Balanceamento trimestral da carteira</li>
+    </ul>
+
+    <h2>Categorias de Investimentos</h2>
     <table class="tabela-historico">
         <thead>
             <tr>
-                <th>Margem de Segurança</th>
-                <th>Decisão de Investimento</th>
+                <th>Classe</th>
+                <th>Subcategorias / Ativos</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="destaque-alerta">
-                <td>Abaixo de 10%</td>
-                <td>Não investir</td>
+            <tr>
+                <td><strong>Renda Fixa</strong></td>
+                <td>Pós-Fixado, Pré-Fixado, Inflação</td>
             </tr>
-            <tr class="destaque-atencao">
-                <td>Entre 10% a 20%</td>
-                <td>Se posicionar</td>
-            </tr>
-            <tr class="destaque-liquidez">
-                <td>Acima de 20%</td>
-                <td>Investir</td>
+            <tr>
+                <td><strong>Renda Variável</strong></td>
+                <td>FIIs, Ações Brasil, Ativos Dolarizados</td>
             </tr>
         </tbody>
     </table>
+
+    <h2>Perfil do Investidor</h2>
+    <p>O perfil do investidor é uma classificação que ajuda a determinar os tipos de investimentos mais adequados para cada pessoa. Ele é baseado em fatores como a tolerância ao risco, os objetivos financeiros e o conhecimento de mercado.</p>
+
+    <h3>Tipos de Perfil do Investidor:</h3>
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>Conservador</h3>
+            <div class="valor">100%</div>
+            <p>Renda Fixa</p>
+        </div>
+        <div class="card-media">
+            <h3>Moderado</h3>
+            <div class="valor">50% / 50%</div>
+            <p>Renda Fixa e Renda Variável</p>
+        </div>
+        <div class="card-media">
+            <h3>Arrojado</h3>
+            <div class="valor">40% / 60%</div>
+            <p>Renda Fixa e Renda Variável</p>
+        </div>
+        <div class="card-media">
+            <h3>Agressivo</h3>
+            <div class="valor">100%</div>
+            <p>Renda Variável</p>
+        </div>
+    </div>
+
+    <h2>Execução e Balanceamento</h2>
+    <p>O Investidor opta por um modelo de carteira e persegue no balanceamento investindo nas oportunidades, <span class="destaque-liquidez">vendendo nas altas e comprando nas baixas</span>.</p>
 
 </body>
 </html>

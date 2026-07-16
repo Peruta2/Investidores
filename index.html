@@ -171,9 +171,12 @@
     <!-- 1. TELA DE LOGIN / SENHA -->
     <div id="tela-senha">
         <div class="login-box">
-            <h2>SALA DOS INVESTIDORES</h2>
+            <h2>SALA DOS INVESTIDORESL</h2>
             <p style="margin-bottom: 20px; color: #aaa;">Acesso Restrito ao Painel</p>
+
+            <!-- Adicione o atributo autofocus ao final da tag input -->
             <input type="password" id="input-senha" placeholder="Digite a senha de acesso" autofocus>
+
             <button onclick="verificarSenha()">Entrar</button>
             <div id="erro" class="erro-mensagem">Senha incorreta. Tente novamente.</div>
         </div>
@@ -191,7 +194,7 @@
                 <button onclick="mudarCanais('vazia.html', 'vazia.html')">Carteira de Clientes</button>
                 <button onclick="mudarCanais('vazia.html', 'vazia.html')">Resultados</button>
 
-                 <!-- NOVO BOTÃO DE SAIR -->
+                <!-- NOVO BOTÃO DE SAIR -->
                 <button onclick="efetuarLogout()" class="btn-sair">Sair ➔</button>
             </div>
         </nav>

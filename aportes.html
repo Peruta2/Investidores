@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estratégias de Investimento e Valuation</title>
+    <title>Tipos de Aportes Estratégicos</title>
     <style>
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -26,6 +26,12 @@
             border-bottom: 1px solid #334155;
             padding-bottom: 8px;
         }
+        h3 {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
         p {
             color: #94a3b8;
             font-size: 15px;
@@ -41,7 +47,7 @@
             margin-bottom: 5px;
         }
         
-        /* Grid para os Cards de Métodos e Estratégias */
+        /* Grid para os Cards de Métodos de Aporte */
         .grid-medias {
             display: flex;
             gap: 20px;
@@ -65,7 +71,7 @@
             letter-spacing: 0.5px;
         }
         .card-media .valor {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: #38bdf8;
         }
@@ -74,10 +80,10 @@
             font-size: 13px;
         }
 
-        /* Estilização da Tabela de Margem de Segurança */
+        /* Tabela Comparativa de Estratégias */
         .tabela-historico {
             width: 100%;
-            max-width: 500px;
+            max-width: 700px;
             border-collapse: collapse;
             background-color: #1e293b;
             border-radius: 8px;
@@ -106,30 +112,19 @@
             font-size: 14px;
         }
 
-        /* Destaques personalizados baseados no modelo */
+        /* Destaques personalizados */
         .destaque-alerta {
-            background-color: rgba(239, 68, 68, 0.1); /* Fundo vermelho suave */
+            background-color: rgba(239, 68, 68, 0.1); 
             font-weight: bold;
-        }
-        .destaque-alerta td {
-            color: #f87171; /* Texto vermelho suave */
-        }
-        .destaque-atencao {
-            background-color: rgba(234, 179, 8, 0.1); /* Fundo amarelo suave */
-            font-weight: bold;
-        }
-        .destaque-atencao td {
-            color: #facc15; /* Texto amarelo suave */
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171; 
+            max-width: 770px;
+            margin-bottom: 20px;
         }
         .destaque-liquidez {
             background-color: rgba(74, 222, 128, 0.1); /* Fundo verde do modelo */
-            font-weight: bold;
-        }
-        .destaque-liquidez td {
-            color: #4ade80; /* Texto verde do modelo */
-        }
-        .destaque-texto-verde {
-            background-color: rgba(74, 222, 128, 0.1);
             font-weight: bold;
             padding: 2px 6px;
             border-radius: 4px;
@@ -139,32 +134,52 @@
 </head>
 <body>
 
-    <h1>Valuation</h1>
-    <p>Antes de começar a investir é necessario conhecer o Valuation do Ativo (Preço Teto Projetivo).</p>
+    <h1>Aportes</h1>
+    <p>A escolha da metodologia de aporte define a eficiência da construção do patrimônio e o gerenciamento de riscos ao longo do tempo.</p>
 
-    <h2>Preço Teto Projetivo</h2>
-    <p>Com base Lucro Líquido nos resultados financeiros de um período do ano, exemplo: 1T26, 2T26... projeta seu crescimento no ano e um período posterior de 5 anos e no perpétuo. <span class="destaque-texto-verde">O resultado projetado mostra o Upside (margem de segurança) para investir ou não no Ativo, olhando para o futuro.</span></p>
+    <h2>Método DCA (Dollar Cost Averaging)</h2>
+    <p>O DCA, ou Custo Médio em Dólar, é uma estratégia de investimento focada em aportes constantes e regulares.</p>
+    <ul>
+        <li><span class="destaque-liquidez">Regra Central:</span> Investir um valor fixo em dinheiro em um intervalo de tempo definido.</li>
+        <li><strong>Premissa:</strong> A execução ocorre independentemente do preço do ativo no momento, reduzindo o impacto da volatilidade.</li>
+    </ul>
+
+    <h2>Estratégias de Aporte em "Escadinha" (Laddering)</h2>
+    <p>A metodologia de fracionamento em degraus pode ser aplicada tanto para blindagem e previsibilidade na Renda Fixa quanto para otimização de preço na Renda Variável.</p>
+
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>Método Escadinha RF</h3>
+            <div class="valor">Por Vencimento</div>
+            <p>Fracionamento do capital em títulos com datas de vencimento diferentes e sequenciais (Estratégia Ladder).</p>
+        </div>
+        <div class="card-media">
+            <h3>Método Escadinha RV</h3>
+            <div class="valor">Por Preço</div>
+            <p>Adaptação para ações, FIIs e ETFs baseada no preço do ativo ou no calendário de dividendos (Scale-in).</p>
+        </div>
+    </div>
+
+    <h2>Detalhamento das Operações Fracionadas</h2>
     
-    <h2>Diretriz para Margem de Segurança</h2>
     <table class="tabela-historico">
         <thead>
             <tr>
-                <th>Margem de Segurança</th>
-                <th>Decisão de Investimento</th>
+                <th>Estratégia</th>
+                <th>Regra de Execução</th>
+                <th>Objetivo Principal</th>
             </tr>
         </thead>
         <tbody>
-            <tr class="destaque-alerta">
-                <td>Abaixo de 10%</td>
-                <td>Não investir</td>
+            <tr>
+                <td><strong>Escadinha RF</strong></td>
+                <td>Divide o valor e distribui os prazos de vencimento em vez de prender todo o capital em um único título de longo prazo.</td>
+                <td>Garantir dinheiro líquido entrando na conta constantemente, sem abrir mão das altas taxas de juros de prazos longos.</td>
             </tr>
-            <tr class="destaque-atencao">
-                <td>Entre 10% a 20%</td>
-                <td>Se posicionar</td>
-            </tr>
-            <tr class="destaque-liquidez">
-                <td>Acima de 20%</td>
-                <td>Investir</td>
+            <tr>
+                <td><strong>Escadinha RV</strong></td>
+                <td>Colocação de ordens de compra automáticas em "degraus" progressivamente abaixo do preço atual de mercado (Scale-in).</td>
+                <td>Aproveitar de forma cirúrgica as oscilações e quedas do mercado em ativos que deseja acumular.</td>
             </tr>
         </tbody>
     </table>

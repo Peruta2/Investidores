@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado de Ações e Estratégias</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8; /* Azul destaque */
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        ul {
+            color: #cbd5e1;
+            font-size: 15px;
+            padding-left: 20px;
+            max-width: 800px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        
+        /* Grid para os Cards de Risco e Rentabilidade */
+        .grid-medias {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .card-media {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .card-media h3 {
+            margin: 0 0 10px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-media .valor {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        .card-media p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+        }
+
+        /* Tabelas Estruturadas (Tickers e Legendas) */
+        .tabela-historico {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .tabela-historico th, .tabela-historico td {
+            padding: 10px 15px;
+            text-align: left;
+        }
+        .tabela-historico th {
+            background-color: #334155;
+            color: #f8fafc;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .tabela-historico tr {
+            border-bottom: 1px solid #334155;
+        }
+        .tabela-historico tr:last-child {
+            border-bottom: none;
+        }
+        .tabela-historico td {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Destaques personalizados */
+        .destaque-alerta {
+            background-color: rgba(239, 68, 68, 0.1); 
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171; 
+            max-width: 770px;
+            margin-bottom: 20px;
+        }
+        .destaque-liquidez {
+            background-color: rgba(74, 222, 128, 0.1); 
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4ade80;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ações</h1>
+    
+    <h2>Ibovespa</h2>
+    <p>O Ibovespa é o principal indicador de desempenho das ações negociadas na B3 e reúne as empresas mais importantes do mercado de capitais brasileiro. Criado em 1968, consolidou-se internacionalmente como a grande referência para investidores ao redor do mundo.</p>
+
+    <h2>Estrutura do Ticker</h2>
+    <p>O ticker é a identificação oficial de uma Ação na Bolsa. É formado por quatro letras, um número correspondente à classe do ativo e, opcionalmente, a letra <strong>F</strong> (para indicar negociação em mercado fracionado). Exemplo: <code>PETR4F</code>.</p>
+
+    <h3>Significado dos Números do Ticker:</h3>
+    <table class="tabela-historico">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Tipo de Ativo / Classe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>1</strong></td><td>DS-ON (Direito de Subscrição Ordinária)</td></tr>
+            <tr><td><strong>2</strong></td><td>DS-PN (Direito de Subscrição Preferencial)</td></tr>
+            <tr><td><strong>3</strong></td><td><strong>ON</strong> - Ação Ordinária (Garante direito a voto nas assembleias)</td></tr>
+            <tr><td><strong>4</strong></td><td><strong>PN</strong> - Ação Preferencial (Prioridade na distribuição de lucros)</td></tr>
+            <tr><td><strong>5</strong></td><td>PNA - Ação Preferencial Classe A</td></tr>
+            <tr><td><strong>6</strong></td><td>PNB - Ação Preferencial Classe B</td></tr>
+            <tr><td><strong>7</strong></td><td>PNC - Ação Preferencial Classe C</td></tr>
+            <tr><td><strong>8</strong></td><td>PND - Ação Preferencial Classe D</td></tr>
+            <tr><td><strong>9</strong></td><td>RS-ON (Recibo de Subscrição Ordinária)</td></tr>
+            <tr><td><strong>10</strong></td><td>RS-PN (Recibo de Subscrição Preferencial)</td></tr>
+            <tr><td><strong>11</strong></td><td><strong>UNIT</strong> - Pacote composto por uma ação ON e no mínimo duas ações PN</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Negociação das Ações na B3</h2>
+    <ul>
+        <li><strong>Lote Padrão:</strong> Negociação regulada estritamente em múltiplos de 100 ações.</li>
+        <li><strong>Fracionado (F):</strong> Negociação flexível permitida em unidades avulsas de 1 a 99 ações.</li>
+    </ul>
+
+    <h2>Classificação Setorial de Risco</h2>
+    
+    <h3>Setor Perene (<span class="destaque-liquidez">BESST</span>) - Baixo a Médio Risco</h3>
+    <p>Setores econômicos essenciais para a sociedade, prestando serviços básicos que sofrem baixo impacto durante recessões. Mantêm demanda estável e resiliência em contextos de crise.</p>
+    <ul>
+        <li><strong>B</strong>ancos</li>
+        <li><strong>E</strong>nergia</li>
+        <li><strong>S</strong>aneamento</li>
+        <li><strong>S</strong>eguros</li>
+        <li><strong>T</strong>elecomunicações</li>
+    </ul>
+
+    <h3>Setor de Commodities - Alto Risco</h3>
+    <p>Empresas focadas na produção e comercialização global de matérias-primas básicas e padronizadas. Seus preços dependem de dinâmicas internacionais de mercado e ciclos econômicos.</p>
+    <ul>
+        <li><strong>Exemplos:</strong> Empresas do setor petroleiro, mineradoras, produtoras de celulose e commodities agrícolas.</li>
+    </ul>
+
+    <h2>Dividendos e Proventos</h2>
+    <p>As empresas distribuem parcelas de seus lucros gerados aos acionistas na forma de dividendos, JCP (Juros sobre Capital Próprio) ou bonificação em ações. A periodicidade segue a política interna de cada companhia, podendo ocorrer de forma mensal, trimestral, semestral ou anual.</p>
+
+    <h2>Matriz de Rentabilidade vs Risco</h2>
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>Empresas Previdenciárias</h3>
+            <div class="valor">Baixo Risco</div>
+            <p>Foco na distribuição recorrente de lucros aos acionistas. O retorno financeiro em proventos mitiga o risco e melhora o fluxo de caixa para novos aportes, mantendo uma rentabilidade previsível.</p>
+        </div>
+        <div class="card-media">
+            <h3>Empresas de Crescimento</h3>
+            <div class="valor">Alto Risco</div>
+            <p>Potencial de expansão agressivo acima da média. Retêm a totalidade do lucro (comum em Startups) para reinvestimento interno no próprio negócio, sem focar na distribuição imediata de dividendos.</p>
+        </div>
+    </div>
+
+</body>
+</html>
