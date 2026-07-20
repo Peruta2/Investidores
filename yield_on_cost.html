@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yield on Cost (YOC)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8; /* Azul destaque */
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        ul {
+            color: #cbd5e1;
+            font-size: 15px;
+            padding-left: 20px;
+            max-width: 800px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        
+        /* Grid para os Cards */
+        .grid-medias {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .card-media {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .card-media h3 {
+            margin: 0 0 10px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-media .valor {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        .card-media p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+        }
+
+        /* Tabelas Estruturadas */
+        .tabela-historico {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .tabela-historico th, .tabela-historico td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .tabela-historico th {
+            background-color: #334155;
+            color: #f8fafc;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .tabela-historico tr {
+            border-bottom: 1px solid #334155;
+        }
+        .tabela-historico tr:last-child {
+            border-bottom: none;
+        }
+        .tabela-historico td {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Destaques personalizados */
+        .destaque-alerta {
+            background-color: rgba(239, 68, 68, 0.1); 
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171; 
+            max-width: 770px;
+            margin-bottom: 20px;
+        }
+        .destaque-liquidez {
+            background-color: rgba(56, 189, 248, 0.1); 
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Yield on Cost (YOC)</h1>
+    <p>É uma métrica financeira que mede o rendimento de um dividendo com base no preço de compra original de um ativo, e não no seu preço de mercado atual. Ele demonstra a rentabilidade real do capital investido ao longo do tempo.</p>
+
+    <h2>Como Calcular</h2>
+    <table class="tabela-historico">
+        <thead>
+            <tr>
+                <th>Métrica</th>
+                <th>Fórmula de Cálculo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>YOC</strong></td>
+                <td><span class="destaque-liquidez">(Dividendo Anual por Ação / Preço de Compra Inicial por Ação) x 100</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Análise da Métrica</h2>
+    <div class="grid-medias">
+        <div class="card-media">
+            <h3>Vantagens e Utilidade</h3>
+            <div class="valor">Estratégia</div>
+            <ul>
+                <li><strong>Mede o crescimento real:</strong> Mostra o impacto do aumento de dividendos no seu bolso.</li>
+                <li><strong>Visão de longo prazo:</strong> Recompensa investidores focados em estratégias de Buy and Hold.</li>
+                <li><strong>Ajuste à inflação própria:</strong> Avalia o retorno real sobre o dinheiro historicamente desembolsado.</li>
+            </ul>
+        </div>
+        
+        <div class="card-media">
+            <h3>Limitações Importantes</h3>
+            <div class="valor" style="color: #f87171;">Atenção</div>
+            <ul>
+                <li><strong>Olha para o passado:</strong> O YOC reflete o custo histórico, ignorando o custo de oportunidade atual.</li>
+                <li><strong>Decisões de venda:</strong> Um YOC alto pode camuflar uma ação que hoje está superavaliada ou com baixo rendimento atual.</li>
+                <li><strong>Não serve para comparação:</strong> Comparar o YOC de dois investidores diferentes não reflete o valor atual de suas carteiras.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2>Qual métrica usar?</h2>
+    <div class="destaque-alerta" style="background-color: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2); color: #cbd5e1;">
+        <span style="color: #38bdf8; display: block; margin-bottom: 5px;">Dividend Yield (DY)</span>
+        Use o Dividend Yield para decidir se vale a pena comprar mais ações hoje ou direcionar o dinheiro para outro ativo.
+    </div>
+
+    <div class="destaque-alerta" style="background-color: rgba(56, 189, 248, 0.05); border-color: rgba(56, 189, 248, 0.2); color: #cbd5e1;">
+        <span style="color: #38bdf8; display: block; margin-bottom: 5px;">Yield on Cost (YOC)</span>
+        Use o Yield on Cost para medir a eficiência do seu patrimônio histórico e observar o efeito dos juros compostos na sua renda passiva.
+    </div>
+
+</body>
+</html>
