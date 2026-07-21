@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cotações em Tempo Real</title>
+  <style>
+    /* Estilos para organizar os elementos lado a lado */
+    .ticker-container {
+      display: flex;
+      gap: 20px;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .ticker-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .ticker-badge {
+      font-weight: bold;
+      color: #333;
+      background: #e0e0e0;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .valor {
+      font-size: 1.1em;
+      color: #007bff;
+    }
+    .destaque {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Container principal das cotações -->
+  <div class="ticker-container">
+    
+    <!-- Exemplo 1: BBDC4 -->
+    <div class="ticker-box">
+      <div class="ticker-badge ativo-ticker">BBDC4</div>
+      <div class="valor destaque preco-ativo">Carregando...</div>
+    </div>
+
+    <!-- Exemplo 2: PETR4 (Basta duplicar o bloco para adicionar mais) -->
+    <div class="ticker-box">
+      <div class="ticker-badge ativo-ticker">PETR4</div>
+      <div class="valor destaque preco-ativo">Carregando...</div>
+    </div>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const token = "qkS8x7ANGCoBa7msaGY8Vn";
+      
+      // 1. Seleciona todos os blocos de ativos da página
+      const boxes = document.querySelectorAll(".ticker-box");
+
+      boxes.forEach(box => {
+        // 2. Captura os elementos específicos de cada bloco
+        const tickerElement = box.querySelector(".ativo-ticker");
+        const precoElement = box.querySelector(".preco-ativo");
+        
+        const ticker = tickerElement.textContent.trim();
+        const url = `https://brapi.dev{ticker}?token=${token}`;
+
+        // 3. Faz a chamada individual para cada ativo
+        fetch(url)
+          .then(response => {
+            if (!response.ok) throw new Error("Erro na API");
+            return response.json();
+          })
+          .then(data => {
+            if (data.results && data.results[0]) {
+              const preco = data.results[0].regularMarketPrice;
+              
+              // 4. Atualiza o campo de valor ao lado do nome do ticker
+              precoElement.textContent = preco.toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL"
+              });
+            } else {
+              precoElement.textContent = "Não encontrado";
+            }
+          })
+          .catch(error => {
+            console.error(`Erro ao carregar ${ticker}:`, error);
+            precoElement.textContent = "Erro";
+          });
+      });
+    });
+  </script>
+
+</body>
+</html>
