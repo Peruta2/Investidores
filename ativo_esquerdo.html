@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Navegação</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico aos outros painéis */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h3 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        /* Remove as bolinhas da lista padrão */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 12px; /* Espaço ideal entre os botões */
+        }
+        /* Estilização do Link transformado em Botão do Painel Escuro */
+        .btn-menu {
+            display: block;
+            background-color: #1e293b; /* Fundo dos cards do modelo */
+            color: #cbd5e1;
+            text-decoration: none; /* Remove o sublinhado */
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease; /* Transição suave */
+        }
+        /* Efeito ao passar o mouse adaptado ao tema azul/neon */
+        .btn-menu:hover {
+            background-color: rgba(56, 189, 248, 0.1); /* Fundo azul transparente */
+            color: #38bdf8; /* Texto no azul destaque */
+            border-color: #38bdf8; /* Borda acesa em azul */
+            transform: translateX(4px); /* Desloca o botão levemente para a direita */
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15); /* Brilho neon suave */
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Ativo</h3>
+<ul>
+    <!-- Botão Normal -->
+<!--
+    <li><a class="btn-menu" href="vazia.html" target="direito">🏛️ Dados Financeiros</a></li>
+-->
+    <li><a>🏛️ Dados Financeiros</a></li>
+
+    <!-- Botão Expandível (Dropdown) -->
+    <li class="menu-dropdown">
+        <button class="btn-menu btn-expandivel">
+            <span>📊 Ações</span>
+            <span class="seta">▼</span>
+        </button>
+        <ul class="dropdown-conteudo">
+            <li><a class="btn-menu sub-item" href="acao_bbdc4.html" target="direito">🔹 BBDC4</a></li>
+            <li><a class="btn-menu sub-item" href="vazia.html" target="direito">🔹 ITUB4</a></li>
+        </ul>
+    </li>
+</ul>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu de Navegação</title>
+
+<style>
+    /* Estilos base para integrar com o seu menu atual */
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .btn-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1e293b;
+        color: #cbd5e1;
+        padding: 12px 15px;
+        text-decoration: none;
+        border-radius: 6px;
+        border: 1px solid #334155;
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 14px;
+        margin-bottom: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .btn-menu:hover {
+        background-color: #24334d;
+        color: #38bdf8;
+        border-color: #38bdf8;
+    }
+
+    /* Configuração do botão que expande */
+    .btn-expandivel {
+        background-color: #1e293b;
+    }
+    
+    .seta {
+        font-size: 10px;
+        color: #64748b;
+        transition: transform 0.2s ease;
+    }
+
+    /* Esconde as opções por padrão */
+    .dropdown-conteudo {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        padding-left: 15px; /* Recuo para parecer sub-menu */
+    }
+
+    /* Mostra as opções e gira a seta quando passa o mouse no item pai */
+    .menu-dropdown:hover .dropdown-conteudo {
+        max-height: 200px; /* Altura máxima para o efeito de abertura */
+    }
+
+    .menu-dropdown:hover .seta {
+        transform: rotate(180deg);
+        color: #38bdf8;
+    }
+
+    /* Estilo sutil diferenciado para os sub-itens */
+    .sub-item {
+        background-color: rgba(30, 41, 59, 0.5);
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+</style>
+</head>
+</html>
