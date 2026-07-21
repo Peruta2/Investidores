@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados Financeiros - ITUB4</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header-db {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #38bdf8;
+            font-size: 24px;
+            margin: 0;
+        }
+        .ticker-badge {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 18px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        /* Grid de Indicadores Gerais */
+        .grid-kpi {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card-kpi {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .card-kpi .label {
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        .card-kpi .valor {
+            font-size: 18px;
+            font-weight: bold;
+            color: #f8fafc;
+        }
+        .card-kpi .valor.destaque {
+            color: #38bdf8;
+        }
+
+        /* Tabela Estilo Base de Dados */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            background-color: #1e293b;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            margin-bottom: 30px;
+        }
+        .db-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+        .db-table th {
+            background-color: #334155;
+            color: #cbd5e1;
+            padding: 12px 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .db-table td {
+            padding: 10px;
+            color: #cbd5e1;
+            border-bottom: 1px solid #334155;
+        }
+        .db-table tr:hover {
+            background-color: #24334d;
+        }
+        .db-table .row-stat {
+            background-color: rgba(56, 189, 248, 0.04);
+            font-weight: bold;
+        }
+        .db-table .row-stat td {
+            color: #94a3b8;
+        }
+
+        /* Grid de Valuation */
+        .grid-valuation {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .card-valuation {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-top: 4px solid #38bdf8;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .card-valuation h3 {
+            margin: 0 0 15px 0;
+            color: #f8fafc;
+            font-size: 16px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        .val-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .val-row .val-label {
+            color: #94a3b8;
+        }
+        .val-row .val-value {
+            font-weight: bold;
+        }
+        
+        /* Badges de Margem e Alertas */
+        .badge-pos {
+            background-color: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .badge-neg {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .badge-info {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-db">
+        <h1>Banco Itaú Unibanco</h1>
+        <div class="ticker-badge">ITUB4</div>
+    </div>
+
+    <h2>Informações Gerais de Mercado</h2>
+    <div class="grid-kpi">
+        <div class="card-kpi">
+            <div class="label">Preço Atual</div>
+            <div class="valor destaque">R$ 18,49</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">DY Atual</div>
+            <div class="valor">8,10%</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">DY Projetivo</div>
+            <div class="valor">6,00%</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">DPA Projetivo</div>
+            <div class="valor">R$ 1,17</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Taxa de Desconto</div>
+            <div class="valor" style="font-size: 16px;">18,00%</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Valor de Mercado</div>
+            <div class="valor">R$ 195,45 Bi</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Patrimônio Líquido</div>
+            <div class="valor">R$ 179,76 Bi</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Papéis Ex-Tesouraria</div>
+            <div class="valor" style="font-size: 16px;">10.570.712.028</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Papéis em Tesouraria</div>
+            <div class="valor" style="font-size: 16px;">21.300.000</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Tag Along</div>
+            <div class="valor" style="font-size: 16px;">80%</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Setor</div>
+            <div class="valor" style="font-size: 16px;">Financeiro</div>
+        </div>
+        <div class="card-kpi">
+            <div class="label">Segmento</div>
+            <div class="valor" style="font-size: 16px;">Bancos</div>
+        </div>
+
+    </div>
+
+    <div class="grid-kpi" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: -15px;">
+
+    </div>
+
+    <h2>Histórico de Indicadores Fundamentais</h2>
+    <div class="table-container">
+        <table class="db-table">
+            <thead>
+                <tr>
+                    <th>ANO</th>
+                    <th>Lucro Líquido</th>
+                    <th>Payout</th>
+                    <th>ROE</th>
+                    <th>P/L</th>
+                    <th>P/VP</th>
+                    <th>LPA</th>
+                    <th>VPA</th>
+                    <th>CAGR LL</th>
+                    <th>DPA</th>
+                    <th>TCE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2016</td>
+                    <td>R$ 17.992.721.000,00</td>
+                    <td>34,25%</td>
+                    <td>17,97%</td>
+                    <td>8,83</td>
+                    <td>1,59</td>
+                    <td>3,28</td>
+                    <td>18,27</td>
+                    <td>10,29%</td>
+                    <td>R$ 0,58</td>
+                    <td>11,82%</td>
+                </tr>
+                <tr>
+                    <td>2017</td>
+                    <td>R$ 17.314.612.000,00</td>
+                    <td>21,41%</td>
+                    <td>15,72%</td>
+                    <td>11,79</td>
+                    <td>1,85</td>
+                    <td>2,87</td>
+                    <td>18,27</td>
+                    <td>8,81%</td>
+                    <td>R$ 0,35</td>
+                    <td>12,35%</td>
+                </tr>
+                <tr>
+                    <td>2018</td>
+                    <td>R$ 16.748.440.000,00</td>
+                    <td>42,97%</td>
+                    <td>13,87%</td>
+                    <td>15,30</td>
+                    <td>2,12</td>
+                    <td>2,53</td>
+                    <td>18,21</td>
+                    <td>6,05%</td>
+                    <td>R$ 0,68</td>
+                    <td>7,91%</td>
+                </tr>
+                <tr>
+                    <td>2019</td>
+                    <td>R$ 22.582.617.000,00</td>
+                    <td>185,13%</td>
+                    <td>8,04%</td>
+                    <td>26,85</td>
+                    <td>2,16</td>
+                    <td>1,35</td>
+                    <td>16,75</td>
+                    <td>7,93%</td>
+                    <td>R$ 3,96</td>
+                    <td>-6,84%</td>
+                </tr>
+                <tr>
+                    <td>2020</td>
+                    <td>R$ 16.546.590.000,00</td>
+                    <td>14,09%</td>
+                    <td>11,55%</td>
+                    <td>14,36</td>
+                    <td>1,66</td>
+                    <td>1,89</td>
+                    <td>16,36</td>
+                    <td>-1,93%</td>
+                    <td>R$ 0,22</td>
+                    <td>9,92%</td>
+                </tr>
+                <tr>
+                    <td>2021</td>
+                    <td>R$ 20.512.720.000,00</td>
+                    <td>62,50%</td>
+                    <td>13,98%</td>
+                    <td>9,02</td>
+                    <td>1,26</td>
+                    <td>2,13</td>
+                    <td>15,23</td>
+                    <td>2,66%</td>
+                    <td>R$ 1,21</td>
+                    <td>5,24%</td>
+                </tr>
+                <tr>
+                    <td>2022</td>
+                    <td>R$ 21.217.200.000,00</td>
+                    <td>19,89%</td>
+                    <td>13,37%</td>
+                    <td>7,56</td>
+                    <td>1,01</td>
+                    <td>2,00</td>
+                    <td>14,99</td>
+                    <td>4,15%</td>
+                    <td>R$ 0,40</td>
+                    <td>10,71%</td>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>R$ 14.502.765.000,00</td>
+                    <td>71,23%</td>
+                    <td>8,60%</td>
+                    <td>12,65</td>
+                    <td>1,09</td>
+                    <td>1,35</td>
+                    <td>15,70</td>
+                    <td>-2,84%</td>
+                    <td>R$ 0,98</td>
+                    <td>2,47%</td>
+                </tr>
+                <tr>
+                    <td>2024</td>
+                    <td>R$ 17.542.153.000,00</td>
+                    <td>53,71%</td>
+                    <td>10,24%</td>
+                    <td>7,10</td>
+                    <td>0,73</td>
+                    <td>1,63</td>
+                    <td>15,90</td>
+                    <td>-4,93%</td>
+                    <td>R$ 0,89</td>
+                    <td>4,74%</td>
+                </tr>
+                <tr>
+                    <td>2025</td>
+                    <td>R$ 23.924.636.000,00</td>
+                    <td>57,32%</td>
+                    <td>13,27%</td>
+                    <td>8,14</td>
+                    <td>1,08</td>
+                    <td>2,23</td>
+                    <td>16,84</td>
+                    <td>7,65%</td>
+                    <td>R$ 1,30</td>
+                    <td>5,66%</td>
+                </tr>
+                <tr>
+                    <td>Atual</td>
+                    <td>R$ 25.120.867.800,00</td>
+                    <td>58,44%</td>
+                    <td>12,93%</td>
+                    <td>8,06</td>
+                    <td>1,04</td>
+                    <td>2,19</td>
+                    <td>16,97</td>
+                    <td>7,65%</td>
+                    <td>R$ 1,39</td>
+                    <td>5,37%</td>
+                </tr>
+
+                <tr class="row-stat">
+                    <td>MEDIANA</td>
+                    <td>-</td>
+                    <td>48,34%</td>
+                    <td>13,32%</td>
+                    <td>10,41</td>
+                    <td>1,43</td>
+                    <td>2,07</td>
+                    <td>16,56</td>
+                    <td>5,10%</td>
+                    <td>R$ 0,79</td>
+                    <td>6,79%</td>
+                </tr>
+                <tr class="row-stat" style="border-bottom: 2px solid #334155;">
+                    <td>MÉDIA</td>
+                    <td>-</td>
+                    <td>56,25%</td>
+                    <td>12,66%</td>
+                    <td>12,16</td>
+                    <td>1,46</td>
+                    <td>2,13</td>
+                    <td>16,65</td>
+                    <td>3,78%</td>
+                    <td>R$ 1,06</td>
+                    <td>6,40%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h2>Valuation - Preço Teto Projetivo (1T26)</h2>
+    <div class="table-container">
+        <table class="db-table" style="max-width: 1000px;">
+            <thead>
+                <tr>
+                    <th>Valuation</th>
+                    <th>Detalhe</th>
+                    <th>Margem de Segurança</th>
+                    <th>Preço Teto Projetivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Peter Lynch</strong></td>
+                    <td>Adaptado ao Brasil</td>
+                    <td><span class="badge-info">PREÇO JUSTO!!!</span></td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><strong>Dividend Yield</strong></td>
+                    <td>Dividendo Projetivo</td>
+                    <td><span class="badge-pos">5,02%</span></td>
+                    <td style="font-weight: bold; color: #38bdf8;">R$ 19,47</td>
+                </tr>
+                <tr>
+                    <td><strong>Bazin</strong></td>
+                    <td>Dividendo Histórico</td>
+                    <td><span class="badge-neg">-4,98%</span></td>
+                    <td style="font-weight: bold; color: #f87171;">R$ 17,61</td>
+                </tr>
+                <tr>
+                    <td><strong>Graham</strong></td>
+                    <td>√22,5 ou (PL/PVP)</td>
+                    <td><span class="badge-pos">33,39%</span></td>
+                    <td style="font-weight: bold; color: #38bdf8;">R$ 27,76</td>
+                </tr>
+                <tr>
+                    <td><strong>Preço Teto Projetivo</strong></td>
+                    <td>Fluxo de Caixa Livre</td>
+                    <td><span class="badge-pos">3,68%</span></td>
+                    <td style="font-weight: bold; color: #38bdf8;">R$ 19,20</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+
+
+
