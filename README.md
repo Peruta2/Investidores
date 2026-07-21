@@ -1,4 +1,4 @@
-# 📈 Portal Nexus Assessoria Financeira
+# 📈 Portal Assessoria Financeira
 
 Um painel corporativo elegante e seguro desenvolvido para empresas de assessoria financeira. O sistema utiliza uma estrutura moderna de navegação dividida em frames controlados dinamicamente via JavaScript, garantindo alta usabilidade e performance.
 
