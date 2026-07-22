@@ -136,44 +136,17 @@
 <body>
 
     <h1>Ações</h1>
-    
-    <h2>Ibovespa</h2>
-    <p>O Ibovespa é o principal indicador de desempenho das ações negociadas na B3 e reúne as empresas mais importantes do mercado de capitais brasileiro. Criado em 1968, consolidou-se internacionalmente como a grande referência para investidores ao redor do mundo.</p>
+    <p>Uma Ação representa a menor parcela do capital social de uma empresa de sociedade anônima (S.A.). Ao comprar uma ação, você se torna coproprietário daquela companhia, passando a ser chamado de acionista ou sócio.</p>
 
-    <h2>Estrutura do Ticker</h2>
-    <p>O ticker é a identificação oficial de uma Ação na Bolsa. É formado por quatro letras, um número correspondente à classe do ativo e, opcionalmente, a letra <strong>F</strong> (para indicar negociação em mercado fracionado). Exemplo: <code>PETR4F</code>.</p>
-
-    <h3>Significado dos Números do Ticker:</h3>
-    <table class="tabela-historico">
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Tipo de Ativo / Classe</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><strong>1</strong></td><td>DS-ON (Direito de Subscrição Ordinária)</td></tr>
-            <tr><td><strong>2</strong></td><td>DS-PN (Direito de Subscrição Preferencial)</td></tr>
-            <tr><td><strong>3</strong></td><td><strong>ON</strong> - Ação Ordinária (Garante direito a voto nas assembleias)</td></tr>
-            <tr><td><strong>4</strong></td><td><strong>PN</strong> - Ação Preferencial (Prioridade na distribuição de lucros)</td></tr>
-            <tr><td><strong>5</strong></td><td>PNA - Ação Preferencial Classe A</td></tr>
-            <tr><td><strong>6</strong></td><td>PNB - Ação Preferencial Classe B</td></tr>
-            <tr><td><strong>7</strong></td><td>PNC - Ação Preferencial Classe C</td></tr>
-            <tr><td><strong>8</strong></td><td>PND - Ação Preferencial Classe D</td></tr>
-            <tr><td><strong>9</strong></td><td>RS-ON (Recibo de Subscrição Ordinária)</td></tr>
-            <tr><td><strong>10</strong></td><td>RS-PN (Recibo de Subscrição Preferencial)</td></tr>
-            <tr><td><strong>11</strong></td><td><strong>UNIT</strong> - Pacote composto por uma ação ON e no mínimo duas ações PN</td></tr>
-        </tbody>
-    </table>
-
-    <h2>Negociação das Ações na B3</h2>
+    <h2>Direitos do Acionista</h2>
     <ul>
-        <li><strong>Lote Padrão:</strong> Negociação regulada estritamente em múltiplos de 100 ações.</li>
-        <li><strong>Fracionado (F):</strong> Negociação flexível permitida em unidades avulsas de 1 a 99 ações.</li>
+        <li><strong>Participação nos lucros:</strong> Direito de receber proventos, como dividendos e Juros sobre Capital Próprio (JCP)</li>
+        <li><strong>Ganho de capital:</strong> Lucro gerado pela valorização do preço da ação no mercado ao longo do tempo.</li>
+        <li><strong>Voto em assembleias:</strong> Direito restrito a uma classe específica de ações para participar das decisões estratégicas.</li>
+        <li><strong>Responsabilidade limitada:</strong> O investidor responde apenas pelo valor dos papéis que possui, sem afetar bens pessoais.</li>
     </ul>
 
     <h2>Classificação Setorial de Risco</h2>
-    
     <h3>Setor Perene (<span class="destaque-liquidez">BESST</span>) - Baixo a Médio Risco</h3>
     <p>Setores econômicos essenciais para a sociedade, prestando serviços básicos que sofrem baixo impacto durante recessões. Mantêm demanda estável e resiliência em contextos de crise.</p>
     <ul>
@@ -187,13 +160,13 @@
     <h3>Setor de Commodities - Alto Risco</h3>
     <p>Empresas focadas na produção e comercialização global de matérias-primas básicas e padronizadas. Seus preços dependem de dinâmicas internacionais de mercado e ciclos econômicos.</p>
     <ul>
-        <li><strong>Exemplos:</strong> Empresas do setor petroleiro, mineradoras, produtoras de celulose e commodities agrícolas.</li>
+        <li><strong>P</strong>etroleiro</li>
+	<li><strong>M</strong>ineradoras</li>
+	<li><strong>P</strong>rodutoras de celulose</li>
+	<li><strong>C</strong>ommodities agrícolas</li>
     </ul>
 
-    <h2>Dividendos e Proventos</h2>
-    <p>As empresas distribuem parcelas de seus lucros gerados aos acionistas na forma de dividendos, JCP (Juros sobre Capital Próprio) ou bonificação em ações. A periodicidade segue a política interna de cada companhia, podendo ocorrer de forma mensal, trimestral, semestral ou anual.</p>
-
-    <h2>Matriz de Rentabilidade vs Risco</h2>
+    <h2>Rentabilidade vs Risco</h2>
     <div class="grid-medias">
         <div class="card-media">
             <h3>Empresas Previdenciárias</h3>
@@ -206,6 +179,55 @@
             <p>Potencial de expansão agressivo acima da média. Retêm a totalidade do lucro (comum em Startups) para reinvestimento interno no próprio negócio, sem focar na distribuição imediata de dividendos.</p>
         </div>
     </div>
+
+    <h2>Ibovespa</h2>
+    <p>É o principal indicador de desempenho das ações negociadas na B3 e reúne as empresas mais importantes do mercado de capitais brasileiro. Criado em 1968, consolidou-se internacionalmente como a grande referência para investidores ao redor do mundo.</p>
+
+<h3 style="color: #cbd5e1; font-size: 16px; margin-top: 20px; margin-bottom: 10px;">Significado dos Números do Ticker:</h3>
+
+<div class="grid-medias" style="max-width: 1240px;">
+    <!-- Coluna da Esquerda: Códigos de 1 a 6 -->
+    <div style="flex: 1; min-width: 280px;">
+        <table class="tabela-historico" style="max-width: 100%; margin-top: 0;">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Código</th>
+                    <th>Tipo de Ativo / Classe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>1</strong></td><td>DS-ON (Direito de Subscrição Ordinária)</td></tr>
+                <tr><td><strong>2</strong></td><td>DS-PN (Direito de Subscrição Preferencial)</td></tr>
+                <tr style="background-color: rgba(56, 189, 248, 0.05);"><td><strong style="color: #38bdf8;">3</strong></td><td><strong style="color: #38bdf8;">ON</strong> - Ação Ordinária (Garante direito a voto nas assembleias)</td></tr>
+                <tr style="background-color: rgba(56, 189, 248, 0.05);"><td><strong style="color: #38bdf8;">4</strong></td><td><strong style="color: #38bdf8;">PN</strong> - Ação Preferencial (Prioridade na distribuição de lucros)</td></tr>
+                <tr><td><strong>5</strong></td><td>PNA - Ação Preferencial Classe A</td></tr>
+                <tr><td><strong>6</strong></td><td>PNB - Ação Preferencial Classe B</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Coluna da Direita: Códigos de 7 a 11 -->
+    <div style="flex: 1; min-width: 280px;">
+        <table class="tabela-historico" style="max-width: 100%; margin-top: 0;">
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Código</th>
+                    <th>Tipo de Ativo / Classe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>7</strong></td><td>PNC - Ação Preferencial Classe C</td></tr>
+                <tr><td><strong>8</strong></td><td>PND - Ação Preferencial Classe D</td></tr>
+                <tr><td><strong>9</strong></td><td>RS-ON (Recibo de Subscrição Ordinária)</td></tr>
+                <tr><td><strong>10</strong></td><td>RS-PN (Recibo de Subscrição Preferencial)</td></tr>
+                <tr style="background-color: rgba(56, 189, 248, 0.05);"><td><strong style="color: #38bdf8;">11</strong></td><td><strong style="color: #38bdf8;">UNIT</strong> - Pacote composto por uma ação ON e no mínimo duas ações PN</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    <h2>Dividendos e Proventos</h2>
+    <p>As empresas distribuem parcelas de seus lucros gerados aos acionistas na forma de dividendos, JCP (Juros sobre Capital Próprio) ou bonificação em ações. A periodicidade segue a política interna de cada companhia, podendo ocorrer de forma mensal, trimestral, semestral ou anual.</p>
 
 </body>
 </html>
