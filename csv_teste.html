@@ -2,64 +2,71 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Ler arquivo CSV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Ações - GitHub Pages</title>
     <!-- Biblioteca PapaParse -->
     <script src="dados.csv"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #007bff; color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        .status-aguardando { background-color: #ffeeba; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+    </style>
 </head>
 <body>
 
-    <h1>Dados Locais do CSV</h1>
+    <h1>Cronograma de Relatórios (3Q26 / 4Q26)</h1>
     <div id="tabela-conteudo">Carregando dados...</div>
 
     <script>
-        const arquivoCsv = 'dados.csv'; 
-
-        fetch(arquivoCsv)
-            .then(resposta => {
-                if (!resposta.ok) {
-                    throw new Error('Não foi possível carregar o arquivo CSV.');
-                }
-                return resposta.text();
-            })
-            .then(textoCsv => {
-                Papa.parse(textoCsv, {
-                    header: true,
-                    skipEmptyLines: true,
-                    delimiter: ",", // OBS: Força o script a entender o ponto e vírgula
-                    complete: function(resultado) {
-                        gerarTabela(resultado.data);
-                    }
-                });
-            })
-            .catch(erro => {
-                document.getElementById('tabela-conteudo').innerText = 'Erro ao carregar dados.';
+        // O PapaParse baixa o arquivo de forma nativa e segura dentro do mesmo domínio
+        Papa.parse('dados.csv', {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            delimiter: ",", // Identifica corretamente o separador do seu arquivo
+            complete: function(resultado) {
+                gerarTabela(resultado.data);
+            },
+            error: function(erro) {
+                document.getElementById('tabela-conteudo').innerText = 'Erro ao carregar o arquivo dados.csv.';
                 console.error(erro);
-            });
+            }
+        });
 
         function gerarTabela(dados) {
-            if (dados.length === 0) {
-                document.getElementById('tabela-conteudo').innerText = 'Nenhum dado encontrado.';
+            if (!dados || dados.length === 0) {
+                document.getElementById('tabela-conteudo').innerText = 'Nenhum dado encontrado no arquivo.';
                 return;
             }
 
-            let html = '<table border="1"><thead><tr>';
-            
-            // Pega os cabeçalhos a partir da primeira linha de dados
-            Object.keys(dados[0]).forEach(coluna => {
-                html += `<th>${coluna}</th>`;
+            // 1. Gera os cabeçalhos das colunas
+            let colunas = Object.keys(dados[0]);
+            let html = '<table><thead><tr>';
+            colunas.forEach(coluna => {
+                html += `<th>${coluna.toUpperCase()}</th>`;
             });
             html += '</tr></thead><tbody>';
 
-            // Preenche as linhas corretamente
+            // 2. Preenche as linhas com os dados das empresas (Apple, Amazon, etc)
             dados.forEach(linha => {
-                html += '<tr>'; // Corrigido aqui: adicionado as tags <>
-                Object.values(linha).forEach(valor => {
-                    html += `<td>${valor}</td>`;
+                html += '<tr>';
+                colunas.forEach(coluna => {
+                    let valor = linha[coluna] || '';
+                    
+                    // Aplica um destaque visual se o status for "Aguardando"
+                    if (coluna.toLowerCase() === 'status' && valor.toLowerCase() === 'aguardando') {
+                        html += `<td><span class="status-aguardando">${valor}</span></td>`;
+                    } else {
+                        html += `<td>${valor}</td>`;
+                    }
                 });
                 html += '</tr>';
             });
+            
             html += '</tbody></table>';
-
             document.getElementById('tabela-conteudo').innerHTML = html;
         }
     </script>
