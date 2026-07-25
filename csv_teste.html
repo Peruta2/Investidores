@@ -136,7 +136,7 @@
 <script>
     async function carregarDados() {
         try {
-            const resposta = await fetch('dados.csv');
+            const resposta = await fetch('csv/dados.csv');
             if (!resposta.ok) {
                 throw new Error("Não foi possível carregar o arquivo dados.csv");
             }
