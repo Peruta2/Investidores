@@ -3,234 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ler Arquivos CSV</title>
+    <title>Cronograma de Relatórios</title>
     <style>
+        /* Estilos baseados na referência visual que você enviou */
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            margin: 0;
-            padding: 30px;
-            line-height: 1.6;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header-db {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
-        h1 {
-            color: #38bdf8;
-            font-size: 24px;
-            margin: 0;
-        }
-        .ticker-badge {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            padding: 4px 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 18px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
-        h2 {
-            color: #e2e8f0;
-            font-size: 18px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        
-        /* Grid de Indicadores Gerais */
-        .grid-kpi {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .card-kpi {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .card-kpi .label {
-            color: #94a3b8;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
-        }
-        .card-kpi .valor {
-            font-size: 18px;
-            font-weight: bold;
-            color: #f8fafc;
-        }
-        .card-kpi .valor.destaque {
-            color: #38bdf8;
-        }
-
-        /* Tabela Estilo Base de Dados */
         .table-container {
-            width: 100%;
             overflow-x: auto;
-            background-color: #1e293b;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            margin-bottom: 30px;
+            margin-top: 15px;
         }
         .db-table {
             width: 100%;
             border-collapse: collapse;
+        }
+        .db-table th, .db-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
             text-align: left;
-            font-size: 13px;
         }
         .db-table th {
-            background-color: #334155;
-            color: #cbd5e1;
-            padding: 12px 10px;
-            font-weight: 600;
+            background-color: #f2f2f2;
+            font-weight: bold;
             text-transform: uppercase;
-            font-size: 11px;
-            letter-spacing: 0.5px;
         }
-        .db-table td {
-            padding: 10px;
-            color: #cbd5e1;
-            border-bottom: 1px solid #334155;
+        .db-table tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
-        .db-table tr:hover {
-            background-color: #24334d;
-        }
-        .db-table .row-stat {
-            background-color: rgba(56, 189, 248, 0.04);
+        /* Estilo extra opcional para destacar o status "Aguardando" */
+        .status-aguardando {
+            color: #d97706;
             font-weight: bold;
-        }
-        .db-table .row-stat td {
-            color: #94a3b8;
-        }
-
-        /* Grid de Valuation */
-        .grid-valuation {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-        }
-        .card-valuation {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            border-top: 4px solid #38bdf8;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .card-valuation h3 {
-            margin: 0 0 15px 0;
-            color: #f8fafc;
-            font-size: 16px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
-        }
-        .val-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        .val-row .val-label {
-            color: #94a3b8;
-        }
-        .val-row .val-value {
-            font-weight: bold;
-        }
-        
-        /* Badges de Margem e Alertas */
-        .badge-pos {
-            background-color: rgba(74, 222, 128, 0.1);
-            color: #4ade80;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .badge-neg {
-            background-color: rgba(239, 68, 68, 0.1);
-            color: #f87171;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .badge-info {
-            background-color: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            padding: 2px 6px;
-            border-radius: 4px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Cronograma de Relatórios (3Q26 / 4Q26)</h1>
-    <div class="table-container" id="tabela-conteudo">Carregando dados...</div>
-    <table class="db-table" style="max-width: 1000px;">
+    <h2>Histórico de Indicadores Fundamentais</h2>
+    <div class="table-container">
+        <table class="db-table">
+            <thead>
+                <tr>
+                    <th>SIM</th>
+                    <th>AÇÃO</th>
+                    <th>DATA</th>
+                    <th>RELATÓRIO</th>
+                    <th>STATUS</th>
+                </tr>
+            </thead>
+            <tbody id="dados-tabela">
+                <!-- As linhas do dados.csv serão injetadas aqui -->
+            </tbody>
+        </table>
+    </div>
+
     <script>
-        // Gera um código único baseado na hora atual para burlar o cache do GitHub
-        const linkComVersao = 'dados.csv?v=' + String(new Date().getTime());
-
-        fetch(linkComVersao)
-            .then(resposta => {
-                if (!resposta.ok) {
-                    throw new Error('O arquivo dados.csv não foi encontrado no GitHub (Erro ' + resposta.status + ').');
-                }
-                return resposta.text();
-            })
-            .then(textoCompleto => {
-                // Quebra o texto bruto em linhas individuais
-                const linhasDoArquivo = textoCompleto.split('\n').map(l => l.trim()).filter(l => l !== '');
+        async function carregarDados() {
+            try {
+                const resposta = await fetch('dados.csv');
+                const texto = await resposta.text();
                 
-                if (linhasDoArquivo.length === 0) {
-                    throw new Error('O arquivo dados.csv está totalmente vazio.');
-                }
+                // Divide por linhas e remove linhas em branco
+                const linhas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                const tbody = document.getElementById('dados-tabela');
+                
+                tbody.innerHTML = '';
 
-                // Pega os cabeçalhos da primeira linha (sim, ação, data, relatório, status)
-                const cabecalhos = linhasDoArquivo[0].split(',');
-
-                let htmlTabela = '<table><thead><tr>';
-                cabecalhos.forEach(coluna => {
-                    htmlTabela += `<th>${coluna}</th>`;
-                });
-                htmlTabela += '</tr></thead><tbody>';
-
-                // Varre as linhas seguintes montando os dados das empresas
-                for (let i = 1; i < linhasDoArquivo.length; i++) {
-                    const colunasDaLinha = linhasDoArquivo[i].split(',');
+                // Pula a primeira linha (cabeçalho do CSV: sim,ação,data...)
+                for (let i = 1; i < linhas.length; i++) {
+                    const colunas = linhas[i].split(','); 
                     
-                    if (colunasDaLinha.length === cabecalhos.length) {
-                        htmlTabela += '<tr>';
-                        colunasDaLinha.forEach((valor, index) => {
-                            const nomeColunaOriginal = cabecalhos[index].toLowerCase().trim();
-                            const textoValor = valor.trim();
-
-                            // Destaca com fundo amarelo se o status for "Aguardando"
-                            if (nomeColunaOriginal === 'status' && textoValor.toLowerCase() === 'aguardando') {
-                                htmlTabela += `<td><span class="status-aguardando">${textoValor}</span></td>`;
-                            } else {
-                                htmlTabela += `<td>${textoValor}</td>`;
-                            }
-                        });
-                        htmlTabela += '</tr>';
-                    }
+                    const tr = document.createElement('tr');
+                    
+                    colunas.forEach((valor, index) => {
+                        const td = document.createElement('td');
+                        td.textContent = valor;
+                        
+                        // Se for a coluna de Status (índice 4) e for "Aguardando", aplica uma classe de destaque
+                        if (index === 4 && valor.trim() === 'Aguardando') {
+                            td.classList.add('status-aguardando');
+                        }
+                        
+                        tr.appendChild(td);
+                    });
+                    
+                    tbody.appendChild(tr);
                 }
+            } catch (erro) {
+                console.error("Erro ao ler o arquivo dados.csv:", erro);
+            }
+        }
 
-                htmlTabela += '</tbody></table>';
-                document.getElementById('tabela-conteudo').innerHTML = htmlTabela;
-            })
-            .catch(erroScript => {
-                document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erroScript.message}</div>`;
-            });
+        window.addEventListener('DOMContentLoaded', carregarDados);
     </script>
-    </table>
 </body>
 </html>
