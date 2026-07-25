@@ -5,41 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cronograma de Relatórios</title>
     <style>
-        /* Estilos baseados na referência visual que você enviou */
+        /* Estilos fontes enviados por você */
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
         }
+        h1 {
+            color: #38bdf8; /* Azul destaque */
+            font-size: 26px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 20px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        ul {
+            color: #cbd5e1;
+            font-size: 15px;
+            padding-left: 20px;
+            max-width: 800px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+
+        /* Adaptação da Tabela para o Modo Escuro */
         .table-container {
             overflow-x: auto;
-            margin-top: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 1px solid #334155;
         }
         .db-table {
             width: 100%;
             border-collapse: collapse;
+            background-color: #1e293b; /* Fundo ligeiramente mais claro para a tabela */
+            font-size: 15px;
         }
         .db-table th, .db-table td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            padding: 12px 16px;
             text-align: left;
+            border-bottom: 1px solid #334155;
         }
         .db-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+            background-color: #0f172a; /* Fundo correspondente ao body */
+            color: #38bdf8; /* Texto azul destaque */
+            font-weight: 600;
             text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.05em;
         }
-        .db-table tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .db-table tr:hover {
+            background-color: #334155; /* Efeito hover discreto ao passar o mouse */
         }
-        /* Estilo extra opcional para destacar o status "Aguardando" */
+        .db-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Estilo para as tags de status */
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
+        }
         .status-aguardando {
-            color: #d97706;
-            font-weight: bold;
+            background-color: #7c2d12; /* Fundo laranja escuro */
+            color: #ffedd5; /* Texto laranja claro */
+            border: 1px solid #ea580c;
         }
     </style>
 </head>
 <body>
+
+    <h1>Painel de Acompanhamento</h1>
+    <p>Visualize abaixo as datas e o status de divulgação dos relatórios trimestrais das empresas monitoradas.</p>
 
     <h2>Histórico de Indicadores Fundamentais</h2>
     <div class="table-container">
@@ -65,25 +119,30 @@
                 const resposta = await fetch('dados.csv');
                 const texto = await resposta.text();
                 
-                // Divide por linhas e remove linhas em branco
                 const linhas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 0);
                 const tbody = document.getElementById('dados-tabela');
                 
                 tbody.innerHTML = '';
 
-                // Pula a primeira linha (cabeçalho do CSV: sim,ação,data...)
                 for (let i = 1; i < linhas.length; i++) {
                     const colunas = linhas[i].split(','); 
-                    
                     const tr = document.createElement('tr');
                     
                     colunas.forEach((valor, index) => {
                         const td = document.createElement('td');
                         td.textContent = valor;
                         
-                        // Se for a coluna de Status (índice 4) e for "Aguardando", aplica uma classe de destaque
-                        if (index === 4 && valor.trim() === 'Aguardando') {
-                            td.classList.add('status-aguardando');
+                        // Customização visual da coluna STATUS (índice 4)
+                        if (index === 4) {
+                            td.textContent = ''; // Limpa o texto puro
+                            const badge = document.createElement('span');
+                            badge.textContent = valor;
+                            badge.classList.add('status-badge');
+                            
+                            if (valor.trim() === 'Aguardando') {
+                                badge.classList.add('status-aguardando');
+                            }
+                            td.appendChild(badge);
                         }
                         
                         tr.appendChild(td);
