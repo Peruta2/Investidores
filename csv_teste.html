@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Ações - GitHub Pages</title>
-    <!-- Script do PapaParse oficial e funcional -->
+    <!-- Script do PapaParse oficial -->
     <script src="https://jsdelivr.net"></script>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
@@ -13,6 +13,7 @@
         th { background-color: #007bff; color: white; text-transform: uppercase; }
         tr:hover { background-color: #f1f1f1; }
         .status-aguardando { background-color: #ffeeba; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .erro-alerta { color: white; background-color: #dc3545; padding: 15px; border-radius: 4px; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -21,29 +22,48 @@
     <div id="tabela-conteudo">Carregando dados...</div>
 
     <script>
-        Papa.parse('dados.csv', {
-            download: true,
-            header: true,
-            skipEmptyLines: true,
-            delimiter: ",", // Configurado para o seu arquivo separado por vírgulas
-            complete: function(resultado) {
-                console.log("Dados carregados com sucesso:", resultado.data);
-                gerarTabela(resultado.data);
-            },
-            error: function(erro) {
-                document.getElementById('tabela-conteudo').innerText = 'Erro ao carregar o arquivo dados.csv.';
-                console.error("Erro no PapaParse:", erro);
-            }
-        });
+        // Forçamos o navegador a buscar o arquivo sem usar o cache antigo
+        const urlComCacheBuster = 'dados.csv?v=' + String(new Date().getTime());
+
+        console.log("Tentando baixar o arquivo de:", urlComCacheBuster);
+
+        fetch(urlComCacheBuster)
+            .then(resposta => {
+                console.log("Resposta do servidor recebida. Status:", resposta.status);
+                if (!resposta.ok) {
+                    // Se o GitHub der erro 404 (Não encontrado), o erro vai direto para a tela
+                    throw new Error('O arquivo dados.csv não foi encontrado no servidor (Erro ' + resposta.status + '). Verifique se o nome do arquivo está totalmente em minúsculo no GitHub.');
+                }
+                return resposta.text();
+            })
+            .then(textoCsv => {
+                console.log("Texto do CSV baixado com sucesso. Iniciando PapaParse.");
+                
+                // Converte o texto do CSV usando o PapaParse
+                Papa.parse(textoCsv, {
+                    header: true,
+                    skipEmptyLines: true,
+                    delimiter: ",", // Configurado para o seu arquivo separado por vírgulas
+                    complete: function(resultado) {
+                        console.log("PapaParse terminou. Dados:", resultado.data);
+                        gerarTabela(resultado.data);
+                    }
+                });
+            })
+            .catch(erro => {
+                console.error("Erro capturado:", erro);
+                document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erro.message}</div>`;
+            });
 
         function gerarTabela(dados) {
             if (!dados || dados.length === 0) {
-                document.getElementById('tabela-conteudo').innerText = 'Nenhum dado encontrado no arquivo.';
+                document.getElementById('tabela-conteudo').innerHTML = '<div class="erro-alerta">❌ Nenhum dado foi encontrado dentro do arquivo dados.csv.</div>';
                 return;
             }
 
-            // CORREÇÃO: Pega as colunas corretas a partir do PRIMEIRO objeto da lista
+            // Pega as colunas a partir da primeira linha de dados de forma segura
             let colunas = Object.keys(dados[0]); 
+            console.log("Colunas detectadas:", colunas);
             
             let html = '<table><thead><tr>';
             colunas.forEach(coluna => {
@@ -51,13 +71,11 @@
             });
             html += '</tr></thead><tbody>';
 
-            // Preenche as linhas com as informações das empresas
             dados.forEach(linha => {
                 html += '<tr>';
                 colunas.forEach(coluna => {
                     let valor = linha[coluna] || '';
                     
-                    // Destaca o status "Aguardando"
                     if (coluna.toLowerCase() === 'status' && valor.toLowerCase() === 'aguardando') {
                         html += `<td><span class="status-aguardando">${valor}</span></td>`;
                     } else {
