@@ -2,78 +2,77 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ler Arquivos CSV</title>
+    <title>Gerenciador de Status</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
-        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 20px; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #007bff; color: white; text-transform: uppercase; }
-        tr:hover { background-color: #f1f1f1; }
-        .status-aguardando { background-color: #ffeeba; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-        .erro-alerta { color: white; background-color: #dc3545; padding: 15px; border-radius: 4px; font-weight: bold; margin-top: 20px; }
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .container { display: flex; align-items: center; gap: 10px; }
+        input[readonly] { background-color: #f0f0f0; border: 1px solid #ccc; padding: 5px; }
+        input:not([readonly]) { background-color: #fff; border: 1px solid #007BFF; padding: 5px; }
+        button { padding: 6px 12px; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <h1>Cronograma de Relatórios (3Q26 / 4Q26)</h1>
-    <div id="tabela-conteudo">Carregando dados...</div>
+    <h2>Atualizar Status do CSV</h2>
+    <div class="container">
+        <label for="statusInput">STATUS:</label>
+        <!-- Simulando a linha 1 do seu CSV. Mude o ID da linha se necessário -->
+        <input type="text" id="statusInput" value="Carregando..." readonly>
+        <button id="btnAcao" onclick="alternarModo()">Editar</button>
+    </div>
 
     <script>
-        // Gera um código único baseado na hora atual para burlar o cache do GitHub
-        const linkComVersao = 'dados.csv?v=' + String(new Date().getTime());
+        const input = document.getElementById('statusInput');
+        const botao = document.getElementById('btnAcao');
+        const ID_LINHA = 1; // Define qual linha do CSV você quer editar
 
-        fetch(linkComVersao)
-            .then(resposta => {
-                if (!resposta.ok) {
-                    throw new Error('O arquivo dados.csv não foi encontrado no GitHub (Erro ' + resposta.status + ').');
-                }
-                return resposta.text();
-            })
-            .then(textoCompleto => {
-                // Quebra o texto bruto em linhas individuais
-                const linhasDoArquivo = textoCompleto.split('\n').map(l => l.trim()).filter(l => l !== '');
-                
-                if (linhasDoArquivo.length === 0) {
-                    throw new Error('O arquivo dados.csv está totalmente vazio.');
-                }
+        // Busca o status atual ao abrir a página
+        async function buscarStatus() {
+            try {
+                const response = await fetch(`/get-status?linha=${ID_LINHA}`);
+                const data = await response.json();
+                input.value = data.status;
+            } catch (err) {
+                input.value = "Erro ao carregar";
+            }
+        }
 
-                // Pega os cabeçalhos da primeira linha (sim, ação, data, relatório, status)
-                const cabecalhos = linhasDoArquivo[0].split(',');
+        async function alternarModo() {
+            if (botao.textContent === "Editar") {
+                // Ativa o modo de edição
+                input.removeAttribute('readonly');
+                input.focus();
+                botao.textContent = "Commit";
+            } else {
+                // Modo "Commit" - Salva a alteração
+                botao.disabled = true;
+                botao.textContent = "Salvando...";
 
-                let htmlTabela = '<table><thead><tr>';
-                cabecalhos.forEach(coluna => {
-                    htmlTabela += `<th>${coluna}</th>`;
-                });
-                htmlTabela += '</tr></thead><tbody>';
+                try {
+                    const response = await fetch('/update-status', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ linha: ID_LINHA, novo_status: input.value })
+                    });
 
-                // Varre as linhas seguintes montando os dados das empresas
-                for (let i = 1; i < linhasDoArquivo.length; i++) {
-                    const colunasDaLinha = linhasDoArquivo[i].split(',');
-                    
-                    if (colunasDaLinha.length === cabecalhos.length) {
-                        htmlTabela += '<tr>';
-                        colunasDaLinha.forEach((valor, index) => {
-                            const nomeColunaOriginal = cabecalhos[index].toLowerCase().trim();
-                            const textoValor = valor.trim();
-
-                            // Destaca com fundo amarelo se o status for "Aguardando"
-                            if (nomeColunaOriginal === 'status' && textoValor.toLowerCase() === 'aguardando') {
-                                htmlTabela += `<td><span class="status-aguardando">${textoValor}</span></td>`;
-                            } else {
-                                htmlTabela += `<td>${textoValor}</td>`;
-                            }
-                        });
-                        htmlTabela += '</tr>';
+                    if (response.ok) {
+                        alert("Alteração salva com sucesso!");
+                    } else {
+                        alert("Erro ao salvar no CSV.");
                     }
+                } catch (err) {
+                    alert("Erro de conexão com o servidor.");
                 }
 
-                htmlTabela += '</tbody></table>';
-                document.getElementById('tabela-conteudo').innerHTML = htmlTabela;
-            })
-            .catch(erroScript => {
-                document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erroScript.message}</div>`;
-            });
+                // Bloqueia o campo novamente e volta o botão para Editar
+                input.setAttribute('readonly', 'true');
+                botao.textContent = "Editar";
+                botao.disabled = false;
+            }
+        }
+
+        // Inicializa a página buscando o dado correto
+        buscarStatus();
     </script>
 </body>
 </html>
