@@ -2,60 +2,65 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Ler CSV com JavaScript</title>
-    <!-- Carrega a biblioteca PapaParse via CDN -->
+    <title>Ler arquivo CSV</title>
+    <!-- Biblioteca PapaParse -->
     <script src="dados.csv"></script>
 </head>
 <body>
 
-    <h1>Dados do CSV</h1>
-    <div id="saida">Carregando dados...</div>
+    <h1>Dados Locais do CSV</h1>
+    <div id="tabela-conteudo">Carregando dados...</div>
 
     <script>
-        // Use o link "Raw" do seu arquivo no GitHub
-	// Busca sempre do GitHub, não importa onde o HTML esteja rodando
-	const urlCsv = 'https://githubusercontent.com';
+        const arquivoCsv = 'dados.csv'; 
 
-	// Funciona no PC (localhost) e no GitHub Pages automaticamente
-	// const urlCsv = './dados.csv'; 
-	fetch(urlCsv)
-	    .then(resposta => resposta.text())
-	    .then(textoCsv => {
-	        Papa.parse(textoCsv, {
-	            header: true,
-	            complete: function(resultado) {
-	                console.log(resultado.data);
-	            }
-	        });
-	    });
-
-        // 1. Busca o arquivo usando Fetch API
-        fetch(urlCsv)
-            .then(resposta => resposta.text()) // Converte a resposta para texto puro
+        fetch(arquivoCsv)
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Não foi possível carregar o arquivo CSV.');
+                }
+                return resposta.text();
+            })
             .then(textoCsv => {
-                // 2. Converte o texto CSV para Objeto JavaScript
                 Papa.parse(textoCsv, {
-                    header: true,        // Define que a primeira linha do CSV é o cabeçalho
-                    skipEmptyLines: true, // Ignora linhas vazias
+                    header: true,
+                    skipEmptyLines: true,
+                    delimiter: ";", // OBS: Força o script a entender o ponto e vírgula
                     complete: function(resultado) {
-                        exibirDados(resultado.data);
+                        gerarTabela(resultado.data);
                     }
                 });
             })
-            .catch(erro => console.error('Erro ao ler o CSV:', erro));
-
-        // 3. Função para processar e mostrar os dados na tela
-        function exibirDados(dados) {
-            console.log(dados); // Mostra a estrutura no console do navegador
-            
-            let html = '<ul>';
-            dados.forEach(linha => {
-                // Substitua 'nome_da_coluna' pelo nome real de uma coluna do seu CSV
-                html += `<li>${linha.nome_da_coluna}</li>`; 
+            .catch(erro => {
+                document.getElementById('tabela-conteudo').innerText = 'Erro ao carregar dados.';
+                console.error(erro);
             });
-            html += '</ul>';
+
+        function gerarTabela(dados) {
+            if (dados.length === 0) {
+                document.getElementById('tabela-conteudo').innerText = 'Nenhum dado encontrado.';
+                return;
+            }
+
+            let html = '<table border="1"><thead><tr>';
             
-            document.getElementById('saida').innerHTML = html;
+            // Pega os cabeçalhos a partir da primeira linha de dados
+            Object.keys(dados[0]).forEach(coluna => {
+                html += `<th>${coluna}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            // Preenche as linhas corretamente
+            dados.forEach(linha => {
+                html += '<tr>'; // Corrigido aqui: adicionado as tags <>
+                Object.values(linha).forEach(valor => {
+                    html += `<td>${valor}</td>`;
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+
+            document.getElementById('tabela-conteudo').innerHTML = html;
         }
     </script>
 </body>
