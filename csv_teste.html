@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Ações - GitHub Pages</title>
-    <!-- Script do PapaParse oficial -->
-    <script src="https://jsdelivr.net"></script>
+    <title>Ler Arquivos CSV</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
         table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 20px; }
@@ -22,72 +20,62 @@
     <div id="tabela-conteudo">Carregando dados...</div>
 
     <script>
-        // Forçamos o navegador a buscar o arquivo sem usar o cache antigo
+        // Busca o arquivo forçando o GitHub a não usar o cache antigo
         const urlComCacheBuster = 'dados.csv?v=' + String(new Date().getTime());
-
-        console.log("Tentando baixar o arquivo de:", urlComCacheBuster);
 
         fetch(urlComCacheBuster)
             .then(resposta => {
-                console.log("Resposta do servidor recebida. Status:", resposta.status);
                 if (!resposta.ok) {
-                    // Se o GitHub der erro 404 (Não encontrado), o erro vai direto para a tela
-                    throw new Error('O arquivo dados.csv não foi encontrado no servidor (Erro ' + resposta.status + '). Verifique se o nome do arquivo está totalmente em minúsculo no GitHub.');
+                    throw new Error('O arquivo dados.csv não foi encontrado no servidor (Erro ' + resposta.status + ').');
                 }
                 return resposta.text();
             })
             .then(textoCsv => {
-                console.log("Texto do CSV baixado com sucesso. Iniciando PapaParse.");
+                // Processa o CSV usando apenas funções nativas do JavaScript (Sem PapaParse!)
+                const linhas = textoCsv.split('\n').map(linha => linha.trim()).filter(linha => linha !== '');
                 
-                // Converte o texto do CSV usando o PapaParse
-                Papa.parse(textoCsv, {
-                    header: true,
-                    skipEmptyLines: true,
-                    delimiter: ",", // Configurado para o seu arquivo separado por vírgulas
-                    complete: function(resultado) {
-                        console.log("PapaParse terminou. Dados:", resultado.data);
-                        gerarTabela(resultado.data);
-                    }
+                if (linhas.length === 0) {
+                    throw new Error('O arquivo dados.csv está vazio.');
+                }
+
+                // Pega a primeira linha como cabeçalho (sim, ação, data, relatório, status)
+                const colunas = linhas[0].split(',');
+
+                // Monta a estrutura da tabela
+                let html = '<table><thead><tr>';
+                colunas.forEach(coluna => {
+                    html += `<th>${coluna}</th>`;
                 });
+                html += '</tr></thead><tbody>';
+
+                // Preenche as linhas de dados (Apple, Amazon, etc.)
+                for (let i = 1; i < linhas.length; i++) {
+                    const valores = linhas[i].split(',');
+                    
+                    // Garante que a linha tem o mesmo número de colunas do cabeçalho
+                    if (valores.length === colunas.length) {
+                        html += '<tr>';
+                        valores.forEach((valor, index) => {
+                            const nomeColuna = colunas[index].toLowerCase().trim();
+                            const valorTratado = valor.trim();
+
+                            // Destaca visualmente se a coluna for status e o valor for Aguardando
+                            if (nomeColuna === 'status' && valorTratado.toLowerCase() === 'aguardando') {
+                                html += `<td><span class="status-aguardando">${valorTratado}</span></td>`;
+                            } else {
+                                html += `<td>${valorTratado}</td>`;
+                            }
+                        });
+                        html += '</tr>';
+                    }
+                }
+
+                html += '</tbody></table>';
+                document.getElementById('tabela-conteudo').innerHTML = html;
             })
             .catch(erro => {
-                console.error("Erro capturado:", erro);
                 document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erro.message}</div>`;
             });
-
-        function gerarTabela(dados) {
-            if (!dados || dados.length === 0) {
-                document.getElementById('tabela-conteudo').innerHTML = '<div class="erro-alerta">❌ Nenhum dado foi encontrado dentro do arquivo dados.csv.</div>';
-                return;
-            }
-
-            // Pega as colunas a partir da primeira linha de dados de forma segura
-            let colunas = Object.keys(dados[0]); 
-            console.log("Colunas detectadas:", colunas);
-            
-            let html = '<table><thead><tr>';
-            colunas.forEach(coluna => {
-                html += `<th>${coluna}</th>`;
-            });
-            html += '</tr></thead><tbody>';
-
-            dados.forEach(linha => {
-                html += '<tr>';
-                colunas.forEach(coluna => {
-                    let valor = linha[coluna] || '';
-                    
-                    if (coluna.toLowerCase() === 'status' && valor.toLowerCase() === 'aguardando') {
-                        html += `<td><span class="status-aguardando">${valor}</span></td>`;
-                    } else {
-                        html += `<td>${valor}</td>`;
-                    }
-                });
-                html += '</tr>';
-            });
-            
-            html += '</tbody></table>';
-            document.getElementById('tabela-conteudo').innerHTML = html;
-        }
     </script>
 </body>
 </html>
