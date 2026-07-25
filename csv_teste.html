@@ -20,61 +20,59 @@
     <div id="tabela-conteudo">Carregando dados...</div>
 
     <script>
-        // Busca o arquivo forçando o GitHub a não usar o cache antigo
-        const urlComCacheBuster = 'dados.csv?v=' + String(new Date().getTime());
+        // Gera um código único baseado na hora atual para burlar o cache do GitHub
+        const linkComVersao = 'dados.csv?v=' + String(new Date().getTime());
 
-        fetch(urlComCacheBuster)
+        fetch(linkComVersao)
             .then(resposta => {
                 if (!resposta.ok) {
-                    throw new Error('O arquivo dados.csv não foi encontrado no servidor (Erro ' + resposta.status + ').');
+                    throw new Error('O arquivo dados.csv não foi encontrado no GitHub (Erro ' + resposta.status + ').');
                 }
                 return resposta.text();
             })
-            .then(textoCsv => {
-                // Processa o CSV usando apenas funções nativas do JavaScript (Sem PapaParse!)
-                const linhas = textoCsv.split('\n').map(linha => linha.trim()).filter(linha => linha !== '');
+            .then(textoCompleto => {
+                // Quebra o texto bruto em linhas individuais
+                const linhasDoArquivo = textoCompleto.split('\n').map(l => l.trim()).filter(l => l !== '');
                 
-                if (linhas.length === 0) {
-                    throw new Error('O arquivo dados.csv está vazio.');
+                if (linhasDoArquivo.length === 0) {
+                    throw new Error('O arquivo dados.csv está totalmente vazio.');
                 }
 
-                // Pega a primeira linha como cabeçalho (sim, ação, data, relatório, status)
-                const colunas = linhas[0].split(',');
+                // Pega os cabeçalhos da primeira linha (sim, ação, data, relatório, status)
+                const cabecalhos = linhasDoArquivo[0].split(',');
 
-                // Monta a estrutura da tabela
-                let html = '<table><thead><tr>';
-                colunas.forEach(coluna => {
-                    html += `<th>${coluna}</th>`;
+                let htmlTabela = '<table><thead><tr>';
+                cabecalhos.forEach(coluna => {
+                    htmlTabela += `<th>${coluna}</th>`;
                 });
-                html += '</tr></thead><tbody>';
+                htmlTabela += '</tr></thead><tbody>';
 
-                // Preenche as linhas de dados (Apple, Amazon, etc.)
-                for (let i = 1; i < linhas.length; i++) {
-                    const valores = linhas[i].split(',');
+                // Varre as linhas seguintes montando os dados das empresas
+                for (let i = 1; i < linhasDoArquivo.length; i++) {
+                    const colunasDaLinha = linhasDoArquivo[i].split(',');
                     
-                    // Garante que a linha tem o mesmo número de colunas do cabeçalho
-                    if (valores.length === colunas.length) {
-                        html += '<tr>';
-                        valores.forEach((valor, index) => {
-                            const nomeColuna = colunas[index].toLowerCase().trim();
-                            const valorTratado = valor.trim();
+                    if (colunasDaLinha.length === cabecalhos.length) {
+                        htmlTabela += '<tr>';
+                        colunasDaLinha.forEach((valor, index) => {
+                            const nomeColunaOriginal = cabecalhos[index].toLowerCase().trim();
+                            const textoValor = valor.trim();
 
-                            // Destaca visualmente se a coluna for status e o valor for Aguardando
-                            if (nomeColuna === 'status' && valorTratado.toLowerCase() === 'aguardando') {
-                                html += `<td><span class="status-aguardando">${valorTratado}</span></td>`;
+                            // Destaca com fundo amarelo se o status for "Aguardando"
+                            if (nomeColunaOriginal === 'status' && textoValor.toLowerCase() === 'aguardando') {
+                                htmlTabela += `<td><span class="status-aguardando">${textoValor}</span></td>`;
                             } else {
-                                html += `<td>${valorTratado}</td>`;
+                                htmlTabela += `<td>${textoValor}</td>`;
                             }
                         });
-                        html += '</tr>';
+                        htmlTabela += '</tr>';
                     }
                 }
 
-                html += '</tbody></table>';
-                document.getElementById('tabela-conteudo').innerHTML = html;
+                htmlTabela += '</tbody></table>';
+                document.getElementById('tabela-conteudo').innerHTML = htmlTabela;
             })
-            .catch(erro => {
-                document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erro.message}</div>`;
+            .catch(erroScript => {
+                document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erroScript.message}</div>`;
             });
     </script>
 </body>
