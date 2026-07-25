@@ -16,16 +16,16 @@
         }
         h1 {
             color: #38bdf8; /* Azul destaque */
-            font-size: 26px;
+            font-size: 24px;
             margin-top: 0;
             margin-bottom: 10px;
         }
         h2 {
             color: #e2e8f0;
-            font-size: 20px;
+            font-size: 18px;
             margin-top: 30px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-weight: 600;
         }
         p {
             color: #94a3b8;
@@ -61,8 +61,8 @@
             border-bottom: 1px solid #334155;
         }
         .db-table th {
-            background-color: #0f172a; /* Fundo correspondente ao body */
-            color: #38bdf8; /* Texto azul destaque */
+            background-color: #334155; /* Fundo cinza escuro */
+            color: #ffffff; /* Letras brancas */
             font-weight: 600;
             text-transform: uppercase;
             font-size: 13px;
@@ -92,10 +92,10 @@
 </head>
 <body>
 
-    <h1>Painel de Acompanhamento</h1>
-    <p>Visualize abaixo as datas e o status de divulgação dos relatórios trimestrais das empresas monitoradas.</p>
+    <h1>Ler Arquivos CSV</h1>
+    <p>Abaixo temos relacionados a data de divulgação dos relatórios trimestrais.</p>
 
-    <h2>Histórico de Indicadores Fundamentais</h2>
+    <h2>Cronograma 2T26 - Data de Divulgação</h2>
     <div class="table-container">
         <table class="db-table">
             <thead>
@@ -132,9 +132,8 @@
                         const td = document.createElement('td');
                         td.textContent = valor;
                         
-                        // Customização visual da coluna STATUS (índice 4)
                         if (index === 4) {
-                            td.textContent = ''; // Limpa o texto puro
+                            td.textContent = ''; 
                             const badge = document.createElement('span');
                             badge.textContent = valor;
                             badge.classList.add('status-badge');
