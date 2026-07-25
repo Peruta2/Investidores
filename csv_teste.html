@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cronograma de Relatórios</title>
+    <title>Ler Arquivos CSV</title>
     <style>
         /* Estilos fontes enviados por você */
         body {
@@ -24,8 +24,8 @@
             color: #e2e8f0;
             font-size: 18px;
             margin-top: 30px;
-            margin-bottom: 15px;
-            font-weight: 600;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
         }
         p {
             color: #94a3b8;
@@ -68,8 +68,10 @@
             font-size: 13px;
             letter-spacing: 0.05em;
         }
-        .db-table tr:hover {
-            background-color: #334155; /* Efeito hover discreto ao passar o mouse */
+        /* Corrigido: efeito hover agora usa um azul suave que destaca no fundo escuro */
+        .db-table tbody tr:hover {
+            background-color: rgba(56, 189, 248, 0.15); 
+            cursor: pointer;
         }
         .db-table tr:last-child td {
             border-bottom: none;
