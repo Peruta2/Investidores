@@ -149,7 +149,7 @@
 
             for (let i = 1; i < linhas.length; i++) {
                 // Modificado para split por ponto e vírgula se o seu CSV usar ';' como separador padrão brasileiro
-                const colunas = linhas[i].split(';'); 
+                const colunas = linhas[i].split(','); 
                 const tr = document.createElement('tr');
                 
                 colunas.forEach((valor, index) => {
