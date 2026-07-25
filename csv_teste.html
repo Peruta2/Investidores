@@ -174,7 +174,7 @@
 
     <h1>Cronograma de Relatórios (3Q26 / 4Q26)</h1>
     <div class="table-container" id="tabela-conteudo">Carregando dados...</div>
-
+    <table class="db-table" style="max-width: 1000px;">
     <script>
         // Gera um código único baseado na hora atual para burlar o cache do GitHub
         const linkComVersao = 'dados.csv?v=' + String(new Date().getTime());
@@ -231,5 +231,6 @@
                 document.getElementById('tabela-conteudo').innerHTML = `<div class="erro-alerta">❌ ${erroScript.message}</div>`;
             });
     </script>
+    </table>
 </body>
 </html>
