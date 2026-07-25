@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ler CSV com JavaScript</title>
+    <!-- Carrega a biblioteca PapaParse via CDN -->
+    <script src="dados.csv"></script>
+</head>
+<body>
+
+    <h1>Dados do CSV</h1>
+    <div id="saida">Carregando dados...</div>
+
+    <script>
+        // Use o link "Raw" do seu arquivo no GitHub
+	// Busca sempre do GitHub, não importa onde o HTML esteja rodando
+	const urlCsv = 'https://githubusercontent.com';
+
+	// Funciona no PC (localhost) e no GitHub Pages automaticamente
+	// const urlCsv = './dados.csv'; 
+	fetch(urlCsv)
+	    .then(resposta => resposta.text())
+	    .then(textoCsv => {
+	        Papa.parse(textoCsv, {
+	            header: true,
+	            complete: function(resultado) {
+	                console.log(resultado.data);
+	            }
+	        });
+	    });
+
+        // 1. Busca o arquivo usando Fetch API
+        fetch(urlCsv)
+            .then(resposta => resposta.text()) // Converte a resposta para texto puro
+            .then(textoCsv => {
+                // 2. Converte o texto CSV para Objeto JavaScript
+                Papa.parse(textoCsv, {
+                    header: true,        // Define que a primeira linha do CSV é o cabeçalho
+                    skipEmptyLines: true, // Ignora linhas vazias
+                    complete: function(resultado) {
+                        exibirDados(resultado.data);
+                    }
+                });
+            })
+            .catch(erro => console.error('Erro ao ler o CSV:', erro));
+
+        // 3. Função para processar e mostrar os dados na tela
+        function exibirDados(dados) {
+            console.log(dados); // Mostra a estrutura no console do navegador
+            
+            let html = '<ul>';
+            dados.forEach(linha => {
+                // Substitua 'nome_da_coluna' pelo nome real de uma coluna do seu CSV
+                html += `<li>${linha.nome_da_coluna}</li>`; 
+            });
+            html += '</ul>';
+            
+            document.getElementById('saida').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
