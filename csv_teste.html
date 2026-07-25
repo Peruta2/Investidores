@@ -3,16 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ler Arquivo CSV</title>
-    
-    <!-- URL CORRIGIDA E ATUALIZADA DO PAPAPARSE -->
+    <title>Painel de Ações - GitHub Pages</title>
+    <!-- Script do PapaParse oficial e funcional -->
     <script src="https://jsdelivr.net"></script>
-    
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f9f9f9; }
-        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 20px; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: #007bff; color: white; }
+        th { background-color: #007bff; color: white; text-transform: uppercase; }
         tr:hover { background-color: #f1f1f1; }
         .status-aguardando { background-color: #ffeeba; color: #856404; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
     </style>
@@ -23,18 +21,18 @@
     <div id="tabela-conteudo">Carregando dados...</div>
 
     <script>
-        // O PapaParse baixa o arquivo de forma nativa e segura dentro do mesmo domínio
         Papa.parse('dados.csv', {
             download: true,
             header: true,
             skipEmptyLines: true,
-            delimiter: ",", // Identifica corretamente o separador do seu arquivo
+            delimiter: ",", // Configurado para o seu arquivo separado por vírgulas
             complete: function(resultado) {
+                console.log("Dados carregados com sucesso:", resultado.data);
                 gerarTabela(resultado.data);
             },
             error: function(erro) {
                 document.getElementById('tabela-conteudo').innerText = 'Erro ao carregar o arquivo dados.csv.';
-                console.error(erro);
+                console.error("Erro no PapaParse:", erro);
             }
         });
 
@@ -44,21 +42,22 @@
                 return;
             }
 
-            // 1. Gera os cabeçalhos das colunas
-            let colunas = Object.keys(dados[0]);
+            // CORREÇÃO: Pega as colunas corretas a partir do PRIMEIRO objeto da lista
+            let colunas = Object.keys(dados[0]); 
+            
             let html = '<table><thead><tr>';
             colunas.forEach(coluna => {
-                html += `<th>${coluna.toUpperCase()}</th>`;
+                html += `<th>${coluna}</th>`;
             });
             html += '</tr></thead><tbody>';
 
-            // 2. Preenche as linhas com os dados das empresas (Apple, Amazon, etc)
+            // Preenche as linhas com as informações das empresas
             dados.forEach(linha => {
                 html += '<tr>';
                 colunas.forEach(coluna => {
                     let valor = linha[coluna] || '';
                     
-                    // Aplica um destaque visual se o status for "Aguardando"
+                    // Destaca o status "Aguardando"
                     if (coluna.toLowerCase() === 'status' && valor.toLowerCase() === 'aguardando') {
                         html += `<td><span class="status-aguardando">${valor}</span></td>`;
                     } else {
