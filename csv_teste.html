@@ -136,9 +136,10 @@
 <script>
     async function carregarDados() {
         try {
+            // Caminho atualizado para a pasta "csv"
             const resposta = await fetch('csv/dados.csv');
             if (!resposta.ok) {
-                throw new Error("Não foi possível carregar o arquivo dados.csv");
+                throw new Error("Não foi possível carregar o arquivo em csv/dados.csv");
             }
             const texto = await resposta.text();
             
@@ -183,11 +184,11 @@
                 tbody.appendChild(tr);
             }
         } catch (erro) {
-            console.error("Erro ao ler o arquivo dados.csv:", erro);
+            console.error("Erro ao ler o arquivo em csv/dados.csv:", erro);
             document.getElementById('dados-tabela').innerHTML = `
                 <tr>
                     <td colspan="5" class="status-msg" style="color: #f87171;">
-                        Erro ao carregar os dados. Verifique a existência e o formato do arquivo 'dados.csv'.
+                        Erro ao carregar os dados. Verifique a existência e o formato do arquivo em 'csv/dados.csv'.
                     </td>
                 </tr>
             `;
@@ -196,5 +197,7 @@
 
     window.addEventListener('DOMContentLoaded', carregarDados);
 </script>
+
+
 </body>
 </html>
