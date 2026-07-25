@@ -25,7 +25,7 @@
                 Papa.parse(textoCsv, {
                     header: true,
                     skipEmptyLines: true,
-                    delimiter: ";", // OBS: Força o script a entender o ponto e vírgula
+                    //delimiter: ";", // OBS: Força o script a entender o ponto e vírgula
                     complete: function(resultado) {
                         gerarTabela(resultado.data);
                     }
