@@ -46,79 +46,16 @@
         li {
             margin-bottom: 5px;
         }
-        
-        /* Grid para os Cards de Tempo de Cobertura */
-        .grid-medias {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        .card-media {
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            padding: 20px;
-            border-radius: 10px;
-            flex: 1;
-            min-width: 250px;
-        }
-        .card-media h3 {
-            margin: 0 0 10px 0;
-            color: #94a3b8;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .card-media .valor {
-            font-size: 24px;
-            font-weight: bold;
-            color: #38bdf8;
-        }
-        .card-media p {
-            margin: 8px 0 0 0;
-            font-size: 13px;
-        }
 
-        /* Estilização da Tabela de Tributação */
-        .tabela-historico {
-            width: 100%;
-            max-width: 500px;
-            border-collapse: collapse;
-            background-color: #1e293b;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #334155;
-            margin-top: 15px;
-        }
-        .tabela-historico th, .tabela-historico td {
-            padding: 10px 15px;
-            text-align: left;
-        }
-        .tabela-historico th {
-            background-color: #334155;
-            color: #f8fafc;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
-        .tabela-historico tr {
-            border-bottom: 1px solid #334155;
-        }
-        .tabela-historico tr:last-child {
-            border-bottom: none;
-        }
-        .tabela-historico td {
-            color: #cbd5e1;
-            font-size: 14px;
-        }
-
-        /* Destaques personalizados baseados no modelo */
         .destaque-alerta {
             background-color: rgba(239, 68, 68, 0.1); /* Fundo vermelho suave */
             font-weight: bold;
-        }
-        .destaque-alerta td {
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
             color: #f87171; /* Texto vermelho suave */
+            max-width: 770px;
+            margin-bottom: 20px;
         }
         .destaque-liquidez {
             background-color: rgba(74, 222, 128, 0.1); /* Fundo verde do modelo */
@@ -126,7 +63,7 @@
             padding: 2px 6px;
             border-radius: 4px;
             color: #4ade80;
-        }
+        }        
     </style>
 </head>
 <body>
@@ -134,25 +71,21 @@
     <h1>Reserva de Emergência</h1>
     <p>A Reserva de Emergência é o colchão financeiro, equivalente a alguns meses do seu custo de vida e guardado em um investimento seguro de resgate imediato, para cobrir imprevistos e proteger seus investimentos de longo prazo de saques forçados.</p>
 
-    <h2>Tempo de Cobertura Necessário</h2>
-    <div class="grid-medias">
-        <div class="card-media">
-            <h3>CLT, Aposentado e Público</h3>
-            <div class="valor">6 Meses</div>
-            <p>Variação indicada para profissionais que trabalham sob o regime CLT, aposentados e funcionários públicos.</p>
-        </div>
-        <div class="card-media">
-            <h3>PJ ou Autônomo</h3>
-            <div class="valor">1 Ano</div>
-            <p>Variação indicada para profissionais que trabalham no regime de pessoa jurídica ou de forma autônoma.</p>
-        </div>
-    </div>
+    <h2>Tempo de Cobertura da Reserva de Emergencia</h2>
+    <ul>
+        <li>Até 6 meses: Indicada para profissionais que trabalham sob o regime CLT, aposentados e funcionários públicos.</li>
+        <li>Até 1 Ano: Indicada para profissionais que trabalham no regime de pessoa jurídica ou de forma autônoma.</li>
+    </ul>
 
-    <h2>Composição do Custo Mensal</h2>
-	<p>Os custos que definem o tamanho da sua Reserva de Emergência, em finanças, chamamos isso de Custo de Vida Essencial ou Gastos de Sobrevivência. Eles representam tudo aquilo que você não pode deixar de pagar mesmo se perder sua renda hoje.</p>
-	<p>Os principais itens que compõem esse cálculo são divididos em 4 categorias básicas:</p>
+    <h3>Composição do Custo Mensal</h3>
+    <ul>
+	<li>Os custos que definem o tamanho da sua Reserva de Emergência, em finanças, chamamos isso de Custo de Vida Essencial ou Gastos de Sobrevivência. Eles representam tudo aquilo que você não pode deixar de pagar mesmo se perder sua renda hoje.</li>
+    </ul>
 
-    <h3>🏠 1. Moradia e Contas Básicas</h3>
+    <h2>Categorias Básicas</h2>
+    <p>Os principais itens que compõem esse cálculo são divididos em 4 categorias básicas:</p>
+
+    <h3>Moradia e Contas Básicas</h3>
     <ul>
 	<li>Aluguel ou prestação do financiamento imobiliário.</li>
 	<li>Taxa de condomínio e IPTU.</li>
@@ -161,103 +94,72 @@
 	<li>Internet e plano de celular (essenciais para procurar emprego ou trabalhar).</li>
     </ul>
 
-    <h3>🛒 2. Sobrevivência e Saúde</h3>
+    <h3>Sobrevivência e Saúde</h3>
     <ul>
 	<li>Mercado (focado apenas em alimentação básica e produtos de higiene/limpeza).</li>
 	<li>Plano de saúde ou gastos fixos com medicamentos contínuos.</li>
     </ul>
 
-    <h3>🚗 3. Transporte Obrigatório</h3>
+    <h3>Transporte Obrigatório</h3>
     <ul>
 	<li>Combustível ou passagens de transporte público para locomoção diária essencial.</li>
 	<li>Parcela do financiamento do carro e seguro (se aplicável).</li>
     </ul>
 
-    <h3>💳 4. Compromissos Financeiros Fixos</h3>
+    <h3>Compromissos Financeiros Fixos</h3>
     <ul>
 	<li>Mensalidade escolar ou faculdade (se houver multa pesada ou quebra de contrato ao cancelar).</li>
 	<li>Parcelas de dívidas ou empréstimos anteriores que continuam vencendo mensalmente.</li>
     </ul>
 
     <h2>Reposição no Caso de Uso</h2>
-	<p>A recomendação primordial é iniciar o processo imediato de recomposição da reserva de emergência antes de direcionar qualquer dinheiro para novos investimentos. Se o investidor usou o recurso para uma necessidade real (como um tratamento médico ou um conserto emergencial do carro), o sistema funcionou exatamente como deveria, evitando dívidas ou saques forçados de investimentos de longo prazo.</p>
-	<p>O plano de ação para restabelecer a segurança financeira deve seguir estas etapas estruturadas:</p>
+    <ul>
+	<li>A recomendação primordial é iniciar o processo imediato de recomposição da reserva de emergência antes de direcionar qualquer dinheiro para novos investimentos. Se o investidor usou o recurso para uma necessidade real (como um tratamento médico ou um conserto emergencial do carro), o sistema funcionou exatamente como deveria, evitando dívidas ou saques forçados de investimentos de longo prazo. O plano de ação para restabelecer a segurança financeira deve seguir estas etapas estruturadas:</li>
+    </ul>
 
-    <h3>🛑 1. Pausar Novos Investimentos</h3>
+    <h3>Pausar Novos Investimentos</h3>
     <ul>
 	<li>O investidor deve interromper temporariamente a compra de ativos de risco ou de longo prazo (como Ações, FIIs ou Renda Fixa com prazo fechado). Todo o dinheiro que seria direcionado para os aportes mensais normais deve ser integralmente desviado para cobrir o "buraco" deixado na Reserva de Emergência.</li>
     </ul>
 
-    <h3>📉 2. Enxugar o Orçamento Temporariamente</h3>
+    <h3>Enxugar o Orçamento Temporariamente</h3>
     <ul>
 	<li>Para acelerar a recuperação do caixa, recomenda-se cortar ou reduzir os gastos supérfluos (o "Estilo de Vida", como assinaturas desnecessárias, jantares fora e compras por impulso) nos meses seguintes. Quanto mais rápido a reserva voltar ao seu patamar original (6 a 12 meses de custo de vida), menor será a janela de tempo em que o investidor ficará vulnerável a um segundo imprevisto.</li>
     </ul>
 
-    <h3>🔁 3. Manter a Alocação Estratégica Intacta</h3>
+    <h3>Manter a Alocação Estratégica Intacta</h3>
     <ul>
 	<li>Não se deve vender cotas de FIIs ou ações que estão em queda no mercado para cobrir a reserva. A carteira de longo prazo deve ser deixada em paz; a recomposição precisa vir obrigatoriamente de nova renda, contenção de despesas ou dos aportes mensais correntes.</li>
     </ul>
 
-    <h3>🧠 4. Celebrar o Sucesso do Método</h3>
+    <h3>Celebrar o Sucesso do Método</h3>
     <ul>
 	<li>O investidor deve encarar o episódio com tranquilidade psicológica. Gastar a reserva gera um desconforto natural, mas o uso correto prova que a estratégia de Asset Allocation está correta: o patrimônio principal foi blindado e nenhuma dívida com juros abusivos de cartão de crédito ou cheque especial precisou ser contraída.</li>
     </ul>
 
     <h2>Onde Alocar os Recursos</h2>
-	<p>A Reserva de Emergência deve ser alocada exclusivamente em ativos de Renda Fixa pós-fixados que ofereçam segurança máxima, liquidez imediata (D+0) e volatilidade zero (o saldo nunca pode amanhecer menor do que no dia anterior).</p>
-	<p>As quatro melhores opções do mercado brasileiro para essa finalidade são:</p>
+    <p>A Reserva de Emergência deve ser alocada exclusivamente em ativos de Renda Fixa pós-fixados que ofereçam segurança máxima, liquidez imediata (D+0) e volatilidade zero (o saldo nunca pode amanhecer menor do que no dia anterior).</p>
 
-    <h3>🏦 1. Tesouro Selic ou (Tesouro Reserva)</h3>
+    <h3>As quatro melhores opções do mercado brasileiro</h3>
     <ul>
-	<li>A maior parte da reserva (entre 70% a 80% do valor total).</li>
-    </ul>
-
-    <h3>📄 2. CDB de Liquidez Diária (100% do CDI)</h3>
-    <ul>
-	<li>Ideal para o "fim de semana", que você pode precisar sacar de madrugada ou em um feriado.</li>
-    </ul>
-
-    <h3>📦 3. Contas Digitais / "Caixinhas" com Resgate Imediato</h3>
-    <ul>
-	<li>Ideal para valores menores e de altíssima urgência do cotidiano.</li>
-    </ul>
-
-    <h3>⏳ 4. ETF de Renda Fixa com Duration maior de 720 dias</h3>
-    <ul>
-        <li>ETF LFTB11 (lembrando que para o ETF a liquidez é D+1)</li>
+        <li>Tesouro Selic ou (Tesouro Reserva): A maior parte da reserva (entre 70% a 80% do valor total).</li>
+        <li>CDB de Liquidez Diária (100% do CDI): Ideal para o "fim de semana", que você pode precisar sacar de madrugada ou em um feriado.</li>
+        <li>Contas Digitais / "Caixinhas" com Resgate Imediato: Ideal para valores menores e de altíssima urgência do cotidiano.</li>
+        <li>ETF de Renda Fixa com Duration maior de 720 dias: ETF LFTB11 (lembrando que para o ETF a liquidez é D+1)</li>
     </ul>
 
     <h2>Tabela de Tributação Regressiva</h2>
-    <table class="tabela-historico">
-        <thead>
-            <tr>
-                <th>Prazo do Investimento</th>
-                <th>Alíquota do IR / Imposto</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="destaque-alerta">
-                <td>Antes de 30 dias</td>
-                <td>Incidência de IOF (Saque imediato)</td>
-            </tr>
-            <tr>
-                <td>Até 6 meses</td>
-                <td>22,50%</td>
-            </tr>
-            <tr>
-                <td>De 6 meses a 1 ano</td>
-                <td>20,00%</td>
-            </tr>
-            <tr>
-                <td>De 1 ano a 2 anos</td>
-                <td>17,50%</td>
-            </tr>
-            <tr>
-                <td>Acima de 2 anos</td>
-                <td>15,00%</td>
-            </tr>
-        </tbody>
-    </table>
+    <p>Prazo do Investimento para incidencia da Alíquota do Imposto de Renda Retido na Fonte.</p>
+    <div class="destaque-alerta">
+        Saques antes de 30 dias há Incidência de IOF!
+    </div>
 
+    <h3>Tempo vs Imposto de Renda</h3>
+    <ul>
+        <li>Até 6 meses: 22,50%</li>
+        <li>De 6 meses a 1 ano: 20,00%</li>
+        <li>De 1 ano a 2 anos: 17,50%</li>
+        <li>Acima de 2 anos: 15,00%</li>
+    </ul>
 </body>
 </html>
