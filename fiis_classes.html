@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes de Fundos de Investimentos Imobiliários</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8; /* Azul destaque */
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 18px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        ul {
+            color: #cbd5e1;
+            font-size: 15px;
+            padding-left: 20px;
+            max-width: 800px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        
+        /* Grid para as Classes de Ativos (Tijolo vs Papel) */
+        .grid-medias {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .card-media {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 250px;
+        }
+        .card-media h3 {
+            margin: 0 0 10px 0;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-media .valor {
+            font-size: 22px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+        .card-media p {
+            margin: 8px 0 0 0;
+            font-size: 13px;
+        }
+
+        /* Tabelas de Segmentos, Ativos e Riscos */
+        .tabela-historico {
+            width: 100%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            margin-top: 15px;
+            margin-bottom: 20px;
+        }
+        .tabela-historico th, .tabela-historico td {
+            padding: 10px 15px;
+            text-align: left;
+        }
+        .tabela-historico th {
+            background-color: #334155;
+            color: #f8fafc;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .tabela-historico tr {
+            border-bottom: 1px solid #334155;
+        }
+        .tabela-historico tr:last-child {
+            border-bottom: none;
+        }
+        .tabela-historico td {
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        /* Destaques personalizados */
+        .destaque-alerta {
+            background-color: rgba(239, 68, 68, 0.1); 
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171; 
+            max-width: 770px;
+            margin-bottom: 20px;
+        }
+        .destaque-liquidez {
+            background-color: rgba(74, 222, 128, 0.1); 
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4ade80;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Classes de Fundos de Investimentos Imobiliários</h1>
+	<p>Os FIIs são fundos com cotas negociadas diretamente na B3 e compõem o índice de referência setorial conhecido como <strong>IFIX</strong>.</p>
+
+    <h2>Grandes Classes de FIIs</h2>
+    <p>São os fundos que investem em imóveis físicos e em títulos de dívida imobiliária.</p>
+
+    <h3>Fundos de Tijolo</h3>
+    <ul>
+	<li><strong>Ativos Físicos:</strong> Foco em propriedades imobiliárias reais. As cotas tendem a se valorizar no longo prazo acompanhando, no mínimo, a inflação (IPCA) anual.</li>
+    </ul>
+    <h3>Fundos de Papel</h3>
+    <ul>
+        <li><strong>Títulos de Dívida:</strong> Foco no financiamento do setor através de títulos de Renda Fixa Imobiliária. Suas cotas não acumulam valorização patrimonial no longo prazo.</li>
+    </ul>
+
+    <h2>Fundos de Tijolo</h2>
+    <p>Os FIIs de Tijolo são Fundos Imobiliários que investem o dinheiro dos cotistas na compra de imóveis físicos reais, com o objetivo de alugar esses espaços e distribuir os lucros mensalmente. Eles são donos de grandes empreendimentos que você vê nas cidades, como shoppings, prédios de escritórios (lajes corporativas), galpões logísticos e hospitais.</p>
+    
+    <h3>Vantagens</h3>
+    <ul>
+        <li><strong>Renda Mensal Passiva:</strong> O fundo recebe os aluguéis e distribui os lucros todos os meses na sua conta de forma isenta de Imposto de Renda (para pessoas físicas).</li>
+	<li><strong>Proteção Contra a Inflação:</strong> Os contratos de aluguel geralmente são corrigidos anualmente por índices como IPCA ou IGPM, o que ajuda a proteger o seu poder de compra no longo prazo.</li>
+	<li><strong>Acesso a Imóveis de Alto Padrão:</strong> Permite que você seja "dono" de uma parte dos melhores shoppings ou galpões do país investindo valores baixos (geralmente a partir de R$ 10 ou R$ 100 por cota), algo impossível de comprar sozinho.</li>
+	<li><strong>Sem Burocracia:</strong> Você não precisa se preocupar em procurar inquilinos, cobrar aluguel ou fazer reformas; uma equipe de profissionais faz toda a gestão do imóvel para você.</li>
+    </ul>
+
+    <h3>Pontos de Atenção</h3>
+    <ul>
+	<li><strong>Risco de Vacância:</strong> Refere-se ao risco de o imóvel ficar vazio. Se um inquilino sai, o fundo deixa de receber aquele aluguel e a sua renda mensal diminui.</li>
+	<li><strong>Inadimplência:</strong> O inquilino pode atrasar ou não pagar o aluguel, impactando diretamente o dividendo do mês.</li>
+	<li><strong>Ciclos Econômicos:</strong> Crises podem afetar setores específicos. Por exemplo, uma crise no comércio prejudica os shoppings, enquanto o aumento do home office pode esvaziar escritórios corporativos.</li>
+	<li><strong>Custos de Manutenção:</strong> Imóveis físicos envelhecem e precisam de reformas (retrofits) para continuarem atrativos, o que pode exigir gastos extras do fundo e reduzir temporariamente os lucros.</li>
+    </ul>
+
+    <h3>Segmentos do Mercado de Tijolo:</h3>
+    <table class="tabela-historico">
+        <thead>
+            <tr>
+                <th>Segmento</th>
+                <th>Foco Operacional</th>
+		<th>Público Alvo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>Logística e Industrial</strong></td><td>Galpões e Centros de Distribuição</td><td>e-commerce e grandes redes varejistas</td></tr>
+            <tr><td><strong>Shoppings Centers</strong></td><td>Lojas e Espaços Comerciais</td><td>varejo, lazer e entretenimento</td></tr>
+            <tr><td><strong>Lajes Corporativas</strong></td><td>Edifícios Comerciais e Escritórios Corporativos</td><td>salas de alto padrão localizados em polos econômicos</td></tr>
+            <tr><td><strong>Imóveis Rurais / Agro</strong></td><td>Aquisição de Terras Produtivas</td><td>agropecuária e infraestrutura de escoamento do campo</td></tr>
+            <tr><td><strong>Varejo / Renda Urbana</strong></td><td>Lojas de Rua e Fachadas Comerciais</td><td>redes de supermercados, farmácias e grandes varejistas</td></tr>
+            <tr><td><strong>Educacional</strong></td><td>Prédios Estruturados</td><td>especificamente para universidades, faculdades e escolas</td></tr>
+            <tr><td><strong>Hospitalar</strong></td><td>Estruturas Exclusivas</td><td>operação de grandes hospitais, clínicas especializadas e laboratórios médicos</td></tr>
+            <tr><td><strong>Hotelaria / Especiais</strong></td><td>Redes de Hotéis</td><td>edifícios desenhados para finalidades corporativas personalizadas</td></tr>
+        </tbody>
+    </table>
+
+    <h2>Fundos de Papel</h2>
+    <p>Os FIIs de Papel (ou fundos de recebíveis) são Fundos Imobiliários que não compram imóveis físicos, mas sim títulos de dívida do setor imobiliário (como CRIs, LHs e LCI). Eles funcionam como se o fundo "emprestasse" dinheiro para o mercado imobiliário em troca de juros.</p>
+
+    <h3>Vantagens</h3>
+    <ul>
+	<li><strong>Dividendos Mais Altos no Curto Prazo:</strong> Como o rendimento está atrelado diretamente aos juros e à inflação, eles costumam pagar dividendos mensais mais elevados que os fundos de tijolo em cenários de juros altos.</li>
+	<li><strong>Sem Risco de Vacância Física:</strong> Não sofrem com problemas de imóveis vazios, inquilinos saindo, reformas ou despesas com manutenção predial.</li>
+	<li><strong>Proteção Indexada:</strong> A maioria dos títulos desses fundos rende uma taxa fixa somada a um indexador econômico (como IPCA + X% ou CDI + X%), garantindo o ganho real acima da inflação.</li>
+	<li><strong>Liquidez e Diversificação:</strong> Possuem centenas de dívidas diferentes na carteira, pulverizando o risco que o investidor teria se comprasse apenas um título sozinho.</li>
+    </ul>
+
+    <h3>Pontos de Atenção</h3>
+    <ul>
+	<li><strong>Risco de Crédito (Calote):</strong> O maior perigo é a empresa que pegou o empréstimo não conseguir pagar a dívida (inadimplência do CRI).</li>
+	<li><strong>Ausência de Patrimônio Real:</strong> Ao contrário dos fundos de tijolo, você não é dono de um prédio físico que se valoriza com o tempo; você possui apenas contratos de dívidas que têm prazo de validade para acabar.</li>
+	<li><strong>Sensibilidade à Deflação ou Queda de Juros:</strong> Se a inflação (IPCA) ou a taxa Selic (CDI) caírem drasticamente, o rendimento distribuído pelo fundo cai na mesma proporção quase que imediatamente.</li>
+	<li><strong>Ilusão do Ganho de Capital:</strong> As cotas dos fundos de papel tendem a oscilar menos e não costumam valorizar expressivamente no longo prazo, pois o ganho principal é quase todo distribuído mensalmente na forma de proventos.</li>
+    </ul>
+
+    <h3>Principais Indexadores de Correção</h3>
+    <ul>
+        <li><strong>Atrelados ao IPCA:</strong> Oferecem proteção direta contra a inflação e pagam um cupom de juros real predefinido (ex: IPCA + 6%).</li>
+        <li><strong>Atrelados ao CDI:</strong> Seguem o comportamento da taxa Selic, apresentando desempenho superior em cenários de juros altos.</li>
+        <li><strong>Prefixados:</strong> Taxa de juros fixa imutável contratada na emissão, independente das oscilações da economia.</li>
+    </ul>
+
+    <h3>Composição Comum de Ativos em Carteira</h3>
+    <ul>
+        <li><strong>CRI (Certificado de Recebíveis Imobiliários):</strong> Títulos de dívida privada para financiamento de grandes empreendimentos residenciais e comerciais.</li>
+        <li><strong>LCI (Letra de Crédito Imobiliário):</strong> Títulos bancários emitidos com foco regulamentado na concessão de crédito habitacional.</li>
+        <li><strong>LH (Letra Hipotecária):</strong> Ativos de crédito imobiliário garantidos por contratos de primeira hipoteca.</li>
+        <li><strong>Cotas de Outros FIIs:</strong> Fundos que adquirem outros fundos imobiliários com o intuito de diversificar riscos (Fundos de Fundos - FoFs).</li>
+    </ul>
+
+    <h3>Classificação de Perfis de Crédito e Risco</h3>
+    <ul>
+        <li><strong>High Grade:</strong> Devedores com altíssima nota de crédito. Oferecem baixo risco de inadimplência e proventos moderados.</li>
+        <li><strong>High Yield:</strong> Ativos focados em devedores com maior prêmio de risco, entregando taxas de retorno consideravelmente mais elevadas.</li>
+        <li><strong>Middle Market:</strong> Carteiras equilibradas que mesclam ativos defensivos com títulos de risco moderado.</li>
+    </ul>
+
+    <h2>Pontos Gerais para FIIs</h2>
+    <h3>Estrutura do Ticker</h3>
+    <ul>
+	<li><strong>O ticker</strong> é o código de negociação de um FII na Bolsa é constituído por quatro letras que identificam a gestão do fundo, acrescidas obrigatoriamente do número <strong>11</strong>. Exemplo: <code>BTLG11</code>.</li>
+    </ul>
+
+    <h3>Estratégia de Diversificação em FIIs</h3>
+    <ul>
+	<li><strong>A alocação</strong> deve avaliar o <strong>spread</strong> (diferença) entre a rentabilidade do fundo escolhido e o rendimento da Renda Fixa soberana de curto prazo (IPCA+).</li>
+    </ul>
+
+    <h3>Matriz de Gerenciamento de Spread e Risco</h3>
+    <p>Quanto maior a Rentabilidade, maior o Risco!</p>
+    <table class="tabela-historico">
+        <thead>
+            <tr>
+                <th>Classe de Risco</th>
+                <th>Características Operacionais</th>
+                <th>Métrica de Spread Alvo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Ancoragem</strong></td>
+                <td>Abordagem defensiva, com baixa volatilidade patrimonial e baixo risco.</td>
+                <td><span class="destaque-liquidez">Spread de 1% a 2%</span></td>
+            </tr>
+            <tr>
+                <td><strong>Oportunidade</strong></td>
+                <td>Equilíbrio estratégico, buscando retorno e risco medianos.</td>
+                <td><span class="destaque-liquidez">Spread de 3%</span></td>
+            </tr>
+            <tr>
+                <td><strong>Rico</strong></td>
+                <td>Estratégico Agressiva, buscando alta rentabilidade e alto risco.</td>
+                <td><span class="destaque-liquidez">Spread de 4,5%</span></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

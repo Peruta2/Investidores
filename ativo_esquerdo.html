@@ -30,59 +30,6 @@
         li {
             margin-bottom: 12px; /* Espaço ideal entre os botões */
         }
-        /* Estilização do Link transformado em Botão do Painel Escuro */
-        .btn-menu {
-            display: block;
-            background-color: #1e293b; /* Fundo dos cards do modelo */
-            color: #cbd5e1;
-            text-decoration: none; /* Remove o sublinhado */
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.2s ease; /* Transição suave */
-        }
-        /* Efeito ao passar o mouse adaptado ao tema azul/neon */
-        .btn-menu:hover {
-            background-color: rgba(56, 189, 248, 0.1); /* Fundo azul transparente */
-            color: #38bdf8; /* Texto no azul destaque */
-            border-color: #38bdf8; /* Borda acesa em azul */
-            transform: translateX(4px); /* Desloca o botão levemente para a direita */
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15); /* Brilho neon suave */
-        }
-    </style>
-</head> 
-
-<body>
-
-    <h3>Ativo</h3>
-<ul>
-    <!-- Botão Normal -->
-    <li><a>🏛️ Dados em Teste</a></li>
-    <li><a class="btn-menu" href="csv_teste.html" target="direito">🏛️ Ler Arquivo CSV</a></li>
-
-    <!-- Botão Expandível (Dropdown) -->
-    <li><a>🏛️ Dados Financeiros</a></li>
-    <li class="menu-dropdown">
-        <button class="btn-menu btn-expandivel">
-            <span>📊 Ações</span>
-            <span class="seta">▼</span>
-        </button>
-        <ul class="dropdown-conteudo">
-            <li><a class="btn-menu sub-item" href="acao_bbdc4.html" target="direito">🔹 BBDC4</a></li>
-            <li><a class="btn-menu sub-item" href="acao_itub4.html" target="direito">🔹 ITUB4</a></li>
-        </ul>
-     </li>
-</ul>
-</body>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu de Navegação</title>
-
-<style>
     /* Estilos base para integrar com o seu menu atual */
     ul {
         list-style: none;
@@ -150,6 +97,30 @@
         font-size: 13px;
         margin-bottom: 4px;
     }
-</style>
-</head>
+    </style>
+</head> 
+
+<body>
+
+    <h3>Ativo</h3>
+<ul>
+    <!-- Botão Normal -->
+    <li><a>🏛️ Dados em Teste</a></li>
+    <li><a class="btn-menu" href="csv_teste.html" target="direito">🏛️ Ler Arquivos CSV</a></li>
+
+    <!-- Botão Expandível (Dropdown) -->
+    <li><a>🏛️ Dados Financeiros</a></li>
+    <li class="menu-dropdown">
+        <button class="btn-menu btn-expandivel">
+            <span>📊 Ações</span>
+            <span class="seta">▼</span>
+        </button>
+        <ul class="dropdown-conteudo">
+            <li><a class="btn-menu sub-item" href="acao_bbdc4.html" target="direito">🔹 BBDC4</a></li>
+            <li><a class="btn-menu sub-item" href="acao_itub4.html" target="direito">🔹 ITUB4</a></li>
+        </ul>
+     </li>
+</ul>
+</body>
+
 </html>

@@ -30,27 +30,73 @@
         li {
             margin-bottom: 12px; /* Espaço ideal entre os botões */
         }
-        /* Estilização do Link transformado em Botão do Painel Escuro */
-        .btn-menu {
-            display: block;
-            background-color: #1e293b; /* Fundo dos cards do modelo */
-            color: #cbd5e1;
-            text-decoration: none; /* Remove o sublinhado */
-            padding: 12px 15px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.2s ease; /* Transição suave */
-        }
-        /* Efeito ao passar o mouse adaptado ao tema azul/neon */
-        .btn-menu:hover {
-            background-color: rgba(56, 189, 248, 0.1); /* Fundo azul transparente */
-            color: #38bdf8; /* Texto no azul destaque */
-            border-color: #38bdf8; /* Borda acesa em azul */
-            transform: translateX(4px); /* Desloca o botão levemente para a direita */
-            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15); /* Brilho neon suave */
-        }
+    /* Estilos base para integrar com o seu menu atual */
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .btn-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1e293b;
+        color: #cbd5e1;
+        padding: 12px 15px;
+        text-decoration: none;
+        border-radius: 6px;
+        border: 1px solid #334155;
+        font-family: 'Segoe UI', sans-serif;
+        font-size: 14px;
+        margin-bottom: 8px;
+        width: 100%;
+        box-sizing: border-box;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .btn-menu:hover {
+        background-color: #24334d;
+        color: #38bdf8;
+        border-color: #38bdf8;
+    }
+
+    /* Configuração do botão que expande */
+    .btn-expandivel {
+        background-color: #1e293b;
+    }
+    
+    .seta {
+        font-size: 10px;
+        color: #64748b;
+        transition: transform 0.2s ease;
+    }
+
+    /* Esconde as opções por padrão */
+    .dropdown-conteudo {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+        padding-left: 15px; /* Recuo para parecer sub-menu */
+    }
+
+    /* Mostra as opções e gira a seta quando passa o mouse no item pai */
+    .menu-dropdown:hover .dropdown-conteudo {
+        max-height: 200px; /* Altura máxima para o efeito de abertura */
+    }
+
+    .menu-dropdown:hover .seta {
+        transform: rotate(180deg);
+        color: #38bdf8;
+    }
+
+    /* Estilo sutil diferenciado para os sub-itens */
+    .sub-item {
+        background-color: rgba(30, 41, 59, 0.5);
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
     </style>
 </head>
 
@@ -68,7 +114,19 @@
         <li><a class="btn-menu" href="valuation.html" target="direito">📈 Valuation</a></li>
 
         <li><a class="btn-menu" href="acoes.html" target="direito">📊 Ações</a></li>
-        <li><a class="btn-menu" href="fiis.html" target="direito">📊 FIIs</a></li>
+
+        <!-- Botão Expandível (Dropdown) -->
+        <li class="menu-dropdown">
+            <button class="btn-menu btn-expandivel">
+                <span>🏛️ Fundos Imobiliários</span>
+                <span class="seta">▼</span>
+            </button>
+            <ul class="dropdown-conteudo">
+                <li><a class="btn-menu sub-item" href="fiis_classes.html" target="direito">📊 Classes de FIIs</a></li>
+                <li><a class="btn-menu sub-item" href="fiis_ subscricao.html" target="direito">📊 Subscrição em FIIs</a></li>
+            </ul>
+        </li>
+
         <li><a class="btn-menu" href="renda_fixa.html" target="direito">📊 Renda Fixa</a></li>
         <li><a class="btn-menu" href="dolarizacao.html" target="direito">📊 Dolarização</a></li>
 
