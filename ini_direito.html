@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambiente do Investidor - Bem-vindo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8; /* Azul destaque */
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 18px;
+            margin-top: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #cbd5e1;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 800px;
+        }
+        ul {
+            color: #cbd5e1;
+            font-size: 15px;
+            padding-left: 20px;
+            max-width: 800px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+
+        .destaque-alerta {
+            background-color: rgba(239, 68, 68, 0.1); /* Fundo vermelho suave */
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171; /* Texto vermelho suave */
+            max-width: 770px;
+            margin-bottom: 20px;
+        }
+        .destaque-liquidez {
+            background-color: rgba(74, 222, 128, 0.1); /* Fundo verde do modelo */
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #4ade80;
+        }
+
+        /* --- Elementos Adicionais Adicionados para o Painel de Apresentação --- */
+        .grid-recursos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 830px;
+            margin-top: 20px;
+        }
+        .card-recurso {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card-recurso:hover {
+            transform: translateY(-2px);
+            border-color: #38bdf8;
+        }
+        .card-recurso h3 {
+            margin-top: 0;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge-premium {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .tabela-demonstrativa {
+            width: 100%;
+            max-width: 830px;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        .tabela-demonstrativa th {
+            background-color: #0f172a;
+            color: #94a3b8;
+            text-align: left;
+            padding: 12px;
+            font-size: 13px;
+            border-bottom: 1px solid #334155;
+        }
+        .tabela-demonstrativa td {
+            padding: 12px;
+            border-bottom: 1px solid #334155;
+            font-size: 14px;
+        }
+        .btn-acao {
+            display: inline-block;
+            background-color: #38bdf8;
+            color: #0f172a;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+        }
+        .btn-acao:hover {
+            background-color: #0ea5e9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bem-vindo ao seu Portal de Evolução Financeira</h1>
+    <p>Sua assinatura está ativa. Este é o seu espaço estratégico para tomar decisões guiadas por dados, calcular margens de segurança e maximizar o retorno do seu capital.</p>
+
+    <!-- Alerta de Oportunidade Prática -->
+    <div class="destaque-alerta">
+        Aviso: O mercado está atualizando. Existem 4 ativos na sua lista que atingiram a margem de segurança ideal com base no Preço Teto Projetivo.
+    </div>
+
+    <h2>Seu Ecossistema do Investidor</h2>
+    <p>Utilize os menus ao lado esquerdo para navegar pelas ferramentas completas da sua assessoria:</p>
+
+    <div class="grid-recursos">
+        <!-- Card 1: Carteira -->
+        <div class="card-recurso">
+            <h3>📈 Gerenciador de Carteira</h3>
+            <p>Monitore suas ações, fundos imobiliários e renda fixa em um só lugar. Consolide sua rentabilidade real descontando a inflação.</p>
+        </div>
+
+        <!-- Card 2: Preço Teto -->
+        <div class="card-recurso">
+            <h3>🎯 Preço Teto Projetivo <span class="badge-premium">Exclusivo</span></h3>
+            <p>Descubra o valor máximo a pagar por uma ação para garantir um Dividend Yield mínimo de 6% ou mais, baseado em projeções matemáticas.</p>
+        </div>
+
+        <!-- Card 3: Dados Quantitativos -->
+        <div class="card-recurso">
+            <h3>📊 Análise Quantitativa</h3>
+            <p>Gráficos interativos de volatilidade, correlação de ativos e saúde financeira das empresas sem termos técnicos complicados.</p>
+        </div>
+
+        <!-- Card 4: Curso -->
+        <div class="card-recurso">
+            <h3>🎓 Formação Investidor Pro</h3>
+            <p>Acesse o método completo em vídeo. Saia do básico e aprenda a montar sua própria carteira previdenciária do zero.</p>
+        </div>
+    </div>
+
+    <h2>Prévia Estratégica: Preço Teto & Dividendos</h2>
+    <p>Veja um exemplo prático das métricas quantitativas que o nosso ecossistema calcula em tempo real para a sua carteira:</p>
+
+    <!-- Tabela Prática Simulando dados Quantitativos -->
+    <table class="tabela-demonstrativa">
+        <thead>
+            <tr>
+                <th>Ativo</th>
+                <th>Preço Atual</th>
+                <th>Preço Teto Projetivo</th>
+                <th>Margem de Segurança</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>BBAS3</strong></td>
+                <td>R$ 27,40</td>
+                <td>R$ 34,50</td>
+                <td><span class="destaque-liquidez">+25,9%</span></td>
+                <td>Oportunidade Clara</td>
+            </tr>
+            <tr>
+                <td><strong>TAEE11</strong></td>
+                <td>R$ 35,10</td>
+                <td>R$ 38,00</td>
+                <td><span class="destaque-liquidez">+8,2%</span></td>
+                <td>Preço Justo</td>
+            </tr>
+            <tr>
+                <td><strong>WEGE3</strong></td>
+                <td>R$ 51,20</td>
+                <td>R$ 42,00</td>
+                <td style="color: #f87171; font-weight: bold;">-17,9%</td>
+                <td>Aguardar Correção</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Pronto para acelerar seus resultados?</h2>
+    <p>Recomendamos começar assistindo à aula introdutória do curso ou importando seu primeiro ativo no simulador de carteiras para liberar os gráficos.</p>
+    
+    <a href="#" class="btn-acao">Começar pelo Curso Completo</a>
+
+</body>
+</html>

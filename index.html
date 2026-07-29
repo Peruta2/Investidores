@@ -231,7 +231,7 @@ function verificarSenha() {
         liberarAcesso();
         
         // Carrega as páginas iniciais padrão se for o primeiro acesso
-        mudarCanais('vazia.html', 'about:blank'); 
+        mudarCanais('ini_esquerdo.html', 'ini_direito.html'); 
     } else {
         erroMsg.style.display = 'block';
         document.getElementById('input-senha').value = '';
