@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu do Curso - Formação Investidor Pro</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px 15px;
+            line-height: 1.4;
+        }
+        
+        .titulo-menu {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 2px solid #334155;
+        }
+
+        .titulo-menu:first-of-type {
+            margin-top: 5px;
+        }
+
+        .menu-lista {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-item {
+            margin-bottom: 6px;
+        }
+
+        /* Links e Botões de Navegação unificados (Mantendo o target="direito") */
+        .btn-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        /* Efeito de destaque ao passar o mouse */
+        .btn-menu:hover {
+            background-color: #1e293b;
+            color: #38bdf8; /* Muda para o Azul Destaque */
+        }
+
+        /* Variação para os sub-itens do Dropdown */
+        .sub-item {
+            padding-left: 32px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        /* Estrutura Oculta do Dropdown por padrão */
+        .dropdown-conteudo {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none; /* Esconde os sub-itens */
+        }
+
+        /* Classe utilitária via JavaScript para exibir o dropdown */
+        .dropdown-conteudo.aberto {
+            display: block;
+        }
+
+        /* Controle visual da Seta do Dropdown */
+        .seta {
+            margin-left: auto;
+            font-size: 10px;
+            transition: transform 0.2s;
+            color: #64748b;
+        }
+
+        .seta.rodada {
+            transform: rotate(180deg);
+            color: #38bdf8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Grupo 1: Mentalidade -->
+    <div class="titulo-menu">Introdução</div>
+    <ul class="menu-lista">
+        <li class="menu-item">
+            <a class="btn-menu" href="investidor.html" target="direito">🏛️ Investidor</a>
+        </li>
+    </ul>
+
+    <!-- Grupo 2: Estratégias Financeiras -->
+    <div class="titulo-menu">Finanças Estratégicas</div>
+    <ul class="menu-lista">
+        <li class="menu-item">
+            <a class="btn-menu" href="reserva_emergencia.html" target="direito">💸 Reserva de Emergência</a>
+        </li>
+        <li class="menu-item">
+            <a class="btn-menu" href="aportes_metodologias.html" target="direito">💸 Metodologias de Aportes</a>
+        </li>
+        <li class="menu-item">
+            <a class="btn-menu" href="dividendos_datas.html" target="direito">💸 Datas de Dividendos</a>
+        </li>
+        <li class="menu-item">
+            <a class="btn-menu" href="yield_on_cost.html" target="direito">💸 Yield On Cost</a>
+        </li>
+    </ul>
+
+    <!-- Grupo 3: Seleção e Preço -->
+    <div class="titulo-menu">Análise de Ativos</div>
+    <ul class="menu-lista">
+        <li class="menu-item">
+            <a class="btn-menu" href="ativos_escolha.html" target="direito">📈 Escolha de Ativos</a>
+        </li>
+        <li class="menu-item">
+            <a class="btn-menu" href="valuation.html" target="direito">📈 Valuation</a>
+        </li>
+    </ul>
+
+    <!-- Grupo 4: Alocação de Carteira -->
+    <div class="titulo-menu">Classes de Investimento</div>
+    <ul class="menu-lista">
+        <li class="menu-item">
+            <a class="btn-menu" href="acoes.html" target="direito">📊 Ações</a>
+        </li>
+        
+        <!-- Estrutura do Dropdown Corporativa -->
+        <li class="menu-item">
+            <button class="btn-menu btn-expandivel" id="btnDropdownFii">
+                <span>🏛️ Fundos Imobiliários</span>
+                <span class="seta" id="setaFii">▼</span>
+            </button>
+            <ul class="dropdown-conteudo" id="conteudoFii">
+                <li><a class="btn-menu sub-item" href="fiis_classes.html" target="direito">📊 Classes de FIIs</a></li>
+                <li><a class="btn-menu sub-item" href="fiis_subscricao.html" target="direito">📊 Subscrição em FIIs</a></li>
+            </ul>
+        </li>
+
+        <li class="menu-item">
+            <a class="btn-menu" href="renda_fixa.html" target="direito">📊 Renda Fixa</a>
+        </li>
+        <li class="menu-item">
+            <a class="btn-menu" href="dolarizacao.html" target="direito">📊 Dolarização</a>
+        </li>
+    </ul>
+
+    <!-- Grupo 5: Indicadores e Seguridade -->
+    <div class="titulo-menu">Macroeconomia & Proteção</div>
+    <ul class="menu-lista">
+        <li class="menu-item">
+            <a class="btn-menu" href="selic.html" target="direito">🛡️ SELIC</a>
+        </li>
+        <li class="menu-item">
+            <a class="menu-link btn-menu" href="ipca.html" target="direito">🛡️ IPCA</a>
+        </li>
+        <li class="menu-item">
+            <a class="menu-link btn-menu" href="inss.html" target="direito">🛡️ INSS</a>
+        </li>
+    </ul>
+
+    <!-- Lógica JavaScript para funcionamento do Dropdown -->
+    <script>
+        document.getElementById('btnDropdownFii').addEventListener('click', function(e) {
+            var conteudo = document.getElementById('conteudoFii');
+            var seta = document.getElementById('setaFii');
+            
+            // Alterna a classe que exibe/esconde os sub-itens
+            conteudo.classList.toggle('aberto');
+            
+            // Alterna a classe que rotaciona a seta visualmente
+            seta.classList.toggle('rodada');
+        });
+    </script>
+
+</body>
+</html>
