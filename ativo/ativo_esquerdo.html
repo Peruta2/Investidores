@@ -3,124 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ativos - Menu Esquerdo</title>
+    <title>Menu Superior Ativo</title>
     <style>
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #0f172a; /* Fundo escuro idêntico aos outros painéis */
+            background-color: #0f172a; /* Fundo escuro idêntico ao modelo */
             color: #f8fafc;
             margin: 0;
-            padding: 30px;
-            line-height: 1.6;
+            padding: 20px 15px;
+            line-height: 1.4;
         }
-        h3 {
-            color: #e2e8f0;
-            font-size: 20px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 8px;
+        
+        .titulo-menu {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 2px solid #334155;
         }
-        /* Remove as bolinhas da lista padrão */
-        ul {
+
+        .titulo-menu:first-of-type {
+            margin-top: 5px;
+        }
+
+        .menu-lista {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        li {
-            margin-bottom: 12px; /* Espaço ideal entre os botões */
+
+        .menu-item {
+            margin-bottom: 6px;
         }
-    /* Estilos base para integrar com o seu menu atual */
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .btn-menu {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #1e293b;
-        color: #cbd5e1;
-        padding: 12px 15px;
-        text-decoration: none;
-        border-radius: 6px;
-        border: 1px solid #334155;
-        font-family: 'Segoe UI', sans-serif;
-        font-size: 14px;
-        margin-bottom: 8px;
-        width: 100%;
-        box-sizing: border-box;
-        cursor: pointer;
-        text-align: left;
-    }
 
-    .btn-menu:hover {
-        background-color: #24334d;
-        color: #38bdf8;
-        border-color: #38bdf8;
-    }
+        /* Links e Botões de Navegação unificados (Mantendo o target="direito") */
+        .btn-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s, color 0.2s;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
 
-    /* Configuração do botão que expande */
-    .btn-expandivel {
-        background-color: #1e293b;
-    }
-    
-    .seta {
-        font-size: 10px;
-        color: #64748b;
-        transition: transform 0.2s ease;
-    }
+        /* Efeito de destaque ao passar o mouse */
+        .btn-menu:hover {
+            background-color: #1e293b;
+            color: #38bdf8; /* Muda para o Azul Destaque */
+        }
 
-    /* Esconde as opções por padrão */
-    .dropdown-conteudo {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out;
-        padding-left: 15px; /* Recuo para parecer sub-menu */
-    }
+        /* Variação para os sub-itens do Dropdown */
+        .sub-item {
+            padding-left: 32px;
+            font-size: 13px;
+            color: #94a3b8;
+        }
 
-    /* Mostra as opções e gira a seta quando passa o mouse no item pai */
-    .menu-dropdown:hover .dropdown-conteudo {
-        max-height: 200px; /* Altura máxima para o efeito de abertura */
-    }
+        /* Estrutura Oculta do Dropdown por padrão */
+        .dropdown-conteudo {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: none; /* Esconde os sub-itens */
+        }
 
-    .menu-dropdown:hover .seta {
-        transform: rotate(180deg);
-        color: #38bdf8;
-    }
+        /* Classe utilitária via JavaScript para exibir o dropdown */
+        .dropdown-conteudo.aberto {
+            display: block;
+        }
 
-    /* Estilo sutil diferenciado para os sub-itens */
-    .sub-item {
-        background-color: rgba(30, 41, 59, 0.5);
-        font-size: 13px;
-        margin-bottom: 4px;
-    }
+        /* Controle visual da Seta do Dropdown */
+        .seta {
+            margin-left: auto;
+            font-size: 10px;
+            transition: transform 0.2s;
+            color: #64748b;
+        }
+
+        .seta.rodada {
+            transform: rotate(180deg);
+            color: #38bdf8;
+        }
     </style>
-</head> 
-
+</head>
 <body>
 
-    <h3>Ativo</h3>
-<ul>
-    <!-- Botão Normal -->
-    <li><a>🏛️ Dados em Teste</a></li>
-    <li><a class="btn-menu" href="csv_teste.html" target="direito">🏛️ Ler Arquivos CSV</a></li>
+    <!-- Grupo 1: Dados Financeiros dos Ativos -->
+    <div class="titulo-menu">Dados Financeiros</div>
+    <ul class="menu-lista">
+        <!-- Estrutura do Dropdown Ações (Atualizado) -->
+        <li class="menu-item">
+            <button class="btn-menu btn-expandivel" id="btnDropdownAcoes">
+                <span>📊 Ações</span>
+                <span class="seta" id="setaAcoes">▼</span>
+            </button>
+            <ul class="dropdown-conteudo" id="conteudoAcoes">
+                <li><a class="btn-menu sub-item" href="acao_bbdc4.html" target="direito">📊 BBDC4</a></li>
+                <li><a class="btn-menu sub-item" href="acao_itub4.html" target="direito">📊 ITUB4</a></li>
+                <!-- Adicione novos sub-itens aqui se necessário -->
+            </ul>
+        </li>
+        
+        <!-- Estrutura do Dropdown Corporativa -->
+        <li class="menu-item">
+            <button class="btn-menu btn-expandivel" id="btnDropdownFii">
+                <span>🏛️ Fundos Imobiliários</span>
+                <span class="seta" id="setaFii">▼</span>
+            </button>
+            <ul class="dropdown-conteudo" id="conteudoFii">
+                <li><a class="btn-menu sub-item" href="fii_hglg11.html" target="direito">📊 HGLG11</a></li>
+                <li><a class="btn-menu sub-item" href="fii_btlg11.html" target="direito">📊 BTLG11</a></li>
+            </ul>
+        </li>
 
-    <!-- Botão Expandível (Dropdown) -->
-    <li><a>🏛️ Dados Financeiros</a></li>
-    <li class="menu-dropdown">
-        <button class="btn-menu btn-expandivel">
-            <span>📊 Ações</span>
-            <span class="seta">▼</span>
-        </button>
-        <ul class="dropdown-conteudo">
-            <li><a class="btn-menu sub-item" href="acao_bbdc4.html" target="direito">🔹 BBDC4</a></li>
-            <li><a class="btn-menu sub-item" href="acao_itub4.html" target="direito">🔹 ITUB4</a></li>
-        </ul>
-     </li>
-</ul>
+        <li class="menu-item">
+            <a class="btn-menu" href="ativo_direito.html" target="direito">📊 Renda Fixa</a>
+        </li>
+        <li class="menu-item">
+            <a class="btn-menu" href="ativo_direito.html" target="direito">📊 Dolarização</a>
+        </li>
+    </ul>
+
+    <!-- Grupo 2: Preço Teto Projetivo -->
+    <div class="titulo-menu">Preço Teto Projetivo</div>
+    <ul class="menu-lista">
+        <li class="menu-item">
+            <a class="btn-menu" href="csv_teste.html" target="direito">🛡️ Leitura Arquivo CVS</a>
+        </li>
+        <li class="menu-item">
+            <a class="menu-link btn-menu" href="ativo_direito.html" target="direito">🛡️ Teste 2</a>
+        </li>
+    </ul>
+
+    <!-- Lógica JavaScript para funcionamento do Dropdown -->
+    <script>
+        // Função genérica para reaproveitar a lógica do dropdown
+        function configurarDropdown(idBotao, idConteudo, idSeta) {
+            var botao = document.getElementById(idBotao);
+            if (botao) {
+                botao.addEventListener('click', function(e) {
+                    var conteudo = document.getElementById(idConteudo);
+                    var seta = document.getElementById(idSeta);
+                    
+                    conteudo.classList.toggle('aberto');
+                    seta.classList.toggle('rodada');
+                });
+            }
+        }
+
+        // Ativa o dropdown para Fundos Imobiliários
+        configurarDropdown('btnDropdownFii', 'conteudoFii', 'setaFii');
+
+        // Ativa o dropdown para Ações
+        configurarDropdown('btnDropdownAcoes', 'conteudoAcoes', 'setaAcoes');
+    </script>
+
 </body>
-
 </html>
