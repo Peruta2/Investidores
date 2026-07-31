@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Abas (Tabs) com CSV</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 30px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #38bdf8;
+            font-size: 24px;
+            margin: 0;
+        }
+        h2 {
+            color: #e2e8f0;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .tab-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .tab-buttons {
+            display: flex;
+            background-color: #e0e0e0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            transition: 0.2s;
+        }
+
+        .tab-btn:hover {
+            background-color: #d5d5d5;
+        }
+
+        .tab-btn.active {
+            background-color: white;
+            color: #000;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            min-height: 200px;
+            overflow-x: auto; /* Garante barra de rolagem se a tabela for grande */
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Estilização da Tabela do CSV */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+            color: #333;
+        }
+
+        /* Destaca linhas de títulos principais (como PROJETIVO e REALIDADE) */
+        tr.linha-destaque {
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+        
+        /* Deixa linhas vazias do CSV com espaçamento discreto */
+        tr.linha-vazia {
+            height: 20px;
+            background-color: transparent;
+        }
+	/* Estilo para a linha de Título da Tabela (Cabeçalho) */
+	th {
+	    background-color: #343a40; /* Fundo cinza escuro/preto */
+	    color: white; /* Letras brancas */
+	    font-weight: bold;
+	    padding: 10px 12px;
+	    text-align: left;
+	    border: 1px solid #454d55;
+	    font-size: 13px;
+	}
+
+	/* Alinha células com valores em R$ ou porcentagem para a direita */
+	.alinhado-direita {
+	    text-align: right;
+	}
+
+    </style>
+</head>
+<body>
+
+    <div class="tab-container">
+        <!-- 1. Abas -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="mudarAba(event, 'aba-dados')">Carteira do Investidor (DESEJADO)</button>
+            <button class="tab-btn" onclick="mudarAba(event, 'aba-config')">Carteira do Investidor (REALIDADE)</button>
+        </div>
+
+        <!-- 2. Conteúdos -->
+        <div id="aba-dados" class="tab-content active">
+            <!-- A tabela será injetada aqui pelo JavaScript -->
+            <div id="tabela-container">Carregando dados do planejamento...</div>
+        </div>
+
+        <div id="aba-config" class="tab-content">
+            <p>Conteúdo da aba de Configurações</p>
+        </div>
+    </div>
+
+    <script>
+        // Função para alternar entre as abas
+        function mudarAba(evento, idAba) {
+            const conteudos = document.querySelectorAll('.tab-content');
+            conteudos.forEach(conteudo => conteudo.classList.remove('active'));
+
+            const botoes = document.querySelectorAll('.tab-btn');
+            botoes.forEach(botao => botao.classList.remove('active'));
+
+            document.getElementById(idAba).classList.add('active');
+            evento.currentTarget.classList.add('active');
+        }
+
+        // Função que lê o CSV e monta a tabela HTML
+async function carregarCSV() {
+    const container = document.getElementById('tabela-container');
+    
+    try {
+        const resposta = await fetch('../csv/carteira_plan.csv');
+        
+        if (!resposta.ok) {
+            throw new Error('Não foi possível carregar o arquivo CSV.');
+        }
+
+        const texto = await resposta.text();
+        const linhas = texto.split('\n');
+        let htmlTabela = '<table>';
+        
+        // Criamos uma variável para controlar se é a primeira linha válida do arquivo
+        let ehPrimeiraLinhaValida = true;
+
+        linhas.forEach((linha) => {
+            if (linha.trim() === '') return;
+
+            const colunas = linha.split(';');
+            
+            // Verifica se é uma linha de separação vazia
+            const valoresPreenchidos = colunas.filter(c => c.trim() !== '');
+            if (valoresPreenchidos.length === 0) {
+                htmlTabela += '<tr class="linha-vazia"><td colspan="10"></td></tr>';
+                return;
+            }
+
+            // Se a linha contiver a palavra "RENDA", vira Cabeçalho (TH)
+            if (linha.toUpperCase().includes('RENDA')) {
+                htmlTabela += '<tr>';
+                colunas.forEach((coluna, colIndex) => {
+                    const alinhamentoHeader = colIndex === 0 ? 'style="text-align: left;"' : 'style="text-align: center;"';
+                    htmlTabela += `<th ${alinhamentoHeader}>${coluna.trim()}</th>`;
+                });
+                htmlTabela += '</tr>';
+                ehPrimeiraLinhaValida = false; // A partir daqui não é mais a primeira linha
+                return; 
+            }
+
+            // Identifica se a linha atual contém o bloco do topo (PROJETIVO / REALIDADE)
+            const ehDestaque = linha.toUpperCase().includes('PROJETIVO') || linha.toUpperCase().includes('REALIDADE');
+            const classeLinha = ehDestaque ? 'class="linha-destaque"' : '';
+
+            htmlTabela += `<tr ${classeLinha}>`;
+            
+            // Se for a primeira linha, vamos descobrir qual é o índice do último campo preenchido
+            let ultimoIndicePreenchido = -1;
+            if (ehPrimeiraLinhaValida) {
+                // Percorre de trás para frente para achar a última coluna que não está vazia
+                for (let i = colunas.length - 1; i >= 0; i--) {
+                    if (colunas[i].trim() !== '') {
+                        ultimoIndicePreenchido = i;
+                        break;
+                    }
+                }
+            }
+            
+            colunas.forEach((coluna, colIndex) => {
+                const valor = coluna.trim();
+                
+                // Alinhamento padrão: primeira coluna à esquerda, as demais no centro
+                let estiloCelula = colIndex === 0 ? 'text-align: left;' : 'text-align: center;';
+                
+                // REGRA DE OURO: Se for a primeira linha válida E for a última coluna preenchida, aplica o destaque
+                if (ehPrimeiraLinhaValida && colIndex === ultimoIndicePreenchido) {
+                    estiloCelula += ' font-weight: bold; background-color: #ffc107; color: #000; border: 1px solid #ff9800; border-radius: 4px;';
+                }
+                
+                htmlTabela += `<td style="${estiloCelula}">${valor}</td>`;
+            });
+
+            htmlTabela += '</tr>';
+            
+            // Após rodar a primeira linha de dados/títulos, desativamos a flag
+            if (ehPrimeiraLinhaValida) {
+                ehPrimeiraLinhaValida = false;
+            }
+        });
+
+        htmlTabela += '</table>';
+        container.innerHTML = htmlTabela;
+
+    } catch (erro) {
+        container.innerHTML = `<span style="color: red;">Erro ao carregar os dados: ${erro.message}</span>`;
+    }
+}
+
+        // Executa a leitura do CSV assim que a página termina de carregar
+        window.onload = carregarCSV;
+    </script>
+
+</body>
+</html>
