@@ -137,7 +137,7 @@
     async function carregarDados() {
         try {
             // Caminho atualizado para a pasta "csv"
-            const resposta = await fetch('csv/dados.csv');
+            const resposta = await fetch('../csv/dados.csv');
             if (!resposta.ok) {
                 throw new Error("Não foi possível carregar o arquivo em csv/dados.csv");
             }
