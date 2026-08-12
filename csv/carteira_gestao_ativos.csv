@@ -1,4 +1,4 @@
-;;;;DESEJADO;;
+10;DESEJADO;;;;;
 0;;(%);% na carteira;Ativos;Valor Total;
 0;AÇÕES (PERENE);100,00%;12,00%;11;R$ 1.200,00;
 1;Ativo;balancea/o;% na carteira;Desejado;Saldo;
@@ -91,7 +91,7 @@
 1;Ativo;balancea/o;% na carteira;Desejado;Saldo;
 2;TFLO;100,00%;0,00%;0,00;R$ 0,00;
 2;USDBRL;;;;;
-;;;;;;REALIDADE;;
+20;REALIDADE;;;;;;;
 0;;;;Variação;Ativos;% na carteira;Valor Total;
 0;AÇÕES (PERENE);;;14,11%;11;13,79%;R$ 594,05;
 1;Ativo;Quant.;Preço Médio;Variação;Representa;% na carteira;Saldo;
