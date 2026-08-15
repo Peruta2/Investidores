@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu do Curso - Formação Investidor Pro</title>
+    <title>Formação Investidor Pro</title>
+    <link rel="stylesheet" href="../css/style.css">
     <style>
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -106,7 +107,10 @@
     <div class="titulo-menu">Introdução</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a class="btn-menu" href="investidor.html" target="direito">🏛️ Sobre o Investidor</a>
+            <a class="btn-menu" href="investidor.html" target="direito">
+                <span class="icone">🏛️</span>
+                <span class="texto-menu">Sobre o Investidor</span>
+            </a>
         </li>
     </ul>
 
@@ -114,16 +118,28 @@
     <div class="titulo-menu">Finanças Estratégicas</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a class="btn-menu" href="reserva_emergencia.html" target="direito">💸 Reserva de Emergência</a>
+            <a class="btn-menu" href="reserva_emergencia.html" target="direito">
+                <span class="icone">💸</span>
+                <span class="texto-menu">Reserva de Emergência</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="btn-menu" href="aportes_metodologias.html" target="direito">💸 Metodologias de Aportes</a>
+            <a class="btn-menu" href="aportes_metodologias.html" target="direito">
+                <span class="icone">💸</span>
+                <span class="texto-menu">Metodologias de Aportes</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="btn-menu" href="dividendos_datas.html" target="direito">💸 Datas de Dividendos</a>
+            <a class="btn-menu" href="dividendos_datas.html" target="direito">
+                <span class="icone">💸</span>
+                <span class="texto-menu">Datas de Dividendos</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="btn-menu" href="yield_on_cost.html" target="direito">💸 Yield On Cost</a>
+            <a class="btn-menu" href="yield_on_cost.html" target="direito">
+                <span class="icone">💸</span>
+                <span class="texto-menu">Yield On Cost</span>
+            </a>
         </li>
     </ul>
 
@@ -131,13 +147,22 @@
     <div class="titulo-menu">Análise de Ativos</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a class="btn-menu" href="ativos_analises_fundamentais.html" target="direito">📈 Análises Fundamentais de Ativos</a>
+            <a class="btn-menu" href="ativos_analises_fundamentais.html" target="direito">
+                <span class="icone">📈</span>
+                <span class="texto-menu">Análises Fundamentais de Ativos</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="btn-menu" href="indicadores.html" target="direito">📈 Indicadores Financeiros</a>
+            <a class="btn-menu" href="indicadores.html" target="direito">
+                <span class="icone">📈</span>
+                <span class="texto-menu">Indicadores Financeiros</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="btn-menu" href="valuation.html" target="direito">📈 Valuation</a>
+            <a class="btn-menu" href="valuation.html" target="direito">
+                <span class="icone">📈</span>
+                <span class="texto-menu">Valuation</span>
+            </a>
         </li>
     </ul>
 
@@ -145,26 +170,46 @@
     <div class="titulo-menu">Classes de Investimento</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a class="btn-menu" href="acoes.html" target="direito">📊 Ações</a>
+            <a class="btn-menu" href="acoes.html" target="direito">
+                <span class="icone">📊</span>
+                <span class="texto-menu">Ações</span>
+            </a>
         </li>
         
         <!-- Estrutura do Dropdown Corporativa -->
         <li class="menu-item">
             <button class="btn-menu btn-expandivel" id="btnDropdownFii">
-                <span>🏛️ Fundos Imobiliários</span>
+                <span class="icone">🏛️</span>
+                <span class="texto-menu">Fundos Imobiliários</span>
                 <span class="seta" id="setaFii">▼</span>
             </button>
             <ul class="dropdown-conteudo" id="conteudoFii">
-                <li><a class="btn-menu sub-item" href="fiis_classes.html" target="direito">📊 Classes de FIIs</a></li>
-                <li><a class="btn-menu sub-item" href="fiis_subscricao.html" target="direito">📊 Subscrição em FIIs</a></li>
+                <li>
+                    <a class="btn-menu sub-item" href="fiis_classes.html" target="direito">
+                        <span class="icone">📊</span>
+                        <span class="texto-menu">Classes de FIIs</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="btn-menu sub-item" href="fiis_subscricao.html" target="direito">
+                        <span class="icone">📊</span>
+                        <span class="texto-menu">Subscrição em FIIs</span>
+                    </a>
+                </li>
             </ul>
         </li>
 
         <li class="menu-item">
-            <a class="btn-menu" href="renda_fixa.html" target="direito">📊 Renda Fixa</a>
+            <a class="btn-menu" href="renda_fixa.html" target="direito">
+                <span class="icone">📊</span>
+                <span class="texto-menu">Renda Fixa</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="btn-menu" href="dolarizacao.html" target="direito">📊 Dolarização</a>
+            <a class="btn-menu" href="dolarizacao.html" target="direito">
+                <span class="icone">📊</span>
+                <span class="texto-menu">Dolarização</span>
+            </a>
         </li>
     </ul>
 
@@ -172,13 +217,22 @@
     <div class="titulo-menu">Macroeconomia & Proteção</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a class="btn-menu" href="selic.html" target="direito">🛡️ SELIC</a>
+            <a class="btn-menu" href="selic.html" target="direito">
+                <span class="icone">🛡️</span>
+                <span class="texto-menu">SELIC</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="menu-link btn-menu" href="ipca.html" target="direito">🛡️ IPCA</a>
+            <a class="btn-menu" href="ipca.html" target="direito">
+                <span class="icone">🛡️</span>
+                <span class="texto-menu">IPCA</span>
+            </a>
         </li>
         <li class="menu-item">
-            <a class="menu-link btn-menu" href="inss.html" target="direito">🛡️ INSS</a>
+            <a class="btn-menu" href="inss.html" target="direito">
+                <span class="icone">🛡️</span>
+                <span class="texto-menu">INSS</span>
+            </a>
         </li>
     </ul>
 
@@ -188,11 +242,8 @@
             var conteudo = document.getElementById('conteudoFii');
             var seta = document.getElementById('setaFii');
             
-            // Alterna a classe que exibe/esconde os sub-itens
-            conteudo.classList.toggle('aberto');
-            
-            // Alterna a classe que rotaciona a seta visualmente
-            seta.classList.toggle('rodada');
+            if (conteudo) conteudo.classList.toggle('aberto');
+            if (seta) seta.classList.toggle('rodada');
         });
     </script>
 
