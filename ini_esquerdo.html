@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu de Navegação - Assessoria Financeira</title>
+    <title>Menu Lateral Esquerdo</title>
+    <link rel="stylesheet" href="/css/style.css">
     <style>
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -96,49 +97,53 @@
 </head>
 <body>
 
-    <!-- Grupo 1: Visão Geral -->
-    <div class="titulo-menu">Navegação Principal</div>
-    <ul class="menu-lista">
-        <li class="menu-item">
-            <!-- Altere o "href" para o nome do arquivo da sua página de apresentação da direita -->
-            <!-- O target="frame-direito" garante que a página abra dentro do painel da direita -->
-            <a href="home_dashboard.html" target="frame-direito" class="menu-link ativo">
-                <span class="icone">🏠</span> Início / Dashboard
-            </a>
-        </li>
-    </ul>
+<!-- Grupo 1: Visão Geral -->
+<div class="titulo-menu">Navegação Principal</div>
+<ul class="menu-lista">
+    <li class="menu-item">
+        <!-- O target correto deve apontar para o ID/Name do seu frame da direita que é "direito" -->
+        <a href="home_dashboard.html" target="direito" class="menu-link ativo">
+            <span class="icone">🏠</span> 
+            <!-- CORREÇÃO: Texto envolvido por uma classe para ser controlado pelo CSS -->
+            <span class="texto-menu">Início / Dashboard</span>
+        </a>
+    </li>
+</ul>
 
     <!-- Grupo 2: Ferramentas -->
     <div class="titulo-menu">Ambiente do Investidor</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a href="carteira.html" target="frame-direito" class="menu-link">
-                <span class="icone">📈</span> Minha Carteira
+            <a href="carteira.html" target="direito" class="menu-link">
+                <span class="icone">📈</span> 
+                <span class="texto-menu">Minha Carteira</span>
             </a>
         </li>
 
         <li class="menu-item">
-            <a href="analise_quantitativa.html" target="frame-direito" class="menu-link">
-                <span class="icone">📊</span> Dados & Gráficos
+            <a href="analise_quantitativa.html" target="direito" class="menu-link">
+                <span class="icone">📊</span> 
+                <span class="texto-menu">Dados & Gráficos</span>
                 <span class="badge-premium-menu">PRO</span>
             </a>
         </li>
 
         <li class="menu-item">
-            <a href="preco_teto.html" target="frame-direito" class="menu-link">
-                <span class="icone">🎯</span> Preço Teto Projetivo
+            <a href="preco_teto.html" target="direito" class="menu-link">
+                <span class="icone">🎯</span> 
+                <span class="texto-menu">Preço Teto Projetivo</span>
                 <span class="badge-alerta-menu">4</span>
             </a>
         </li>
-
     </ul>
 
     <!-- Grupo 3: Conhecimento -->
     <div class="titulo-menu">Educação</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a href="curso.html" target="frame-direito" class="menu-link">
-                <span class="icone">🎓</span> Curso Investidor Pro
+            <a href="curso.html" target="direito" class="menu-link">
+                <span class="icone">🎓</span> 
+                <span class="texto-menu">Curso Investidor Pro</span>
             </a>
         </li>
     </ul>
@@ -147,13 +152,15 @@
     <div class="titulo-menu">Sua Conta</div>
     <ul class="menu-lista">
         <li class="menu-item">
-            <a href="perfil.html" target="frame-direito" class="menu-link">
-                <span class="icone">👤</span> Meu Perfil
+            <a href="perfil.html" target="direito" class="menu-link">
+                <span class="icone">👤</span> 
+                <span class="texto-menu">Meu Perfil</span>
             </a>
         </li>
         <li class="menu-item">
             <a href="logout.html" target="_top" class="menu-link" style="color: #f87171;">
-                <span class="icone">🚪</span> Sair do Sistema
+                <span class="icone">🚪</span> 
+                <span class="texto-menu">Sair do Sistema</span>
             </a>
         </li>
     </ul>
