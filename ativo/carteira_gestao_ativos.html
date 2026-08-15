@@ -1,194 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestão Operacional de Carteira</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
-            margin: 0;
-            padding: 30px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-            h1 {
-                color: #38bdf8;
-                font-size: 24px;
-                margin: 0;
-                border-bottom: 1px solid #334155;
-                padding-bottom: 15px;
-                margin-bottom: 20px;
-            }
-            h2 {
-                color: #e2e8f0;
-                font-size: 18px;
-                margin-top: 30px;
-                margin-bottom: 15px;
-                font-weight: 600;
-            }
-            p {
-                color: #94a3b8;
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-        
-        .main-title {
-            color: #38bdf8;
-            font-size: 24px;
-            margin: 0;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Guias / Abas Estilo Ficheiro (Idêntico ao Perfil) */
-        .tab-buttons {
-            display: flex;
-            background-color: #1e293b;
-            border: 1px solid #334155;
-            border-bottom: none;
-            border-radius: 8px 8px 0 0;
-            overflow: hidden;
-            max-width: 300px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            color: #94a3b8;
-            transition: 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .tab-btn:hover {
-            background-color: #24334d;
-            color: #f8fafc;
-        }
-        .tab-btn.active {
-            background-color: #334155;
-            color: #38bdf8;
-        }
-        .tab-buttons-spacer {
-            height: 1px;
-            background-color: #334155;
-            margin-top: -1px;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        
-        .db-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 13px;
-            table-layout: fixed; /* Gabarito rígido milimétrico */
-        }
-        
-        /* GABARITO MATEMÁTICO: Distribuição proporcional das 7 colunas visíveis */
-        .db-table th:nth-child(1), .db-table td:nth-child(1) { width: 22%; }
-        .db-table th:nth-child(2), .db-table td:nth-child(2) { width: 11%; }
-        .db-table th:nth-child(3), .db-table td:nth-child(3) { width: 13%; }
-        .db-table th:nth-child(4), .db-table td:nth-child(4) { width: 11%; }
-        .db-table th:nth-child(5), .db-table td:nth-child(5) { width: 13%; }
-        .db-table th:nth-child(6), .db-table td:nth-child(6) { width: 14%; }
-        .db-table th:nth-child(7), .db-table td:nth-child(7) { width: 16%; }
-        
-        .db-table td, .db-table th {
-            padding: 8px 10px;
-            text-align: left; 
-        }
-        
-        /* Linhas do Menu Principal (ID 0) */
-        .db-table td.linha-id0 {
-            background-color: #1e293b !important;
-            cursor: pointer;
-            user-select: none;
-        }
-        
-        /* Regra da Guia Ativa: Única linha do Submenu (ID 1) */
-        .db-table tr.linha-id1-row td {
-            background-color: #334155 !important;
-            color: #ffffff !important;
-            font-weight: bold !important;
-            font-size: 13px !important;
-        }
-        
-        /* Linhas do Ativo (ID >= 2) */
-        .linha-dados td {
-            border-bottom: none;
-            color: #cbd5e1 !important;
-            font-size: 13px;
-            font-weight: normal;
-        }
-        
-        /* Tracejado sutil apenas no início de cada bloco diferente */
-        .inicio-bloco-id td {
-            border-top: 1px dotted #475569;
-        }
-        
-        .db-table tr:hover {
-            background-color: #24334d;
-        }
-        
-        .db-table tr.linha-dados:hover td {
-            color: #f8fafc !important;
-        }
-        
-        .db-table tr.linha-id1-row:hover,
-        .db-table tr.linha-id1-row:hover td {
-            background-color: #334155 !important;
-            color: #ffffff !important;
-        }
-
-        .db-table tr.id0-row-clickable:hover td.linha-id0 {
-            background-color: #24334d !important;
-            color: #38bdf8 !important;
-        }
-
-        .row-hidden {
-            display: none !important;
-        }
-
-        .toggle-icon {
-            display: inline-block;
-            margin-right: 6px;
-            color: #38bdf8;
-            font-size: 11px;
-            transition: transform 0.2s ease;
-        }
-        .collapsed .toggle-icon {
-            transform: rotate(-90deg);
-        }
-        
-        .status-msg {
-            padding: 30px;
-            text-align: center;
-            color: #94a3b8;
-            font-style: italic;
-        }
-    </style>
+    <!-- Vincula o mesmo CSS unificado do sistema -->
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+<body class="pagina-interna">
 
     <div class="container">
-        <h1>Gestão de Ativos da Carteira</h1>
+        <!-- Correção: Classe adicionada para usar a identidade visual correta -->
+        <h1 class="titulo-pagina">Gestão de Ativos da Carteira</h1>
         
         <!-- Abas -->
         <div class="tab-buttons">
@@ -198,215 +23,22 @@
         <div class="tab-buttons-spacer"></div>
 
         <!-- Conteúdos das Abas (Recebem as tabelas injetadas separadamente) -->
-        <div id="aba-desejado" class="tab-content active" style="margin-top: 20px;">
-            <div id="tabela-desejado" class="tabelas-container">
+        <!-- Otimização: Removidos os styles inline 'margin-top' pois o CSS externo já gerencia os espaçamentos -->
+        <div id="aba-desejado" class="tab-content active">
+            <div id="tabela-desejado" class="table-container">
                 <div class="status-msg">Processando dados planejados...</div>
             </div>
         </div>
 
-        <div id="aba-realidade" class="tab-content" style="margin-top: 20px;">
-            <div id="tabela-realidade" class="tabelas-container">
+        <div id="aba-realidade" class="tab-content">
+            <div id="tabela-realidade" class="table-container">
                 <div class="status-msg">Processando dados reais...</div>
             </div>
         </div>
     </div>
 
-<script>
-    // Altera visualmente a aba ativa na tela
-    function mudarAba(evento, idAba) {
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(idAba).classList.add('active');
-        evento.currentTarget.classList.add('active');
-    }
-
-    // Abre e fecha as linhas filhas (ID 1 e ID 2) do bloco correspondente
-    window.alternarBloco = function(indexBloco) {
-        const linhasFilhas = document.querySelectorAll(`.grupo-bloco-${indexBloco}`);
-        const linhaMestre = document.getElementById(`mestre-bloco-${indexBloco}`);
-        
-        if (linhasFilhas.length === 0) return;
-
-        // Identifica se o bloco está fechado checando o primeiro item
-        let estaEscondido = linhasFilhas[0].classList.contains('row-hidden');
-
-        linhasFilhas.forEach(linha => {
-            if (estaEscondido) {
-                linha.classList.remove('row-hidden');
-            } else {
-                linha.classList.add('row-hidden');
-            }
-        });
-
-        if (linhaMestre) {
-            if (estaEscondido) {
-                linhaMestre.classList.remove('collapsed');
-            } else {
-                linhaMestre.classList.add('collapsed');
-            }
-        }
-    };
-
-    async function carregarCarteiraGestao() {
-        const containerDesejado = document.getElementById('tabela-desejado');
-        const containerRealidade = document.getElementById('tabela-realidade');
-        
-        try {
-            const resposta = await fetch('../csv/carteira_gestao_ativos.csv?v=' + Math.random());
-            if (!resposta.ok) throw new Error('Não foi possível ler o arquivo CSV.');
-
-            const buffer = await resposta.arrayBuffer();
-            const decodificador = new TextDecoder('windows-1252');
-            const texto = decodificador.decode(buffer);
-            const lines = texto.split('\n');
-
-            let htmlDesejado = '<table class="db-table gabarito-desejado">';
-            let htmlRealidade = '<table class="db-table gabarito-realidade">';
-            
-            let blocoDestino = ''; 
-            let idAnterior = null;
-            let valoresLinhaAnterior = Array(7).fill('');
-            let titulosId0Temporario = null;
-            let contadorBlocos = 0;
-
-            lines.forEach((linha) => {
-                const linhaLimpa = linha.trim();
-                if (linhaLimpa === '') return;
-
-                const colunasBrutas = linhaLimpa.split(';');
-                
-                // Resgata o ID numérico puro da coluna 0
-                const idRow = parseInt(colunasBrutas[0].trim());
-                if (isNaN(idRow)) return;
-
-                // 1. REGRAS DOS IDENTIFICADORES MESTRE (10 e 20) - Altera as chaves e limpa a memória
-                if (idRow === 10) {
-                    blocoDestino = 'DESEJADO';
-                    valoresLinhaAnterior = Array(7).fill('');
-                    idAnterior = null;
-                    return; 
-                }
-                if (idRow === 20) {
-                    blocoDestino = 'REALIDADE';
-                    valoresLinhaAnterior = Array(7).fill('');
-                    idAnterior = null;
-                    return; 
-                }
-
-                // Configura dinamicamente o corte com base na aba em processamento
-                const maxCamposFisicos = blocoDestino === 'DESEJADO' ? 6 : 8;
-                const maxCamposVisiveis = blocoDestino === 'DESEJADO' ? 5 : 7;
-
-                // Fatia e purifica os campos de dados
-                let listaCampos = colunasBrutas.map(campo => campo.trim()).slice(0, maxCamposFisicos);
-                while(listaCampos.length < maxCamposFisicos) listaCampos.push('');
-
-                let dadosVisiveis = listaCampos.slice(1, maxCamposFisicos);
-
-                // 2. REGRA DO CABEÇALHO DO MENU (ID 0 com dados vazios no início)
-                // Se a posição 1 estiver vazia, significa que é a linha de títulos ("Variação", "Ativos", etc.)
-                if (idRow === 0 && dadosVisiveis[0] === '') {
-                    titulosId0Temporario = [...dadosVisiveis];
-                    contadorBlocos++; // Incrementa o marcador único de árvore
-                    return; 
-                }
-
-                // Define se há salto de bloco para a linha pontilhada sutil
-                let classeSeparadoraID = '';
-                if (idAnterior !== null && idRow !== idAnterior) {
-                    if (idRow === 0 || idRow === 1) {
-                        classeSeparadoraID = 'inicio-bloco-id';
-                    }
-                }
-                idAnterior = idRow;
-
-                // Monta as classes estruturais para as linhas filhas nascerem fechadas
-                let classeLinhaTr = classeSeparadoraID;
-                if (idRow === 1) {
-                    classeLinhaTr += ` linha-id1-row grupo-bloco-${contadorBlocos} row-hidden`;
-                } else if (idRow >= 2) {
-                    classeLinhaTr += ` linha-dados grupo-bloco-${contadorBlocos} row-hidden`; 
-                }
-
-                let htmlLinhaStr = '';
-
-                // 3. PROCESSAMENTO DO MENU PRINCIPAL (ID 0)
-                if (idRow === 0) {
-                    htmlLinhaStr = `<tr id="mestre-bloco-${contadorBlocos}" class="id0-row-clickable collapsed ${classeSeparadoraID}" onclick="alternarBloco(${contadorBlocos})">`;
-                    
-                    if (titulosId0Temporario === null) {
-                        titulosId0Temporario = blocoDestino === 'DESEJADO' ? ["", "", "", "Ativos", "Valor Total"] : ["", "", "", "Variação", "Ativos", "% na carteira", "Valor Total"];
-                    }
-
-                    dadosVisiveis.forEach((conteudo, colIndex) => {
-                        let titulo = titulosId0Temporario[colIndex] || '';
-                        let prefixoIcone = colIndex === 0 ? '<span class="toggle-icon">▼</span>' : '';
-
-                        htmlLinhaStr += `<td class="linha-id0">
-                            <div style="font-size: 10px; color: #94a3b8; font-weight: normal; margin-bottom: 2px;">${titulo}</div>
-                            <div style="font-size: 13px; color: #38bdf8; font-weight: bold; display: flex; align-items: center;">${prefixoIcone}${conteudo}</div>
-                        </td>`;
-                    });
-                    htmlLinhaStr += '</tr>';
-                    titulosId0Temporario = null;
-                } 
-                // 4. PROCESSAMENTO DO SUBMENU (ID 1)
-                else if (idRow === 1) {
-                    htmlLinhaStr += `<tr class="${classeLinhaTr.trim()}">`;
-                    dadosVisiveis.forEach((campo, colIndex) => {
-                        let estiloRecuo = colIndex === 0 ? 'style="padding-left: 15px; border-left: 3px solid #475569;"' : '';
-                        htmlLinhaStr += `<td ${estiloRecuo}>${campo}</td>`;
-                    });
-                    htmlLinhaStr += '</tr>';
-                } 
-                // 5. PROCESSAMENTO DOS ATIVOS (ID >= 2) - HERANÇA E OPACIDADE
-                else {
-                    let camposEramVazios = Array(maxCamposVisiveis).fill(false);
-
-                    for (let i = 0; i < dadosVisiveis.length; i++) {
-                        if (dadosVisiveis[i] === '') {
-                            camposEramVazios[i] = true;
-                            if (valoresLinhaAnterior[i] !== '') {
-                                dadosVisiveis[i] = valoresLinhaAnterior[i];
-                            }
-                        }
-                    }
-                    valoresLinhaAnterior = [...dadosVisiveis];
-
-                    htmlLinhaStr += `<tr class="${classeLinhaTr.trim()}">`;
-                    dadosVisiveis.forEach((valorCampo, colIndex) => {
-                        let estiloSuave = colIndex === 0 ? 'style="padding-left: 28px; border-left: 3px solid #334155;' : 'style="';
-                        
-                        if (camposEramVazios[colIndex]) {
-                            estiloSuave += ' opacity: 0.20; font-style: italic;';
-                        }
-                        estiloSuave += '"';
-
-                        htmlLinhaStr += `<td ${estiloSuave}>${valorCampo}</td>`;
-                    });
-                    htmlLinhaStr += '</tr>';
-                }
-
-                // Distribui os blocos concluídos para as strings das guias correspondentes
-                if (blocoDestino === 'DESEJADO') htmlDesejado += htmlLinhaStr;
-                else if (blocoDestino === 'REALIDADE') htmlRealidade += htmlLinhaStr;
-            });
-
-            htmlDesejado += '</table>';
-            htmlRealidade += '</table>';
-
-            containerDesejado.innerHTML = htmlDesejado;
-            containerRealidade.innerHTML = htmlRealidade;
-
-        } catch (erro) {
-            const painelErro = `<div class="status-msg" style="color: #f87171;">Erro de carga: ${erro.message}</div>`;
-            containerDesejado.innerHTML = painelErro;
-            containerRealidade.innerHTML = painelErro;
-        }
-    }
-
-    window.onload = carregarCarteiraGestao;
-</script>
+    <!-- Chame o arquivo externo de gestão unificado -->
+    <script src="/js/carteira_gestao.js"></script>
 
 </body>
 </html>
