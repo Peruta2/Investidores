@@ -1,0 +1,757 @@
+/* Estilos Globais - Identidade Visual Financeira */
+:root {
+    --azul-marinho: #0A192F;
+    --azul-escuro-tab: #142238; /* Nova cor para o fundo das planilhas/abas */
+    --dourado: #C5A880;
+    --cinza-claro: #F4F6F9;
+    --branco: #FFFFFF;
+    --texto-mutado: #94A3B8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--cinza-claro);
+}
+
+/* Tela de Bloqueio (Senha) */
+#tela-senha {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--azul-marinho);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--dourado);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-box h2 {
+    color: var(--dourado);
+    margin-bottom: 20px;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--dourado);
+    background: transparent;
+    color: var(--branco);
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.login-box button {
+    background-color: var(--dourado);
+    color: var(--azul-marinho);
+    border: none;
+    padding: 12px 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.login-box button:hover {
+    background-color: #e5c495;
+}
+
+.erro-mensagem {
+    color: #ff6b6b;
+    margin-top: 15px;
+    font-size: 14px;
+    display: none;
+}
+
+/* Estrutura Principal (Pós-Login) */
+#conteudo-principal {
+    display: none;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Menu Horizontal Superior */
+nav {
+    background-color: var(--azul-marinho);
+    border-bottom: 3px solid var(--dourado);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: var(--dourado);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.menu-links {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-links button {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--branco);
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+
+.menu-links button:hover {
+    border-color: var(--dourado);
+    color: var(--dourado);
+}
+
+/* Container dos Dois Frames Verticais */
+.container-frames {
+    display: flex;
+    flex: 1;
+}
+
+/* Estilização dos Iframes (Lado a Lado) */
+iframe {
+    border: none;
+}
+
+/* ==========================================================================
+   NOVA SIDEBAR RETRÁTIL COM ÍCONES VISÍVEIS (SIDEBAR TOGGLE)
+   ========================================================================== */
+
+/* Container geral dos frames posiciona os elementos lado a lado */
+.container-frames {
+    display: flex;
+    flex: 1;
+    position: relative;
+}
+
+/* Envoltório da Sidebar Esquerda */
+.sidebar-wrapper {
+    width: 30%; /* Tamanho normal (Expandido) */
+    position: relative;
+    border-right: 2px solid #e0e0e0;
+    transition: width 0.3s ease; /* Animação suave de abertura/fechamento */
+}
+
+/* Força o iframe esquerdo a ocupar todo o espaço interno da sidebar */
+#frame-esquerdo {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+#frame-direito {
+    width: 70%;
+    height: 100%;
+    border: none;
+    transition: width 0.3s ease;
+}
+
+/* O BOTÃO FLUTUANTE NA BORDA DA SIDEBAR (Estilo aba do frame) */
+.btn-toggle-sidebar {
+    position: absolute;
+    top: 20px; /* Distância do topo do menu */
+    right: -15px; /* Joga o botão exatamente em cima da linha divisória */
+    width: 30px;
+    height: 30px;
+    background-color: var(--azul-marinho);
+    color: var(--dourado);
+    border: 1px solid var(--dourado);
+    border-radius: 50%; /* Botão perfeitamente redondo moderno */
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+.btn-toggle-sidebar:hover {
+    background-color: var(--dourado);
+    color: var(--azul-marinho);
+}
+
+/* ==========================================================================
+   ESTADO RECOLHIDO: Mantém apenas uma barra estreita para os ícones
+   ========================================================================== */
+
+/* Quando recolhido, a sidebar diminui para 60px (espaço ideal para os ícones) */
+.container-frames.menu-escondido .sidebar-wrapper {
+    width: 60px; 
+}
+
+/* O conteúdo da direita expande para ocupar o resto (100% menos os 60px da barra) */
+.container-frames.menu-escondido #frame-direito {
+    width: calc(100% - 60px);
+}
+
+/* ==========================================================================
+   NOVOS ESTILOS OTIMIZADOS PARA AS PÁGINAS INTERNAS (PLANILHAS E ABAS)
+   ========================================================================== */
+
+.pagina-interna {
+    overflow-y: auto !important;
+    padding: 30px;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+h1.titulo-pagina {
+    color: var(--azul-marinho);
+    font-size: 24px;
+    margin: 0 0 20px 0;
+    border-bottom: 2px solid var(--dourado);
+    padding-bottom: 15px;
+}
+
+h2.subtitulo-pagina {
+    color: var(--azul-marinho);
+    font-size: 18px;
+    margin: 30px 0 15px 0;
+    font-weight: 600;
+}
+
+.descricao-pagina {
+    color: #555555;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Guias / Abas Estilo Ficheiro */
+.tab-buttons {
+    display: flex;
+    background-color: var(--azul-marinho);
+    border: 1px solid var(--azul-marinho);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    max-width: 300px;
+}
+
+/* 1. ESTADO NATURAL: Como as guias nascem (Fundo azul escuro com texto cinza) */
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    transition: background-color 0.2s, color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 2. EFEITO HOVER CORRIGIDO: Quando passa o mouse (Acende o texto em branco e o fundo em dourado bem sutil) */
+.tab-btn:hover {
+    background-color: rgba(197, 168, 128, 0.15) !important; /* Dourado bem clarinho/translúcido */
+    color: #ffffff !important;                              /* Texto branco brilhoso no foco do mouse */
+}
+
+/* 3. GUIA ATIVA FIXA: Quando a aba é clicada e selecionada (Trava em fundo dourado e texto escuro) */
+.tab-btn.active {
+    background-color: var(--dourado) !important;   /* Fundo dourado sólido */
+    color: var(--azul-marinho) !important;        /* Letras em azul-marinho para alto contraste */
+}
+
+/* 4. Garante que a guia ativa não mude de cor se você passar o mouse por cima dela */
+.tab-btn.active:hover {
+    background-color: var(--dourado) !important;
+    color: var(--azul-marinho) !important;
+}
+
+
+.tab-buttons-spacer {
+    height: 2px;
+    background-color: var(--dourado);
+    margin-top: -1px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Container do Fundo da Planilha */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--azul-escuro-tab);
+    border-radius: 0 8px 8px 8px;
+    border: 1px solid var(--azul-marinho);
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.db-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+/* Distribuição rígida proporcional das 6 colunas */
+.db-table th:nth-child(1), .db-table td:nth-child(1) { width: 24%; }
+.db-table th:nth-child(2), .db-table td:nth-child(2) { width: 22%; }
+.db-table th:nth-child(3), .db-table td:nth-child(3) { width: 11%; }
+.db-table th:nth-child(4), .db-table td:nth-child(4) { width: 11%; }
+.db-table th:nth-child(5), .db-table td:nth-child(5) { width: 16%; }
+.db-table th:nth-child(6), .db-table td:nth-child(6) { width: 16%; }
+
+.db-table td, .db-table th {
+    padding: 8px 10px;
+    color: var(--branco);
+}
+
+.db-table th {
+    background-color: var(--azul-marinho);
+    color: var(--dourado);
+    font-weight: 600;
+}
+
+/* Estilização baseada nos Níveis de ID */
+.linha-id0 td {
+    background-color: #050d1a;
+    font-weight: 600;
+}
+
+/* Regra da Guia Ativa Fixa para o Submenu (ID 1) */
+.db-table tr.linha-id1-row td {
+    background-color: var(--dourado) !important;
+    color: #000000 !important; /* <---  cor da letra do titulo no Submenu id1 */
+    font-weight: bold !important;
+}
+
+/* Linhas do Ativo (ID >= 2) */
+.linha-dados td {
+    border-bottom: none;
+    color: #e2e8f0 !important;
+    font-size: 13px !important;
+    font-weight: normal !important;
+}
+
+/* Tracejado sutil apenas no início de cada bloco diferente */
+.inicio-bloco-id td {
+    border-top: 1px dotted rgba(197, 168, 128, 0.3);
+}
+
+.db-table tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.db-table tr.linha-dados:hover td {
+    color: var(--dourado) !important;
+}
+
+/* Trava o hover nas linhas do Submenu (ID 1) para o fundo NÃO mudar de cor */
+.db-table tr.linha-id1-row:hover,
+.db-table tr.linha-id1-row:hover td {
+    background-color: var(--dourado) !important; /* Mantém o fundo dourado fixo */
+    color: #000000 !important;                  /* Garante as letras em preto no hover */
+}
+
+.txt-centro { text-align: center; }
+.txt-direita { text-align: right; }
+
+.status-msg {
+    padding: 30px;
+    text-align: center;
+    color: var(--texto-mutado);
+    font-style: italic;
+}
+
+/* Estilos específicos para a Gestão Operacional (Retráteis) */
+.row-hidden {
+    display: none !important;
+}
+
+/* Altera a cor do ícone de seta (Collapse/Expand) para dourado */
+.toggle-icon {
+    display: inline-block;
+    margin-right: 6px;
+    color: var(--dourado);
+    font-size: 11px;
+    transition: transform 0.2s ease;
+}
+
+.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/* Cor do texto do menu/cabeçalho clicável no efeito Hover para branco brilhoso */
+.db-table tr.id0-row-clickable:hover td.linha-id0 {
+    background-color: #24334d; /* Cor do fundo que muda no mouse */
+    color: #e5c495;            /* Cor do texto que muda no mouse */
+}
+/* ==========================================================================
+   ESTILOS EXCLUSIVOS PARA O SIMULADOR E POPUPS (OPORTUNIDADES)
+   ========================================================================== */
+
+/* Distribuição de colunas exclusiva para o gabarito de Oportunidades (10 colunas) */
+.tabela-oportunidades th:nth-child(1), .tabela-oportunidades td:nth-child(1) { width: 20%; }
+.tabela-oportunidades th:nth-child(2), .tabela-oportunidades td:nth-child(2) { width: 8%; }
+.tabela-oportunidades th:nth-child(3), .tabela-oportunidades td:nth-child(3) { width: 9%; }
+.tabela-oportunidades th:nth-child(4), .tabela-oportunidades td:nth-child(4) { width: 9%; }
+.tabela-oportunidades th:nth-child(5), .tabela-oportunidades td:nth-child(5) { width: 9%; }
+.tabela-oportunidades th:nth-child(6), .tabela-oportunidades td:nth-child(6) { width: 9%; }
+.tabela-oportunidades th:nth-child(7), .tabela-oportunidades td:nth-child(7) { width: 9%; }
+.tabela-oportunidades th:nth-child(8), .tabela-oportunidades td:nth-child(8) { width: 15%; }
+.tabela-oportunidades th:nth-child(9), .tabela-oportunidades td:nth-child(9) { width: 8%; }
+.tabela-oportunidades th:nth-child(10), .tabela-oportunidades td:nth-child(10) { width: 4%; }
+
+/* Botão de Três Pontos (⋮) */
+.btn-menu-lateral {
+    background: none;
+    border: none;
+    color: var(--texto-mutado);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+/* Altera o visual do botão de três pontos ao passar o mouse para acompanhar o padrão */
+.btn-menu-lateral:hover {
+    color: var(--azul-marinho);
+    background-color: var(--dourado);
+}
+
+/* Estrutura de Fundo do Pop-up (Borrão moderno) */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 25, 47, 0.8); /* Fundo com a cor azul-marinho base */
+    z-index: 200;
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+}
+.modal-overlay.active {
+    display: flex;
+}
+.modal-box {
+    background-color: var(--azul-escuro-tab);
+    border: 1px solid var(--dourado);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+.modal-header {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--dourado);
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.3);
+    padding-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--texto-mutado);
+    cursor: pointer;
+    font-size: 22px;
+}
+.modal-close:hover {
+    color: #ff6b6b;
+}
+
+/* Grid do Simulador Interno */
+.simulador-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+.simulador-item {
+    background-color: #050d1a;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(197, 168, 128, 0.2);
+}
+.simulador-label {
+    font-size: 10px;
+    color: var(--texto-mutado);
+    margin-bottom: 3px;
+}
+.simulador-val {
+    font-size: 13px;
+    color: var(--branco);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   GABARITO DE DISTRIBUIÇÃO COUPLADO PARA CARTEIRA GESTÃO (SEM ROLAGEM)
+   ========================================================================== */
+
+/* 1. Ajuste Rígido para a Aba DESEJADO (5 colunas visíveis) */
+.gabarito-desejado th:nth-child(1), .gabarito-desejado td:nth-child(1) { width: 30%; } /* Ativos / Categoria */
+.gabarito-desejado th:nth-child(2), .gabarito-desejado td:nth-child(2) { width: 15%; }
+.gabarito-desejado th:nth-child(3), .gabarito-desejado td:nth-child(3) { width: 15%; }
+.gabarito-desejado th:nth-child(4), .gabarito-desejado td:nth-child(4) { width: 20%; }
+.gabarito-desejado th:nth-child(5), .gabarito-desejado td:nth-child(5) { width: 20%; } /* Valor Total */
+
+/* 2. Ajuste Rígido para a Aba REALIDADE (7 colunas visíveis) */
+/* Distribuído milimetricamente para somar 100% e sumir com a barra de rolagem */
+.gabarito-realidade th:nth-child(1), .gabarito-realidade td:nth-child(1) { width: 22%; } /* Ativos / Categoria */
+.gabarito-realidade th:nth-child(2), .gabarito-realidade td:nth-child(2) { width: 11%; } /* Variação */
+.gabarito-realidade th:nth-child(3), .gabarito-realidade td:nth-child(3) { width: 13%; }
+.gabarito-realidade th:nth-child(4), .gabarito-realidade td:nth-child(4) { width: 11%; }
+.gabarito-realidade th:nth-child(5), .gabarito-realidade td:nth-child(5) { width: 13%; }
+.gabarito-realidade th:nth-child(6), .gabarito-realidade td:nth-child(6) { width: 14%; } /* % na carteira */
+.gabarito-realidade th:nth-child(7), .gabarito-realidade td:nth-child(7) { width: 16%; } /* Valor Total */
+
+/* Garante que o texto longo dentro da célula não force a barra a voltar */
+.db-table td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Coloca "..." se o texto for maior que a coluna */
+}
+
+/* ==========================================================================
+   SIDEBAR ESTILO MICROSOFT ONEDRIVE (ÍCONES CENTRALIZADOS)
+   ========================================================================== */
+
+/* Tamanho normal da Sidebar */
+.sidebar-wrapper {
+    width: 30%;
+    position: relative;
+    border-right: 2px solid #e0e0e0;
+    transition: width 0.3s ease;
+}
+
+#frame-direito {
+    width: 70%;
+    transition: width 0.3s ease;
+}
+
+/* O Botão redondo na linha divisória */
+.btn-toggle-sidebar {
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--azul-marinho);
+    color: var(--dourado);
+    border: 1px solid var(--dourado);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* ==========================================================================
+   ESTADO RECOLHIDO (ONEDRIVE MODE)
+   ========================================================================== */
+
+/* 1. Comportamento do link no estado NORMAL (Expandido) */
+.menu-link {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* IMPEDE o texto de quebrar para a linha de baixo */
+    overflow: hidden;    /* Esconde qualquer texto que passe do tamanho */
+    transition: padding 0.3s ease;
+}
+
+/* Garante que o texto suma suavemente se a barra encolher */
+.texto-menu {
+    transition: opacity 0.2s ease;
+    opacity: 1;
+}
+
+/* 2. ESTADO RECOLHIDO: Força o corte invisível e limpa a rolagem */
+.container-frames.menu-escondido .sidebar-wrapper {
+    width: 70px; 
+}
+
+/* Aplica o corte cirúrgico no conteúdo do iframe esquerdo */
+.container-frames.menu-escondido .sidebar-wrapper iframe {
+    overflow-y: hidden !important; /* Desativa e mata a barra de rolagem vertical */
+}
+
+/* Apaga a opacidade dos textos e dos badges para eles sumirem suavemente */
+.container-frames.menu-escondido .sidebar-wrapper .texto-menu,
+.container-frames.menu-escondido .sidebar-wrapper .titulo-menu,
+.container-frames.menu-escondido .sidebar-wrapper .badge-premium-menu,
+.container-frames.menu-escondido .sidebar-wrapper .badge-alerta-menu {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+/* Mantém os Emojis visíveis, fixos e centralizados na barra de 70px */
+.container-frames.menu-escondido .sidebar-wrapper .menu-link {
+    padding-left: 0 !important;
+    justify-content: center !important;
+}
+
+.container-frames.menu-escondido .sidebar-wrapper .icone {
+    margin: 0 !important;
+    font-size: 20px; /* Aumenta levemente o emoji para o clique ficar confortável */
+}
+
+/* ==========================================================================
+   BLINDAGEM CONTRA ESMAGAMENTO E ROLAGEM VERTICAL (MODO RECOLHIDO)
+   ========================================================================== */
+
+/* ==========================================================================
+   AJUSTE DE RESPIRO VISUAL NO MODO RECOLHIDO (SEM ELEMENTOS COLADOS)
+   ========================================================================== */
+/* ==========================================================================
+   AJUSTE DE ALINHAMENTO INTELIGENTE (ESQUERDA QUANDO ABERTO / CENTRO FECHADO)
+   ========================================================================== */
+@media (max-width: 100px) {
+    body, html {
+        overflow: hidden !important;
+    }
+
+    .titulo-menu, .dropdown-conteudo, .seta {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .menu-lista {
+        margin-top: 25px !important;
+    }
+
+    .texto-menu, .badge-premium-menu, .badge-alerta-menu {
+        display: none !important;
+    }
+
+    /* MÁGICA DO ALINHAMENTO: Só centraliza se a classe .menu-escondido estiver ativa no index */
+    /* Se estiver aberto, ignora isso e mantém o seu padrão original alinhado à esquerda */
+    .btn-menu, .menu-link {
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 12px 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        white-space: nowrap !important;
+    }
+
+    .icone {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-size: 20px !important;
+        display: inline-block !important;
+    }
+}
+
+/* ==========================================================================
+   BOTÃO DA SIDEBAR INTERNA (ESPELHO PERFEITO DO MENU SUPERIOR NAV)
+   ========================================================================== */
+
+.btn-toggle-horizontal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: 1px solid transparent;
+    color: var(--branco);
+    padding: 6px 12px; /* Reduzi um pouco o padding para o botão acompanhar o tamanho menor */
+    cursor: pointer;
+    font-size: 11px; /* <--- ALTERADO DE 14px PARA 11px (Fica delicado igual aos títulos) */
+    text-transform: uppercase;
+    font-weight: bold; /* Deixei em negrito para dar leitura mesmo sendo menor, se preferir normal é só mudar para 'normal' */
+    border-radius: 4px;
+    z-index: 110;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 6px; /* Ajuste sutil no espaço entre a seta e o texto */
+}
+
+/* HOVER IDÊNTICO: Acende apenas a linha da borda e o texto em dourado */
+.btn-toggle-horizontal:hover {
+    border-color: var(--dourado) !important; /* Linha dourada idêntica */
+    color: var(--dourado) !important;        /* Letras douradas idênticas */
+    background-color: transparent !important; /* Força o fundo a continuar invisível */
+}
+
+/* Ajuste compacto para a setinha interna se misturar ao texto */
+.seta-toggle {
+    font-size: 9px;
+}
+
+/* Mantém o comportamento de centralizar o botão quando o menu encolher para 70px */
+.container-frames.menu-escondido .btn-toggle-horizontal {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 0;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Força o estado normal (Menu Aberto) a ficar perfeitamente alinhado à esquerda */
+.btn-menu, .menu-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important; /* Sempre à esquerda quando aberto */
+    text-align: left !important;
+    gap: 12px !important;
+    width: 100%;
+}
+
+.icone {
+    margin-right: 4px !important; /* Dá um espacinho sutil entre o emoji e o texto */
+}
