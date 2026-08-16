@@ -36,6 +36,7 @@ window.abrirSimulador = function(ativo) {
 
     document.getElementById('modal-titulo').innerText = `Simulador de Compra: ${ativo}`;
     let htmlPopup = '';
+    
     dadosDoAtivo.valores.forEach((valor, index) => {
         let rotulo = dadosDoAtivo.titulos[index] || `Indicador ${index + 1}`;
         htmlPopup += `
@@ -67,16 +68,22 @@ async function carregarOportunidades() {
         let htmlTabela = '<table class="db-table">';
         let idEscopoAtual = 30, idAnterior = null, contadorBlocos = 0;
         let titulosId0 = null, titulosId1Op = null, titulosId1Sim = null;
-        let valoresLinhaAnteriorOp = Array(9).fill('');
-        let valoresLinhaAnteriorSim = Array(6).fill('');
+        
+        let valoresLinhaAnteriorOp = Array(10).fill(''); 
+        let valoresLinhaAnteriorSim = Array(7).fill('');
+
+        const cacheOportunidades = {};
 
         lines.forEach((linha) => {
             const htmlLinhaLimpa = linha.trim();
-            if (htmlLinhaLimpa === '') return;
+            // TRAVA DE SEGURANÇA 1: Ignora linhas completamente vazias ou que só tenham aspas soltas
+            if (!htmlLinhaLimpa || htmlLinhaLimpa === '"') return;
 
             const listaCampos = htmlLinhaLimpa.split(';').map(campo => campo.trim());
+            
+            // TRAVA DE SEGURANÇA 2: Se a linha não começar com um ID válido (0,1,2,30,40), descarta na hora
             const idRow = parseInt(listaCampos[0]);
-            if (isNaN(idRow)) return;
+            if (isNaN(idRow) || listaCampos[0] === '') return;
 
             if (idRow === 30 || idRow === 40) {
                 idEscopoAtual = idRow;
@@ -89,16 +96,43 @@ async function carregarOportunidades() {
                 let dadosOp = listaCampos.slice(1, 10);
                 while (dadosOp.length < 9) dadosOp.push('');
 
+                // CORREÇÃO DEFINITIVA: Captura a linha de títulos do ID0 ("Variação", etc.) e impede que ela gere HTML lixo
+                if (idRow === 0 && (!listaCampos[1] || listaCampos[1].trim() === '')) {
+                    titulosId0 = [...dadosOp]; // Guarda os nomes corretos para o topo das células
+                    return; // Sai do loop sem desenhar nada na tela
+                }
+
+                if (idRow === 0) {
+                    contadorBlocos++;
+                    idAnterior = idRow;
+
+                    // Se por acaso o CSV não tiver a linha de títulos superior, usa o fallback estruturado
+                    if (titulosId0 === null) {
+                        titulosId0 = ["Ativos", "", "", "", "", "Variação", "Resultado Parcial", "Ativos", "Valuation"];
+                    }
+
+                    let htmlLinhaStr = `<tr id="mestre-bloco-${contadorBlocos}" class="id0-row-clickable collapsed" onclick="alternarBloco(${contadorBlocos})">`;
+                    
+                    dadosOp.forEach((conteudo, colIndex) => {
+                        let titulo = titulosId0[colIndex] || '';
+                        let prefixoIcone = colIndex === 0 ? `<span class="toggle-icon">▼</span>` : '';
+                        
+                        htmlLinhaStr += `<td class="linha-id0">
+                            <div style="font-size: 10px; color: #94a3b8; font-weight: normal; margin-bottom: 2px;">${titulo}</div>
+                            <div style="font-size: 13px; font-weight: bold; display: flex; align-items: center;">${prefixoIcone}${conteudo}</div>
+                        </td>`;
+                    });
+                    
+                    htmlLinhaStr += '<td class="linha-id0"></td></tr>';
+                    htmlTabela += htmlLinhaStr;
+                    
+                    titulosId0 = null; 
+                    return;
+                }
+
                 let classeSeparadoraID = '';
                 if (idAnterior !== null && idRow !== idAnterior && (idRow === 0 || idRow === 1)) {
                     classeSeparadoraID = 'inicio-bloco-id';
-                }
-
-                if (idRow === 0 && dadosOp[0] && dadosOp[0].toUpperCase().includes('ANÁLISE')) {
-                    titulosId0 = [...dadosOp];
-                    return;
-                } else if (idRow === 0) {
-                    contadorBlocos++;
                 }
 
                 idAnterior = idRow;
@@ -109,21 +143,7 @@ async function carregarOportunidades() {
 
                 let htmlLinhaStr = '';
 
-                if (idRow === 0) {
-                    if (titulosId0 === null) titulosId0 = ["Ativos", "", "Situação Atual", "", "", "", "", "Valuation", ""];
-                    htmlLinhaStr += `<tr id="mestre-bloco-${contadorBlocos}" class="id0-row-clickable collapsed ${classeSeparadoraID}" onclick="alternarBloco(${contadorBlocos})">`;
-                    dadosOp.forEach((conteudo, colIndex) => {
-                        let titulo = titulosId0[colIndex] || '';
-                        let prefixoIcone = colIndex === 0 ? `<span class="toggle-icon">▼</span>` : '';
-                        htmlLinhaStr += `<td class="linha-id0">
-                            <div style="font-size: 10px; color: #94a3b8; font-weight: normal; margin-bottom: 2px;">${titulo}</div>
-                            <div style="font-size: 13px; font-weight: bold; display: flex; align-items: center;">${prefixoIcone}${conteudo}</div>
-                        </td>`;
-                    });
-                    htmlLinhaStr += '<td class="linha-id0"></td></tr>';
-                    titulosId0 = null;
-                } 
-                else if (idRow === 1) {
+                if (idRow === 1) {
                     titulosId1Op = [...dadosOp];
                     htmlLinhaStr += `<tr class="${classeLinhaTr.trim()}">`;
                     titulosId1Op.forEach(campo => htmlLinhaStr += `<td>${campo}</td>`);
@@ -138,18 +158,26 @@ async function carregarOportunidades() {
                     }
                     valoresLinhaAnteriorOp = [...dadosOp];
 
+                    cacheOportunidades[ticker] = {
+                        desejado: dadosOp[1],
+                        adquirido: dadosOp[2],
+                        precoAtual: dadosOp[6]
+                    };
+
                     htmlLinhaStr += `<tr class="${classeLinhaTr.trim()}">`;
                     dadosOp.forEach(valor => htmlLinhaStr += `<td>${valor}</td>`);
                     htmlLinhaStr += `<td><button class="btn-menu-lateral" onclick="abrirSimulador('${ticker}')">⋮</button></td></tr>`;
                 }
                 htmlTabela += htmlLinhaStr;
             }
+
             else if (idEscopoAtual === 40) {
                 let dadosSim = listaCampos.slice(1, 7);
                 while (dadosSim.length < 6) dadosSim.push('');
 
                 if (idRow === 1) {
-                    titulosId1Sim = [...dadosSim];
+                    // Guarda estritamente as colunas visíveis do Simulador sem o "Ativo"
+                    titulosId1Sim = listaCampos.slice(2, 7);
                 } 
                 else if (idRow === 2) {
                     const ticker = dadosSim[0];
@@ -160,9 +188,25 @@ async function carregarOportunidades() {
                     }
                     valoresLinhaAnteriorSim = [...dadosSim];
 
+                    const dadosOpSalvos = cacheOportunidades[ticker] || { desejado: '-', adquirido: '-', precoAtual: '-' };
+                    
+                    const titulosPopup = [
+                        "Desejado (Op)", 
+                        "Adquirido (Op)", 
+                        "Preço Atual (Op)", 
+                        ...(titulosId1Sim && titulosId1Sim.length > 0 ? titulosId1Sim : ["Quant.", "Investimento", "Novo (PM)", "Variação", "Upside"])
+                    ];
+                    
+                    const valoresPopup = [
+                        dadosOpSalvos.desejado, 
+                        dadosOpSalvos.adquirido, 
+                        dadosOpSalvos.precoAtual,
+                        ...dadosSim.slice(1) // Pega do índice 1 em diante (Quant, Investimento, Novo, Variação, Upside)
+                    ];
+
                     memoriaSimulador[ticker] = {
-                        titulos: titulosId1Sim ? titulosId1Sim.slice(1) : ["Ordem", "Investimento", "Preço Médio", "Variação", "Upside"],
-                        valores: dadosSim.slice(1)
+                        titulos: titulosPopup,
+                        valores: valoresPopup
                     };
                 }
             }
@@ -175,5 +219,4 @@ async function carregarOportunidades() {
     }
 }
 
-// Inicializa o carregamento da tabela assim que a página abre
 document.addEventListener('DOMContentLoaded', carregarOportunidades);
