@@ -1,9 +1,13 @@
+// ============================================================================
+// 1. ESCOPO GLOBAL E MEMÓRIA DE SIMULAÇÃO (Nunca apague ou mova estas linhas)
+// ============================================================================
 const memoriaSimulador = {};
+const cacheOportunidades = {}; 
 
-// LÓGICA DE ÁRVORE PADRONIZADA: Idêntica ao motor da tela de gestão
+// LÓGICA DE ÁRVORE PADRONIZADA: Expande e retrai os blocos da tabela principal
 window.alternarBloco = function(indexBloco) {
     const linhasFilhas = document.querySelectorAll(`.filhas-bloco-${indexBloco}`);
-    const linhaMestre = document.getElementById(`mestre-bloco-${indexBloco}`);
+    const lineMestre = document.getElementById(`mestre-bloco-${indexBloco}`);
     if (linhasFilhas.length === 0) return;
 
     const primeiraLinha = linhasFilhas.item(0);
@@ -17,15 +21,30 @@ window.alternarBloco = function(indexBloco) {
         }
     });
 
-    if (linhaMestre) {
+    if (lineMestre) {
         if (estaEscondido) {
-            linhaMestre.classList.remove('collapsed');
+            lineMestre.classList.remove('collapsed');
         } else {
-            linhaMestre.classList.add('collapsed');
+            lineMestre.classList.add('collapsed');
         }
     }
 };
 
+// AUXILIAR GLOBAL: Limpa moedas e porcentagens e converte para número real no JS
+function converterParaNumero(texto) {
+    if (!texto) return 0;
+    let limpo = texto.replace('R$', '').replace('%', '').replace(/\s/g, '').trim();
+    if (limpo.includes(',') && limpo.includes('.')) {
+        limpo = limpo.replace(/\./g, '').replace(',', '.');
+    } else if (limpo.includes(',')) {
+        limpo = limpo.replace(',', '.');
+    }
+    return parseFloat(limpo) || 0;
+}
+
+// ============================================================================
+// 2. CONTROLE INTERATIVO DO POPUP (SIMULADOR DE COMPRAS)
+// ============================================================================
 window.abrirSimulador = function(ativo) {
     const dadosDoAtivo = memoriaSimulador[ativo];
     const modal = document.getElementById('popup-simulador');
@@ -36,17 +55,58 @@ window.abrirSimulador = function(ativo) {
 
     document.getElementById('modal-titulo').innerText = `Simulador de Compra: ${ativo}`;
     let htmlPopup = '';
-    
-    dadosDoAtivo.valores.forEach((valor, index) => {
-        let rotulo = dadosDoAtivo.titulos[index] || `Indicador ${index + 1}`;
+    modal.dataset.ativo = ativo;
+
+    dadosDoAtivo.titulos.forEach((rotulo, index) => {
+        let valor = dadosDoAtivo.valores[index] || '';
+        let elementoValor = `<div class="simulador-val">${valor}</div>`;
+
+        let rotuloLimpo = rotulo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+        // Torna a quantidade editável
+        if (rotuloLimpo.includes('quant') || rotuloLimpo.includes('compra')) {
+            let valorNumerico = parseInt(valor.replace(/\D/g, '')) || 0;
+            elementoValor = `
+                <input type="number" 
+                       class="simulador-input-quant" 
+                       id="input-simulador-quant" 
+                       value="${valorNumerico}" 
+                       min="0" 
+                       style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; font-weight: bold; text-align: right;"
+                       oninput="window.calcularSimulacao('${ativo}')">`;
+        }
+        // Injeta IDs fixos para os alvos matemáticos
+        else if (rotuloLimpo.includes('investimento')) {
+            elementoValor = `<div class="simulador-val" id="sim-investimento" style="font-weight: bold;">${valor}</div>`;
+        } 
+        else if (rotuloLimpo.includes('novo (pm)')) {
+            elementoValor = `<div class="simulador-val" id="sim-novopm" style="font-weight: bold;">${valor}</div>`;
+        } 
+        else if (rotuloLimpo.includes('variacao')) {
+            elementoValor = `<div class="simulador-val" id="sim-variacao" style="font-weight: bold;">${valor}</div>`;
+        } 
+        else if (rotuloLimpo.includes('upside')) {
+            elementoValor = `<div class="simulador-val" id="sim-upside" style="font-weight: bold;">${valor}</div>`;
+        }
+
         htmlPopup += `
-            <div class="simulador-item">
-                <div class="simulador-label">${rotulo}</div>
-                <div class="simulador-val">${valor}</div>
+            <div class="simulador-item" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
+                <div class="simulador-label" style="font-size: 12px; color: #64748b;">${rotulo}</div>
+                <div style="width: 50%; text-align: right;">${elementoValor}</div>
             </div>`;
     });
+
     document.getElementById('modal-conteudo').innerHTML = htmlPopup;
     modal.classList.add('active');
+
+    // Foco automático do cursor no input de quantidade
+    setTimeout(() => {
+        const inputQuant = document.getElementById('input-simulador-quant');
+        if (inputQuant) {
+            inputQuant.focus();
+            inputQuant.select(); 
+        }
+    }, 50);
 };
 
 window.fecharModal = function(e) {
@@ -55,6 +115,68 @@ window.fecharModal = function(e) {
     }
 };
 
+// MOTOR DE CÁLCULO DA SIMULAÇÃO
+window.calcularSimulacao = function(ativo) {
+    const dadosOp = cacheOportunidades[ativo];
+    if (!dadosOp) return;
+
+    const inputQuant = document.getElementById('input-simulador-quant');
+    const novaQuantidade = parseInt(inputQuant.value) || 0;
+
+    const formatarMoeda = (numero) => numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const formatarPorcentagem = (numero) => (numero * 100).toFixed(2).replace('.', ',') + '%';
+
+    // FÓRMULA 1: Investimento = Nova Qtd * Preço Atual
+    const novoInvestimento = novaQuantidade * dadosOp.precoAtual;
+
+    // FÓRMULA 2: Novo Preço Médio (Média Ponderada Pura)
+    let novoPrecoMedio = dadosOp.precoMedio; 
+    const qtdTotal = dadosOp.adquirido + novaQuantidade;
+    if (qtdTotal > 0) {
+        novoPrecoMedio = ((dadosOp.adquirido * dadosOp.precoMedio) + (novaQuantidade * dadosOp.precoAtual)) / qtdTotal;
+    }
+
+    // FÓRMULA 3: Variação = [Preço Atual / Novo (PM)] - 1
+    let novaVariacao = 0;
+    if (novoPrecoMedio > 0) {
+        novaVariacao = (dadosOp.precoAtual / novoPrecoMedio) - 1;
+    }
+
+    // FÓRMULA 4: Upside = [Preço teto - Novo (PM)] / Preço teto
+    let novoUpside = 0;
+    let temPrecoTeto = dadosOp.precoTeto > 0;
+    if (temPrecoTeto) {
+        novoUpside = (dadosOp.precoTeto - novoPrecoMedio) / dadosOp.precoTeto;
+    }
+
+    // Injeção de resultados na interface do Popup
+    const campoInvestimento = document.getElementById('sim-investimento');
+    const campoNovoPM       = document.getElementById('sim-novopm');
+    const campoVariacao     = document.getElementById('sim-variacao');
+    const campoUpside       = document.getElementById('sim-upside');
+
+    if (campoInvestimento) campoInvestimento.innerText = formatarMoeda(novoInvestimento);
+    if (campoNovoPM)       campoNovoPM.innerText = formatarMoeda(novoPrecoMedio);
+    
+    if (campoVariacao) {
+        campoVariacao.innerText = formatarPorcentagem(novaVariacao);
+        campoVariacao.style.color = novaVariacao >= 0 ? '#10b981' : '#ef4444';
+    }
+    
+    if (campoUpside) {
+        if (!temPrecoTeto) {
+            campoUpside.innerText = "N/A";
+            campoUpside.style.color = "#64748b";
+        } else {
+            campoUpside.innerText = formatarPorcentagem(novoUpside);
+            campoUpside.style.color = novoUpside >= 0 ? '#10b981' : '#ef4444';
+        }
+    }
+};
+
+// ============================================================================
+// 3. CARREGAMENTO E PARSER DINÂMICO DO ARQUIVO CSV
+// ============================================================================
 async function carregarOportunidades() {
     const container = document.getElementById('tabela-oportunidades-container');
     try {
@@ -72,18 +194,13 @@ async function carregarOportunidades() {
         let valoresLinhaAnteriorOp = Array(10).fill(''); 
         let valoresLinhaAnteriorSim = Array(7).fill('');
 
-        const cacheOportunidades = {};
-
         lines.forEach((linha) => {
-            const htmlLinhaLimpa = linha.trim();
-            // TRAVA DE SEGURANÇA 1: Ignora linhas completamente vazias ou que só tenham aspas soltas
-            if (!htmlLinhaLimpa || htmlLinhaLimpa === '"') return;
+            const htmlLinhaReal = linha.trim();
+            if (!htmlLinhaReal || htmlLinhaReal === '"') return;
 
-            const listaCampos = htmlLinhaLimpa.split(';').map(campo => campo.trim());
-            
-            // TRAVA DE SEGURANÇA 2: Se a linha não começar com um ID válido (0,1,2,30,40), descarta na hora
-            const idRow = parseInt(listaCampos[0]);
-            if (isNaN(idRow) || listaCampos[0] === '') return;
+            const listaCampos = htmlLinhaReal.split(';').map(campo => campo.trim());
+            const idRow = parseInt(listaCampos[0]); // Captura explícita do ID da linha
+            if (isNaN(idRow)) return;
 
             if (idRow === 30 || idRow === 40) {
                 idEscopoAtual = idRow;
@@ -96,17 +213,16 @@ async function carregarOportunidades() {
                 let dadosOp = listaCampos.slice(1, 10);
                 while (dadosOp.length < 9) dadosOp.push('');
 
-                // CORREÇÃO DEFINITIVA: Captura a linha de títulos do ID0 ("Variação", etc.) e impede que ela gere HTML lixo
-                if (idRow === 0 && (!listaCampos[1] || listaCampos[1].trim() === '')) {
-                    titulosId0 = [...dadosOp]; // Guarda os nomes corretos para o topo das células
-                    return; // Sai do loop sem desenhar nada na tela
+                // Ignora linhas de metadados de cabeçalho vazias do ID 0
+                if (idRow === 0 && (listaCampos[1] === undefined || listaCampos[1].trim() === '')) {
+                    titulosId0 = [...dadosOp]; 
+                    return; 
                 }
 
                 if (idRow === 0) {
                     contadorBlocos++;
                     idAnterior = idRow;
 
-                    // Se por acaso o CSV não tiver a linha de títulos superior, usa o fallback estruturado
                     if (titulosId0 === null) {
                         titulosId0 = ["Ativos", "", "", "", "", "Variação", "Resultado Parcial", "Ativos", "Valuation"];
                     }
@@ -158,10 +274,13 @@ async function carregarOportunidades() {
                     }
                     valoresLinhaAnteriorOp = [...dadosOp];
 
+                    // EXTRAÇÃO POSICIONAL FIXA DO NOVO CSV (ID 30)
                     cacheOportunidades[ticker] = {
-                        desejado: dadosOp[1],
-                        adquirido: dadosOp[2],
-                        precoAtual: dadosOp[6]
+                        desejadoTexto: dadosOp[1] || '-', // Mapeia o Desejado planejado
+                        adquirido: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[2]) : 0,
+                        precoMedio: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[3]) : 0,
+                        precoAtual: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[6]) : 0, // Índice 6 = Preço Atual
+                        precoTeto: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[7]) : 0   // Índice 7 = Preço Teto
                     };
 
                     htmlLinhaStr += `<tr class="${classeLinhaTr.trim()}">`;
@@ -170,13 +289,11 @@ async function carregarOportunidades() {
                 }
                 htmlTabela += htmlLinhaStr;
             }
-
             else if (idEscopoAtual === 40) {
-                let dadosSim = listaCampos.slice(1, 7);
-                while (dadosSim.length < 6) dadosSim.push('');
+                let dadosSim = listaCampos.slice(1, 8);
+                while (dadosSim.length < 7) dadosSim.push('');
 
                 if (idRow === 1) {
-                    // Guarda estritamente as colunas visíveis do Simulador sem o "Ativo"
                     titulosId1Sim = listaCampos.slice(2, 7);
                 } 
                 else if (idRow === 2) {
@@ -188,7 +305,7 @@ async function carregarOportunidades() {
                     }
                     valoresLinhaAnteriorSim = [...dadosSim];
 
-                    const dadosOpSalvos = cacheOportunidades[ticker] || { desejado: '-', adquirido: '-', precoAtual: '-' };
+                    const dadosOpSalvos = cacheOportunidades[ticker] || { desejadoTexto: '-', adquirido: 0, precoMedio: 0, precoAtual: 0, precoTeto: 0 };
                     
                     const titulosPopup = [
                         "Desejado (Op)", 
@@ -198,10 +315,10 @@ async function carregarOportunidades() {
                     ];
                     
                     const valoresPopup = [
-                        dadosOpSalvos.desejado, 
-                        dadosOpSalvos.adquirido, 
-                        dadosOpSalvos.precoAtual,
-                        ...dadosSim.slice(1) // Pega do índice 1 em diante (Quant, Investimento, Novo, Variação, Upside)
+                        dadosOpSalvos.desejadoTexto, 
+                        dadosOpSalvos.adquirido.toString(), 
+                        dadosOpSalvos.precoAtual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
+                        ...dadosSim.slice(1) 
                     ];
 
                     memoriaSimulador[ticker] = {
