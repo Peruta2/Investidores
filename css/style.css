@@ -422,7 +422,7 @@ h2.subtitulo-pagina {
     color: #e5c495;            /* Cor do texto que muda no mouse */
 }
 /* ==========================================================================
-   ESTILOS EXCLUSIVOS PARA O SIMULADOR E POPUPS (OPORTUNIDADES)
+   ESTILOS EXCLUSIVOS PARA O SIMULADOR E POPUPS (OPORTUNIDADES) e (SIMULADOR)
    ========================================================================== */
 
 /* Distribuição de colunas exclusiva para o gabarito de Oportunidades (10 colunas) */
@@ -436,6 +436,19 @@ h2.subtitulo-pagina {
 .tabela-oportunidades th:nth-child(8), .tabela-oportunidades td:nth-child(8) { width: 15%; }
 .tabela-oportunidades th:nth-child(9), .tabela-oportunidades td:nth-child(9) { width: 8%; }
 .tabela-oportunidades th:nth-child(10), .tabela-oportunidades td:nth-child(10) { width: 4%; }
+
+/* Distribuição de colunas calibrada para o Simulador (6 colunas) */
+/* Distribuição de colunas calibrada para o Simulador Completo (10 colunas) */
+.tabela-simulador th:nth-child(1), .tabela-simulador td:nth-child(1) { width: 13%; } /* Ativo */
+.tabela-simulador th:nth-child(2), .tabela-simulador td:nth-child(2) { width: 9%; }  /* Desejado */
+.tabela-simulador th:nth-child(3), .tabela-simulador td:nth-child(3) { width: 9%; }  /* Adquirido */
+.tabela-simulador th:nth-child(4), .tabela-simulador td:nth-child(4) { width: 10%; } /* Preço Atual */
+.tabela-simulador th:nth-child(5), .tabela-simulador td:nth-child(5) { width: 10%; } /* Preço Teto */
+.tabela-simulador th:nth-child(6), .tabela-simulador td:nth-child(6) { width: 9%; }  /* Quantidade */
+.tabela-simulador th:nth-child(7), .tabela-simulador td:nth-child(7) { width: 10%; } /* Investimento */
+.tabela-simulador th:nth-child(8), .tabela-simulador td:nth-child(8) { width: 10%; } /* Novo PM */
+.tabela-simulador th:nth-child(9), .tabela-simulador td:nth-child(9) { width: 10%; } /* Variação */
+.tabela-simulador th:nth-child(10), .tabela-simulador td:nth-child(10) { width: 10%; } /* Upside */
 
 /* Botão de Três Pontos (⋮) */
 .btn-menu-lateral {
