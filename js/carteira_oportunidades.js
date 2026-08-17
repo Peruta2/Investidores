@@ -4,14 +4,21 @@
 const memoriaSimulador = {};
 const cacheOportunidades = {}; 
 
-// LÓGICA DE ÁRVORE PADRONIZADA: Expande e retrai os blocos da tabela principal
-window.alternarBloco = function(indexBloco) {
-    const linhasFilhas = document.querySelectorAll(`.filhas-bloco-${indexBloco}`);
-    const lineMestre = document.getElementById(`mestre-bloco-${indexBloco}`);
+// Altera visualmente a aba ativa na tela
+window.mudarAba = function(evento, idAba) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(idAba).classList.add('active');
+    evento.currentTarget.classList.add('active');
+};
+
+// LÓGICA DE ÁRVORE EVOLUÍDA: Suporta colapsar tanto blocos ID 0 quanto submenus ID 1
+window.alternarBloco = function(prefixoId, indexBloco) {
+    const linhasFilhas = document.querySelectorAll(`.${prefixoId}-filhas-bloco-${indexBloco}`);
+    const linhaMestre = document.getElementById(`${prefixoId}-mestre-bloco-${indexBloco}`);
     if (linhasFilhas.length === 0) return;
 
-    const primeiraLinha = linhasFilhas.item(0);
-    let estaEscondido = primeiraLinha.classList.contains('row-hidden');
+    let estaEscondido = linhasFilhas[0].classList.contains('row-hidden');
 
     linhasFilhas.forEach(linha => {
         if (estaEscondido) {
@@ -21,11 +28,11 @@ window.alternarBloco = function(indexBloco) {
         }
     });
 
-    if (lineMestre) {
+    if (linhaMestre) {
         if (estaEscondido) {
-            lineMestre.classList.remove('collapsed');
+            linhaMestre.classList.remove('collapsed');
         } else {
-            lineMestre.classList.add('collapsed');
+            linhaMestre.classList.add('collapsed');
         }
     }
 };
@@ -43,84 +50,14 @@ function converterParaNumero(texto) {
 }
 
 // ============================================================================
-// 2. CONTROLE INTERATIVO DO POPUP (SIMULADOR DE COMPRAS)
+// 2. MOTOR DE CÁLCULO DO SIMULADOR (Injetado Direto nas Linhas da Tabela)
 // ============================================================================
-window.abrirSimulador = function(ativo) {
-    const dadosDoAtivo = memoriaSimulador[ativo];
-    const modal = document.getElementById('popup-simulador');
-    if (!dadosDoAtivo) {
-        alert(`Nenhum registro de simulador encontrado para o ativo ${ativo}.`);
-        return;
-    }
-
-    document.getElementById('modal-titulo').innerText = `Simulador de Compra: ${ativo}`;
-    let htmlPopup = '';
-    modal.dataset.ativo = ativo;
-
-    dadosDoAtivo.titulos.forEach((rotulo, index) => {
-        let valor = dadosDoAtivo.valores[index] || '';
-        let elementoValor = `<div class="simulador-val">${valor}</div>`;
-
-        let rotuloLimpo = rotulo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-        // Torna a quantidade editável
-        if (rotuloLimpo.includes('quant') || rotuloLimpo.includes('compra')) {
-            let valorNumerico = parseInt(valor.replace(/\D/g, '')) || 0;
-            elementoValor = `
-                <input type="number" 
-                       class="simulador-input-quant" 
-                       id="input-simulador-quant" 
-                       value="${valorNumerico}" 
-                       min="0" 
-                       style="width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; font-weight: bold; text-align: right;"
-                       oninput="window.calcularSimulacao('${ativo}')">`;
-        }
-        // Injeta IDs fixos para os alvos matemáticos
-        else if (rotuloLimpo.includes('investimento')) {
-            elementoValor = `<div class="simulador-val" id="sim-investimento" style="font-weight: bold;">${valor}</div>`;
-        } 
-        else if (rotuloLimpo.includes('novo (pm)')) {
-            elementoValor = `<div class="simulador-val" id="sim-novopm" style="font-weight: bold;">${valor}</div>`;
-        } 
-        else if (rotuloLimpo.includes('variacao')) {
-            elementoValor = `<div class="simulador-val" id="sim-variacao" style="font-weight: bold;">${valor}</div>`;
-        } 
-        else if (rotuloLimpo.includes('upside')) {
-            elementoValor = `<div class="simulador-val" id="sim-upside" style="font-weight: bold;">${valor}</div>`;
-        }
-
-        htmlPopup += `
-            <div class="simulador-item" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
-                <div class="simulador-label" style="font-size: 12px; color: #64748b;">${rotulo}</div>
-                <div style="width: 50%; text-align: right;">${elementoValor}</div>
-            </div>`;
-    });
-
-    document.getElementById('modal-conteudo').innerHTML = htmlPopup;
-    modal.classList.add('active');
-
-    // Foco automático do cursor no input de quantidade
-    setTimeout(() => {
-        const inputQuant = document.getElementById('input-simulador-quant');
-        if (inputQuant) {
-            inputQuant.focus();
-            inputQuant.select(); 
-        }
-    }, 50);
-};
-
-window.fecharModal = function(e) {
-    if (!e || e.target.id === 'popup-simulador' || e.type === 'click') {
-        document.getElementById('popup-simulador').classList.remove('active');
-    }
-};
-
-// MOTOR DE CÁLCULO DA SIMULAÇÃO
-window.calcularSimulacao = function(ativo) {
+window.calcularSimulacaoLinha = function(ativo) {
     const dadosOp = cacheOportunidades[ativo];
     if (!dadosOp) return;
 
-    const inputQuant = document.getElementById('input-simulador-quant');
+    const inputQuant = document.getElementById(`input-sim-${ativo}`);
+    if (!inputQuant) return;
     const novaQuantidade = parseInt(inputQuant.value) || 0;
 
     const formatarMoeda = (numero) => numero.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -149,11 +86,11 @@ window.calcularSimulacao = function(ativo) {
         novoUpside = (dadosOp.precoTeto - novoPrecoMedio) / dadosOp.precoTeto;
     }
 
-    // Injeção de resultados na interface do Popup
-    const campoInvestimento = document.getElementById('sim-investimento');
-    const campoNovoPM       = document.getElementById('sim-novopm');
-    const campoVariacao     = document.getElementById('sim-variacao');
-    const campoUpside       = document.getElementById('sim-upside');
+    // Atualização dinâmica dos campos HTML da linha correspondente
+    const campoInvestimento = document.getElementById(`txt-sim-investimento-${ativo}`);
+    const campoNovoPM       = document.getElementById(`txt-sim-novopm-${ativo}`);
+    const campoVariacao     = document.getElementById(`txt-sim-variacao-${ativo}`);
+    const campoUpside       = document.getElementById(`txt-sim-upside-${ativo}`);
 
     if (campoInvestimento) campoInvestimento.innerText = formatarMoeda(novoInvestimento);
     if (campoNovoPM)       campoNovoPM.innerText = formatarMoeda(novoPrecoMedio);
@@ -178,7 +115,9 @@ window.calcularSimulacao = function(ativo) {
 // 3. CARREGAMENTO E PARSER DINÂMICO DO ARQUIVO CSV
 // ============================================================================
 async function carregarOportunidades() {
-    const container = document.getElementById('tabela-oportunidades-container');
+    const containerOportunidades = document.getElementById('tabela-oportunidades-container');
+    const containerSimulador = document.getElementById('tabela-simulador-container');
+    
     try {
         const resposta = await fetch('../csv/carteira_oportunidades.csv?v=' + Math.random());
         if (!resposta.ok) throw new Error('Não foi possível ler o arquivo CSV.');
@@ -187,8 +126,11 @@ async function carregarOportunidades() {
         const decodificador = new TextDecoder('windows-1252');
         const lines = decodificador.decode(buffer).split('\n');
 
-        let htmlTabela = '<table class="db-table">';
-        let idEscopoAtual = 30, idAnterior = null, contadorBlocos = 0;
+        let htmlOportunidades = '<table class="db-table tabela-oportunidades">';
+        let htmlSimulador = '<table class="db-table tabela-simulador">';
+        
+        let idEscopoAtual = 30, idAnterior = null;
+        let contadorBlocosOp = 0, contadorBlocosSim = 0;
         let titulosId0 = null, titulosId1Op = null, titulosId1Sim = null;
         
         let valoresLinhaAnteriorOp = Array(10).fill(''); 
@@ -199,7 +141,7 @@ async function carregarOportunidades() {
             if (!htmlLinhaReal || htmlLinhaReal === '"') return;
 
             const listaCampos = htmlLinhaReal.split(';').map(campo => campo.trim());
-            const idRow = parseInt(listaCampos[0]); // Captura explícita do ID da linha
+            const idRow = parseInt(listaCampos[0]); 
             if (isNaN(idRow)) return;
 
             if (idRow === 30 || idRow === 40) {
@@ -209,25 +151,27 @@ async function carregarOportunidades() {
                 return;
             }
 
+            // ==========================================
+            // ESCOPO 30: OPORTUNIDADES
+            // ==========================================
             if (idEscopoAtual === 30) {
                 let dadosOp = listaCampos.slice(1, 10);
                 while (dadosOp.length < 9) dadosOp.push('');
 
-                // Ignora linhas de metadados de cabeçalho vazias do ID 0
                 if (idRow === 0 && (listaCampos[1] === undefined || listaCampos[1].trim() === '')) {
                     titulosId0 = [...dadosOp]; 
                     return; 
                 }
 
                 if (idRow === 0) {
-                    contadorBlocos++;
+                    contadorBlocosOp++;
                     idAnterior = idRow;
 
                     if (titulosId0 === null) {
                         titulosId0 = ["Ativos", "", "", "", "", "Variação", "Resultado Parcial", "Ativos", "Valuation"];
                     }
 
-                    let htmlLinhaStr = `<tr id="mestre-bloco-${contadorBlocos}" class="id0-row-clickable collapsed" onclick="alternarBloco(${contadorBlocos})">`;
+                    let htmlLinhaStr = `<tr id="op-mestre-bloco-${contadorBlocosOp}" class="id0-row-clickable collapsed" onclick="alternarBloco('op', ${contadorBlocosOp})">`;
                     
                     dadosOp.forEach((conteudo, colIndex) => {
                         let titulo = titulosId0[colIndex] || '';
@@ -240,8 +184,7 @@ async function carregarOportunidades() {
                     });
                     
                     htmlLinhaStr += '<td class="linha-id0"></td></tr>';
-                    htmlTabela += htmlLinhaStr;
-                    
+                    htmlOportunidades += htmlLinhaStr;
                     titulosId0 = null; 
                     return;
                 }
@@ -250,12 +193,11 @@ async function carregarOportunidades() {
                 if (idAnterior !== null && idRow !== idAnterior && (idRow === 0 || idRow === 1)) {
                     classeSeparadoraID = 'inicio-bloco-id';
                 }
-
                 idAnterior = idRow;
 
                 let classeLinhaTr = classeSeparadoraID;
-                if (idRow === 1) classeLinhaTr += ` linha-id1-row filhas-bloco-${contadorBlocos} row-hidden`;
-                else if (idRow >= 2) classeLinhaTr += ` linha-dados filhas-bloco-${contadorBlocos} row-hidden`;
+                if (idRow === 1) classeLinhaTr += ` linha-id1-row op-filhas-bloco-${contadorBlocosOp} row-hidden`;
+                else if (idRow >= 2) classeLinhaTr += ` linha-dados op-filhas-bloco-${contadorBlocosOp} row-hidden`;
 
                 let htmlLinhaStr = '';
 
@@ -274,28 +216,54 @@ async function carregarOportunidades() {
                     }
                     valoresLinhaAnteriorOp = [...dadosOp];
 
-                    // EXTRAÇÃO POSICIONAL FIXA DO NOVO CSV (ID 30)
                     cacheOportunidades[ticker] = {
-                        desejadoTexto: dadosOp[1] || '-', // Mapeia o Desejado planejado
-                        adquirido: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[2]) : 0,
-                        precoMedio: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[3]) : 0,
-                        precoAtual: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[6]) : 0, // Índice 6 = Preço Atual
-                        precoTeto: typeof converterParaNumero === 'function' ? converterParaNumero(dadosOp[7]) : 0   // Índice 7 = Preço Teto
+                        desejadoTexto: dadosOp[1] || '-', 
+                        adquirido: converterParaNumero(dadosOp[2]),
+                        precoMedio: converterParaNumero(dadosOp[3]),
+                        precoAtual: converterParaNumero(dadosOp[6]), 
+                        precoTeto: converterParaNumero(dadosOp[7])   
                     };
 
                     htmlLinhaStr += `<tr class="${classeLinhaTr.trim()}">`;
                     dadosOp.forEach(valor => htmlLinhaStr += `<td>${valor}</td>`);
-                    htmlLinhaStr += `<td><button class="btn-menu-lateral" onclick="abrirSimulador('${ticker}')">⋮</button></td></tr>`;
+                    htmlLinhaStr += `<td><button class="btn-menu-lateral" onclick="window.abrirSimulador('${ticker}')">⋮</button></td></tr>`;
                 }
-                htmlTabela += htmlLinhaStr;
+                htmlOportunidades += htmlLinhaStr;
             }
+            // ==============================================
+     // ESCOPO 40: SIMULADOR (Submenu ID 1 vira Mestre Colapsável)
+            //   ESCOPO 40: SIMULADOR (Com 4 Colunas Injetadas da Oportunidade)
+            // ==============================================
             else if (idEscopoAtual === 40) {
-                let dadosSim = listaCampos.slice(1, 8);
-                while (dadosSim.length < 7) dadosSim.push('');
+                let dadosSim = listaCampos.slice(1, 7);
+                while (dadosSim.length < 6) dadosSim.push('');
 
+                // ID 1: Cabeçalho do Bloco
                 if (idRow === 1) {
+                    contadorBlocosSim++;
                     titulosId1Sim = listaCampos.slice(2, 7);
+                    
+                    htmlSimulador += `<tr id="sim-mestre-bloco-${contadorBlocosSim}" class="linha-id1-row id0-row-clickable collapsed" onclick="alternarBloco('sim', ${contadorBlocosSim})" style="cursor: pointer;">`;
+                    
+                    // Nome do Ativo
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px;"><span class="toggle-icon">▼</span> ${dadosSim[0]}</td>`;
+                    
+                    // Títulos das Novas Colunas de Referência (Injetadas)
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px; color: #94a3b8;">Desejado</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px; color: #94a3b8;">Adquirido</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px; color: #94a3b8;">Preço Atual</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px; color: #94a3b8;">Preço Teto</td>`;
+                    
+                    // Títulos Originais do Simulador
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px;">${dadosSim[1]}</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px;">${dadosSim[2]}</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px;">${dadosSim[3]}</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px;">${dadosSim[4]}</td>`;
+                    htmlSimulador += `<td style="font-weight: bold; font-size: 13px;">${dadosSim[5]}</td>`;
+                    
+                    htmlSimulador += `</tr>`;
                 } 
+                // ID 2: Linha de Dados
                 else if (idRow === 2) {
                     const ticker = dadosSim[0];
                     if (!ticker) return;
@@ -305,34 +273,55 @@ async function carregarOportunidades() {
                     }
                     valoresLinhaAnteriorSim = [...dadosSim];
 
-                    const dadosOpSalvos = cacheOportunidades[ticker] || { desejadoTexto: '-', adquirido: 0, precoMedio: 0, precoAtual: 0, precoTeto: 0 };
+                    // Recupera os 4 dados estratégicos guardados da aba Oportunidades
+                    const dadosOriginais = cacheOportunidades[ticker] || { desejadoTexto: '-', adquirido: 0, precoAtual: 0, precoTeto: 0 };
                     
-                    const titulosPopup = [
-                        "Desejado (Op)", 
-                        "Adquirido (Op)", 
-                        "Preço Atual (Op)", 
-                        ...(titulosId1Sim && titulosId1Sim.length > 0 ? titulosId1Sim : ["Quant.", "Investimento", "Novo (PM)", "Variação", "Upside"])
-                    ];
-                    
-                    const valoresPopup = [
-                        dadosOpSalvos.desejadoTexto, 
-                        dadosOpSalvos.adquirido.toString(), 
-                        dadosOpSalvos.precoAtual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-                        ...dadosSim.slice(1) 
-                    ];
+                    const txtDesejado = dadosOriginais.desejadoTexto;
+                    const txtAdquirido = dadosOriginais.adquirido > 0 ? dadosOriginais.adquirido.toString() : '0';
+                    const txtPrecoAtual = dadosOriginais.precoAtual > 0 ? dadosOriginais.precoAtual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-';
+                    const txtPrecoTeto = dadosOriginais.precoTeto > 0 ? dadosOriginais.precoTeto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-';
 
-                    memoriaSimulador[ticker] = {
-                        titulos: titulosPopup,
-                        valores: valoresPopup
-                    };
+                    htmlSimulador += `<tr class="linha-dados sim-filhas-bloco-${contadorBlocosSim} row-hidden">`;
+                    
+                    // Coluna 1: Nome do Ativo
+                    htmlSimulador += `<td>${dadosSim[0]}</td>`;
+                    
+                    // Colunas Injetadas (Estilo sutil cinza/itálico de referência)
+                    htmlSimulador += `<td style="color: #64748b; font-style: italic;">${txtDesejado}</td>`;
+                    htmlSimulador += `<td style="color: #64748b; font-style: italic;">${txtAdquirido}</td>`;
+                    htmlSimulador += `<td style="color: #64748b; font-style: italic;">${txtPrecoAtual}</td>`;
+                    htmlSimulador += `<td style="color: #64748b; font-style: italic;">${txtPrecoTeto}</td>`;
+                    
+                    // Coluna 6: Input de Quantidade / Compra
+                    htmlSimulador += `<td>
+                        <input type="number" id="input-sim-${ticker}" class="simulador-input-quant" value="0" min="0" style="width:70px; text-align:right; font-weight:bold;" oninput="window.calcularSimulacaoLinha('${ticker}')">
+                    </td>`;
+                    
+                    // Colunas Calculadas Dinamicamente
+                    htmlSimulador += `<td id="txt-sim-investimento-${ticker}">${dadosSim[2]}</td>`;
+                    htmlSimulador += `<td id="txt-sim-novopm-${ticker}">${dadosSim[3]}</td>`;
+                    htmlSimulador += `<td id="txt-sim-variacao-${ticker}">${dadosSim[4]}</td>`;
+                    htmlSimulador += `<td id="txt-sim-upside-${ticker}">${dadosSim[5]}</td>`;
+                    
+                    htmlSimulador += '</tr>';
+
+                    // Manutenção do cache interno do sistema
+                    const dadosOpSalvos = cacheOportunidades[ticker] || { desejadoTexto: '-', adquirido: 0, precoMedio: 0, precoAtual: 0, precoTeto: 0 };
+                    const titulosPopup = ["Desejado (Op)", "Adquirido (Op)", "Preço Atual (Op)", ...(titulosId1Sim && titulosId1Sim.length > 0 ? titulosId1Sim : ["Quant.", "Investimento", "Novo (PM)", "Variação", "Upside"])];
+                    const valoresPopup = [dadosOpSalvos.desejadoTexto, dadosOpSalvos.adquirido.toString(), dadosOpSalvos.precoAtual.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }), ...dadosSim.slice(1)];
+
+                    memoriaSimulador[ticker] = { titulos: titulosPopup, valores: valoresPopup };
                 }
             }
         });
 
-        htmlTabela += '</table>';
-        container.innerHTML = htmlTabela;
+        htmlOportunidades += '</table>';
+        htmlSimulador += '</table>';
+
+        if(containerOportunidades) containerOportunidades.innerHTML = htmlOportunidades;
+        if(containerSimulador) containerSimulador.innerHTML = htmlSimulador;
     } catch (erro) {
-        container.innerHTML = `<div class="status-msg" style="color: #ff6b6b;">Erro: ${erro.message}</div>`;
+        if(containerOportunidades) containerOportunidades.innerHTML = `<div class="status-msg" style="color: #ff6b6b;">Erro: ${erro.message}</div>`;
     }
 }
 
