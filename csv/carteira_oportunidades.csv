@@ -91,7 +91,7 @@
 1;Ativo;Desejado;Adquirido;Preço Médio;Variação;Representa;Preço Atual;Valor Projetivo;TEC
 2;TFLO;0,00;0,00;R$ 50,50;0,16%;R$ 0,00;R$ 50,58;R$ 52,75;4,50%
 40;SIMULADOR;;;;;
-1;Ativo;Quant.;Investimento;Novo (PM);Variação;Upside
+1;Ativo;Compra;Investimento;Novo (PM);Variação;Upside
 2;BBDC4;0;R$ 0,00;R$ 12,18;35,80%;36,55%
 2;ITUB4;0;R$ 0,00;R$ 31,57;23,54%;26,64%
 2;BBAS3;0;R$ 0,00;R$ 21,88;-16,00%;15,47%
