@@ -3,27 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oportunidades e Simulador de Aportes</title>
+    <title>Análise de Oportunidades e Simulador de Aportes</title>
     <!-- Vincula o mesmo CSS unificado do sistema -->
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="pagina-interna">
 
     <div class="container">
+        <!-- Título padrão com a identidade visual correta -->
         <h1 class="titulo-pagina">Oportunidades de Investimento</h1>
         
-        <div id="tabela-oportunidades-container" class="table-container tabela-oportunidades">
-            <div class="status-msg">Processando base de dados operacional...</div>
+        <!-- Abas no mesmo padrão do carteira_gestao.html -->
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="mudarAba(event, 'aba-oportunidades')">Oportunidades</button>
+            <button class="tab-btn" onclick="mudarAba(event, 'aba-simulador')">Simulador</button>
         </div>
-    </div>
+        <div class="tab-buttons-spacer"></div>
 
-    <!-- Estrutura do Popup para o ID 40 (Simulador) -->
-    <div id="popup-simulador" class="modal-overlay" onclick="fecharModal(event)">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <button class="modal-close" onclick="fecharModal(null)">&times;</button>
-            <div id="modal-titulo" class="modal-header">Simulador do Ativo</div>
-            <div id="modal-conteudo" class="simulador-grid">
-                <!-- Preenchido via JS dinamicamente -->
+        <!-- Aba 1: Tabela de Oportunidades (10 colunas) -->
+        <div id="aba-oportunidades" class="tab-content active">
+            <div id="tabela-oportunidades-container" class="table-container tabela-oportunidades">
+                <div class="status-msg">Processando base de dados operacional...</div>
+            </div>
+        </div>
+
+        <!-- Aba 2: Novo espaço fixo do Simulador (Tabela de 7 colunas ou Grid) -->
+        <div id="aba-simulador" class="tab-content">
+            <div id="tabela-simulador-container" class="table-container tabela-simulador">
+                <!-- Mantive a sua classe simulador-grid caso o JS injete blocos/cards em vez de linhas de tabela -->
+                <div id="conteudo-simulador" class="simulador-grid">
+                    <div class="status-msg">Selecione um ativo ou inicialize o simulador...</div>
+                </div>
             </div>
         </div>
     </div>
