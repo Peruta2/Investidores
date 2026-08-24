@@ -1,0 +1,184 @@
+/* ============================================================================
+   PALETA DE CORES E VARIÁVEIS OPERACIONAIS GLOBAIS
+   ============================================================================ */
+:root {
+    --azul-marinho: #0A192F;
+    --azul-escuro-tab: #112240;
+    --dourado: #C5A880;
+    --branco: #F4F6F9;
+    --texto-mutado: #94A3B8;
+    --cinza-linha: #C0C0C0;
+    --azul-platinado: #92A0B3; /* Mistura exata calculada para o hover */
+}
+
+/* ============================================================================
+   ESTRUTURA GERAL DA TABELA (PADRÃO ECÚMÊNICO DB-TABLE)
+   ============================================================================ */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background-color: var(--azul-escuro-tab);
+    border-radius: 0 8px 8px 8px;
+    border: 1px solid var(--azul-marinho);
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.db-table {
+    width: 100%;
+    border-collapse: collapse; /* Permite as bordas nativas ultrafinas de 2px */
+    text-align: left;
+    font-size: 13px;
+    table-layout: fixed; /* Trava a largura das colunas do Excel */
+    background-color: var(--azul-escuro-tab);
+}
+
+.db-table th {
+    background-color: var(--azul-marinho);
+    color: var(--dourado);
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+}
+
+.db-table td {
+    padding: 6px 10px;
+    color: var(--branco);
+    vertical-align: middle;
+    /* Padrão restrito: Texto longo vira reticências apenas nas linhas de ativos */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ============================================================================
+   REGRA DE TRANSBORDO LIVRE: EXCLUSIVA PARA ID 0 E ID 1 (MENU E SUBMENU)
+   ============================================================================ */
+.db-table tr.id0-row-clickable td,
+.db-table tr.linha-id1-row td {
+    overflow: visible !important;   /* Cancela o corte do texto longo */
+    text-overflow: clip !important;  /* Remove as reticências fantasmas */
+    white-space: nowrap;
+}
+
+/* ============================================================================
+   ESTILIZAÇÃO DA ARQUITETURA DE LINHAS (ID 0, ID 1, ID 2)
+   ============================================================================ */
+
+/* ID 0 - MENU PRINCIPAL (Barra Superior de Títulos Consolidados) */
+.db-table tr.id0-row-clickable td.linha-id0 {
+    background-color: var(--azul-marinho);
+    color: var(--branco);
+    padding: 12px 10px;
+    /* Trava a borda fina dourada nativa como divisor fixo de blocos */
+    border-bottom: 2px solid var(--dourado) !important;
+}
+
+.db-table tr.id0-row-clickable:hover td.linha-id0 {
+    background-color: #24334d; /* Realce sutil do menu ao passar o mouse */
+    color: #e5c495;
+    cursor: pointer;
+}
+
+/* ID 1 - SUBMENU (Barra Ativa Fixa) */
+.db-table tr.linha-id1-row td {
+    background-color: var(--dourado) !important;
+    color: #000000 !important; /* Texto em preto puro para alto contraste */
+    font-weight: bold !important;
+}
+
+.db-table tr.linha-id1-row:hover,
+.db-table tr.linha-id1-row:hover td {
+    background-color: var(--dourado) !important; /* Trava o fundo dourado fixo */
+    color: #000000 !important;
+}
+
+/* ID 2 ATÉ 5 - CONTEÚDO DAS LINHAS (Ativos) */
+.tabela-oportunidades tr.linha-dados,
+.tabela-simulador tr.linha-dados,
+.db-table tr.linha-dados {
+    height: 32px !important; 
+    background-color: var(--cinza-linha) !important; /* Fundo Cinza Claro do Excel */
+}
+
+.tabela-oportunidades tr.linha-dados td,
+.tabela-simulador tr.linha-dados td,
+.db-table tr.linha-dados td {
+    line-height: 14px !important; 
+    padding-top: 5px !important;  
+    padding-bottom: 5px !important; 
+    color: #000000 !important; /* Força o texto em Preto Puro nativo */
+}
+
+/* HOVER DAS LINHAS: Mistura exata (Azul Platinado) com Letras em Preto Puro */
+.tabela-oportunidades tr.linha-dados:hover,
+.tabela-simulador tr.linha-dados:hover,
+.db-table tr.linha-dados:hover {
+    background-color: var(--azul-platinado) !important; /* Acende no azul metalizado */
+    cursor: pointer;
+}
+
+.tabela-oportunidades tr.linha-dados:hover td,
+.tabela-simulador tr.linha-dados:hover td,
+.db-table tr.linha-dados:hover td {
+    color: #000000 !important; /* Letras continuam pretas e legíveis no foco */
+}
+
+/* ============================================================================
+   REGRA DE HERANÇA VACANTE (EXCLUSIVA DO BALANCEAMENTO)
+   ============================================================================ */
+.db-table tr.linha-dados td.campo-herdado-nulo {
+    font-style: italic !important;
+    color: rgba(0, 0, 0, 0.35) !important; /* Cor transparente/mutada sobre o cinza */
+}
+
+/* ============================================================================
+   COMPONENTES INTERATIVOS (INPUTS E BOTÕES DO SIMULADOR)
+   ============================================================================ */
+.simulador-input-quant {
+    width: 65px;
+    height: 18px; /* Reduzido cirurgicamente para caber na linha de 32px do Excel */
+    padding: 0 4px !important;
+    margin: 0 !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+    background: #ffffff !important;
+    text-align: right;
+    font-weight: bold;
+    font-family: inherit;
+    color: #1e293b !important;
+    outline: none;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box !important; /* Força o navegador a incluir a borda dentro dos 18px */
+}
+
+.btn-menu-lateral {
+    background: transparent;
+    color: #000000;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.btn-menu-lateral:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Classes de utilidade de animação e ocultação */
+.row-hidden {
+    display: none !important;
+}
+
+.toggle-icon {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    margin-right: 6px;
+    font-size: 10px;
+}
+
+.collapsed .toggle-icon {
+    transform: rotate(-90deg); /* Gira a setinha quando fechar */
+}
