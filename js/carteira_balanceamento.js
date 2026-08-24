@@ -1,197 +1,333 @@
-// Altera visualmente a aba ativa na tela
-window.mudarAba = function(evento, idAba) {
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById(idAba).classList.add('active');
-    evento.currentTarget.classList.add('active');
+// ============================================================================
+// 1. ESCOPO GLOBAL E AUXILIARES DE ESTILIZAÇÃO E RENDERIZAÇÃO
+// ============================================================================
+
+window.alternarBloco = function(prefixoId, indexBloco) {
+    const linhasFilhas = document.querySelectorAll(`.${prefixoId}-filhas-bloco-${indexBloco}`);
+    const linhaSubmenu = document.getElementById(`${prefixoId}-submenu-bloco-${indexBloco}`);
+    const linhaMestre = document.getElementById(`${prefixoId}-mestre-bloco-${indexBloco}`);
+    
+    if (!linhasFilhas || linhasFilhas.length === 0) return;
+
+    let estaEscondido = linhasFilhas.item(0).classList.contains('row-hidden');
+
+    linhasFilhas.forEach(linha => {
+        if (estaEscondido) {
+            linha.classList.remove('row-hidden');
+        } else {
+            linha.classList.add('row-hidden');
+        }
+    });
+
+    if (linhaSubmenu) {
+        if (estaEscondido) {
+            linhaSubmenu.classList.remove('row-hidden');
+        } else {
+            linhaSubmenu.classList.add('row-hidden');
+        }
+    }
+
+    if (linhaMestre) {
+        if (estaEscondido) {
+            linhaMestre.classList.remove('collapsed');
+        } else {
+            linhaMestre.classList.add('collapsed');
+        }
+    }
 };
 
-async function carregarCarteiraPerfil() {
-    const containerDesejado = document.getElementById('tabela-desejado');
-    const containerRealidade = document.getElementById('tabela-realidade');
+window.converterParaNumero = function(valorOriginal) {
+    if (!valorOriginal) return 0;
+    let texto = String(valorOriginal);
+    let limpo = texto.replace('R$', '').replace('%', '').replace(/\s/g, '').trim();
+    if (limpo.includes(',') && limpo.includes('.')) limpo = limpo.replace(/\./g, '').replace(',', '.');
+    else if (limpo.includes(',')) limpo = limpo.replace(',', '.');
+    return parseFloat(limpo) || 0;
+};
+
+// ============================================================================
+// 2. MOTOR CORE DE PROCESSAMENTO DO DASHBOARD INTEGRADO
+// ============================================================================
+async function inicializarModuloBalanceamento() {
+    const cardsContainer = document.getElementById('kpi-cards-container');
+    const containerId10 = document.getElementById('container-id10-tabela');
+    const containerId30 = document.getElementById('container-id30-tabela');
     
     try {
-        // Chamada de rede com quebra de cache para o arquivo de balanceamento
         const resposta = await fetch('../csv/carteira_balanceamento.csv?v=' + Math.random());
-        if (!resposta.ok) throw new Error('Não foi possível ler o arquivo carteira_balanceamento.csv.');
+        if (!resposta.ok) throw new Error('Falha ao ler carteira_balanceamento.csv');
 
         const buffer = await resposta.arrayBuffer();
         const decodificador = new TextDecoder('windows-1252');
-        const texto = decodificador.decode(buffer);
-        const lines = texto.split('\n');
+        const lines = decodificador.decode(buffer).split('\n');
 
-        let htmlDesejado = '<table class="db-table">';
-        let htmlRealidade = '<table class="db-table">';
+        let htmlId10 = '<table class="db-table tabela-classes">';
+        let htmlId30 = '<table class="db-table tabela-ativos">';
         
-        let blocoDestino = ''; 
-        let idAnterior = null;
+        let id0Linha1Titulos = null;
+        let id0Linha1AtivosClass = null;
         
-        // Memória linear estável de 6 posições para a herança de dados vazios
-        let valoresLinhaAnterior = Array(6).fill('');
-        
-        let titulosId0Temporario = null;
-        let titulosId1Temporario = null;
-        let contadorBlocos = 0; // <--- ADICIONE ESTA LINHA EXATAMENTE AQUI
-        
-        // Chave de controle interna para diferenciar a Linha 1 (Títulos) da Linha 2 (Valores) do ID 1
-        let proximaLinhaEhConteudoId1 = false;
+        let labelsGrafico = [];
+        let valoresGrafico = [];
+
+        let kpiPatrimonio = "R$ 0,00", kpiAtivos = "0", kpiRV = "-", kpiRF = "-", pctRV = "-", pctRF = "-";
+
+        let idEscopoAtual = 10; 
+        let blocoId10Cont = 0;
+        let blocoId30Cont = 0;
+
+        let herancaVacanteDes = "";
+        let herancaVacanteAtivo = "";
 
         lines.forEach((linha) => {
-            const linhaLimpa = inlineString = linha.trim();
-            if (linhaLimpa === '') return;
+            const linhaLimpa = linha.trim();
+            if (!linhaLimpa || linhaLimpa === '"') return;
 
-            const colunasBrutas = linhaLimpa.split(';');
-            
-            // Resgata o ID numérico puro da coluna 0 imediatamente
-            const idRow = parseInt(colunasBrutas[0]?.trim());
+            const campos = linhaLimpa.split(';').map(c => c.trim());
+            const idRow = parseInt(campos[0]);
             if (isNaN(idRow)) return;
 
-            // PADRONIZAÇÃO MASTER: Altera a rota da aba e limpa as memórias ao ler os IDs 10 e 20
-            if (idRow === 10) {
-                blocoDestino = 'DESEJADO';
-                valoresLinhaAnterior = Array(6).fill('');
-                idAnterior = null;
-                proximaLinhaEhConteudoId1 = false;
-                return; 
-            }
-            if (idRow === 20) {
-                blocoDestino = 'REALIDADE';
-                valoresLinhaAnterior = Array(6).fill('');
-                idAnterior = null;
-                proximaLinhaEhConteudoId1 = false;
+            // Roteador de Escopo Rígido por bloco físico do CSV
+            if (idRow === 60 || idRow === 10 || idRow === 30) {
+                idEscopoAtual = idRow;
                 return; 
             }
 
-            // Fatia a linha mantendo rigidamente os 7 campos físicos do perfil (1 ID + 6 dados)
-            const listaCampos = colunasBrutas.map(campo => campo.trim()).slice(0, 7);
-            while(listaCampos.length < 7) listaCampos.push('');
-
-            let dadosVisiveis = listaCampos.slice(1, 7);
-
-            // Armazena temporariamente os rótulos de colunas do ID 0 e ID 1
-            if (idRow === 0 && dadosVisiveis[0] === 'Carteira') {
-                titulosId0Temporario = [...dadosVisiveis];
-                return; 
-            } 
-            if (idRow === 1 && dadosVisiveis[0] === 'Ativos') {
-                titulosId1Temporario = [...dadosVisiveis];
-                proximaLinhaEhConteudoId1 = false; // Reinicia o indicador de linha do submenu
+            // ----------------------------------------------------------------
+            // 2.1 PROCESSAMENTO DO ID 60 (KPI CARD PATRIMÔNIO TOTAL)
+            // ----------------------------------------------------------------
+            if (idEscopoAtual === 60) {
+                if (idRow === 0 && campos[1] === "BALANCEAMENTO") {
+                    kpiAtivos = campos[5] || "0";
+                    kpiPatrimonio = campos[7] || "R$ 0,00";
+                }
                 return;
             }
 
-            // Linha divisória pontilhada sutil na virada de categorias
-            let classeSeparadoraID = '';
-            if (idAnterior !== null && idRow !== idAnterior) {
-                if (idRow === 0 || idRow === 1) {
-                    classeSeparadoraID = 'inicio-bloco-id';
+            // ----------------------------------------------------------------
+            // 2.2 PROCESSAMENTO DO ID 10 (MACRO CLASSES DE INVESTIMENTO)
+            // ----------------------------------------------------------------
+            else if (idEscopoAtual === 10) {
+                let dadosCorte10 = campos.slice(1, 10);
+                while (dadosCorte10.length < 9) dadosCorte10.push('');
+
+                if (idRow === 0) {
+                    if (campos[1].includes("Carteira Renda")) {
+                        id0Linha1Titulos = [...dadosCorte10];
+                        return;
+                    }
+                    if (campos[1] === "DESEJADO") {
+                        if (id0Linha1Titulos && id0Linha1Titulos.includes("Saldo Renda Variável")) {
+                            kpiRV = campos[7] || "-";
+                            pctRV = campos[3] || "-";
+                        } else {
+                            kpiRF = campos[7] || "-";
+                            pctRF = campos[3] || "-";
+                        }
+
+                        blocoId10Cont++;
+                        let htmlStr = `<tr id="bal-cl-mestre-${blocoId10Cont}" class="id0-row-clickable collapsed" onclick="alternarBloco('bal-cl', ${blocoId10Cont})">`;
+                        dadosCorte10.forEach((conteudo, i) => {
+                            let titulo = id0Linha1Titulos ? id0Linha1Titulos[i] : '';
+                            let icone = i === 0 ? `<span class="toggle-icon" style="color: var(--azul-claro-brilhoso); margin-right:6px;">▼</span>` : '';
+                            htmlStr += `<td class="linha-id0" style="border-bottom: 1px solid rgba(197, 168, 128, 0.2); padding: 8px 10px;">
+                                <div style="font-size: 10px; color: var(--cinza-claro-azulado); font-weight: normal; margin-bottom: 2px;">${titulo}</div>
+                                <div style="font-size: 13px; font-weight: bold; display: flex; align-items: center; color: var(--branco);">${icone}${conteudo}</div>
+                            </td>`;
+                        });
+                        htmlStr += '</tr>';
+                        htmlId10 += htmlStr;
+                        id0Linha1Titulos = null;
+                        return;
+                    }
                 }
-            }
-            idAnterior = idRow;
-
-            // Carimba as classes no elemento <tr> para vincular com as chaves do CSS
-            let classeLinhaTr = classeSeparadoraID;
-            if (idRow === 1) {
-                classeLinhaTr += ' linha-id1-row';
-            } else if (idRow >= 2) {
-                classeLinhaTr += ' linha-dados'; 
-            }
-
-            let htmlLinhaStr = `<tr class="${classeLinhaTr.trim()}">`;
-
-            // 1. PROCESSAMENTO DO MENU PRINCIPAL (ID 0)
-            if (idRow === 0) {
-                htmlLinhaStr = `<tr id="mestre-bloco-${contadorBlocos}" class="id0-row-clickable collapsed ${classeSeparadoraID}" onclick="alternarBloco(${contadorBlocos})">`;
-
-                if (titulosId0Temporario === null) {
-                    titulosId0Temporario = ["Carteira", "Perfil de Investimento", "", "", "Patrimônio Total", ""];
+                if (idRow === 12) {
+                    if (campos[1] === "Classes de Ativos") {
+                        let htmlStr = `<tr id="bal-cl-submenu-bloco-${blocoId10Cont}" class="linha-id1-row row-hidden">`;
+                        dadosCorte10.forEach(campo => {
+                            htmlStr += `<td style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                        });
+                        htmlStr += '</tr>';
+                        htmlId10 += htmlStr;
+                    }
+                    return;
                 }
+                if (idRow >= 2 && idRow <= 5) {
+                    let htmlStr = `<tr class="linha-dados bal-cl-filhas-bloco-${blocoId10Cont} row-hidden">`;
+                    dadosCorte10.forEach((valor, idx) => {
+                        if (idx === 1) {
+                            if (valor === '') {
+                                htmlStr += `<td class="campo-herdado-nulo">${herancaVacanteDes}</td>`;
+                            } else {
+                                herancaVacanteDes = valor;
+                                htmlStr += `<td>${valor}</td>`;
+                            }
+                        } else {
+                            htmlStr += `<td>${valor}</td>`;
+                        }
+                    });
+                    htmlStr += '</tr>';
+                    htmlId10 += htmlStr;
 
-                dadosVisiveis.forEach((conteudo, colIndex) => {
-                    let titulo = titulosId0Temporario[colIndex] || '';
-                    let classeAlinhamento = colIndex === 0 ? '' : 'class="txt-centro"';
-                    if (conteudo.includes('R$')) classeAlinhamento = 'class="txt-direita"';
+                    // LÓGICA DE SOMA RECURSIVA POR % NA CARTEIRA (CAMPO 4 / ÍNDICE 3 DO CORTE)
+                    let classeMacro = campos[1]; 
+                    let percentualTexto = campos[4]; 
 
-                    // OTIMIZAÇÃO: Removido o 'color: #38bdf8;' inline para herdar o branco brilhante do seu CSS unificado
-                    htmlLinhaStr += `<td class="linha-id0" ${classeAlinhamento}>
-                        <div style="font-size: 10px; color: #94a3b8; font-weight: normal; margin-bottom: 2px;">${titulo}</div>
-                        <div style="font-size: 13px; font-weight: bold;">${conteudo}</div>
-                    </td>`;
-                });
-            } 
-            // 2. PROCESSAMENTO DO SUBMENU (ID 1)
-            else if (idRow === 1) {
-                if (titulosId1Temporario === null) {
-                    titulosId1Temporario = ["Ativos", "Perfil Carteira", "% carteira", "% ativos", "Patrimônio Renda Fixa", ""];
-                }
-
-                // Determina se aplica a classe de títulos (linha 1) ou de valores (linha 2)
-                let classeSubmenu = proximaLinhaEhConteudoId1 ? 'submenu-valores' : 'submenu-titulos';
-
-                dadosVisiveis.forEach((conteudo, colIndex) => {
-                    let titulo = titulosId1Temporario[colIndex] || '';
-                    let classeAlinhamento = colIndex === 0 ? '' : 'class="txt-centro"';
-                    if (conteudo.includes('R$')) classeAlinhamento = 'class="txt-direita"';
-
-                    let estiloRecuo = colIndex === 0 ? 'style="padding-left: 15px; border-left: 3px solid #475569;"' : '';
-
-                    // Agora injetamos a classe correta na div para você controlar pelo CSS
-                    htmlLinhaStr += `<td class="linha-id1" ${classeAlinhamento} ${estiloRecuo}>
-                        <div style="font-size: 10px; color: #ffffff; font-weight: normal; margin-bottom: 2px;">${titulo}</div>
-                        <div style="font-size: 13px; font-weight: bold;">${conteudo}</div>
-                    </td>`;
-                });
-                
-                proximaLinhaEhConteudoId1 = true;
-            }
-            // 3. PROCESSAMENTO DOS ATIVOS (ID >= 2) - HERANÇA E OPACIDADE
-            else {
-                let camposEramVazios = Array(6).fill(false);
-
-                for (let i = 0; i < dadosVisiveis.length; i++) {
-                    if (dadosVisiveis[i] === '') {
-                        camposEramVazios[i] = true;
-                        if (valoresLinhaAnterior[i] !== '') {
-                            dadosVisiveis[i] = valoresLinhaAnterior[i];
+                    if (classeMacro && percentualTexto !== undefined && percentualTexto !== "") {
+                        let valorNumerico = window.converterParaNumero(percentualTexto);
+                        let indexExistente = labelsGrafico.indexOf(classeMacro);
+                        if (indexExistente !== -1) {
+                            valoresGrafico[indexExistente] += valorNumerico;
+                        } else {
+                            labelsGrafico.push(classeMacro);
+                            valoresGrafico.push(valorNumerico);
                         }
                     }
+                    return;
                 }
-                valoresLinhaAnterior = [...dadosVisiveis];
-
-                dadosVisiveis.forEach((valorCampo, colIndex) => {
-                    let classeAlinhamento = 'class="txt-centro"';
-                    if (colIndex === 0) classeAlinhamento = ''; 
-                    if (valorCampo.includes('R$')) classeAlinhamento = 'class="txt-direita"'; 
-
-                    let estiloSuave = colIndex === 0 ? 'style="padding-left: 28px; border-left: 3px solid #334155;' : 'style="';
-                    
-                    if (camposEramVazios[colIndex]) {
-                        estiloSuave += ' opacity: 0.20; font-style: italic;';
-                    }
-                    estiloSuave += '"';
-
-                    htmlLinhaStr += `<td class="linha-dados" ${classeAlinhamento} ${estiloSuave}>${valorCampo}</td>`;
-                });
             }
 
-            htmlLinhaStr += '</tr>';
+            // ----------------------------------------------------------------
+            // 2.3 PROCESSAMENTO DO ID 30 (MICRO DETALHAMENTO DE ATIVOS INDIVIDUAIS)
+            // ----------------------------------------------------------------
+            else if (idEscopoAtual === 30) {
+                let dadosRealAtivos = campos.slice(1, 9);
+                while (dadosRealAtivos.length < 8) dadosRealAtivos.push('');
 
-            // Canaliza a linha consolidada para a aba correspondente
-            if (blocoDestino === 'DESEJADO') htmlDesejado += htmlLinhaStr;
-            else if (blocoDestino === 'REALIDADE') htmlRealidade += htmlLinhaStr;
+                if (idRow === 0) {
+                    // Validação cirúrgica: se for o rótulo textual superior, armazena e sai
+                    if (campos[1] === "Classe de Ativo") {
+                        id0Linha1AtivosClass = [...dadosRealAtivos];
+                        return;
+                    }
+                    
+                    blocoId30Cont++;
+                    let htmlStr = `<tr id="bal-at-mestre-bloco-${blocoId30Cont}" class="id0-row-clickable collapsed" onclick="alternarBloco('bal-at', ${blocoId30Cont})">`;
+                    dadosRealAtivos.forEach((conteudo, i) => {
+                        let titulo = id0Linha1AtivosClass ? id0Linha1AtivosClass[i] : '';
+                        let icone = i === 0 ? `<span class="toggle-icon" style="color: var(--azul-claro-brilhoso); margin-right:6px;">▼</span>` : '';
+                        htmlStr += `<td class="linha-id0" style="border-bottom: 1px solid rgba(197, 168, 128, 0.2); padding: 8px 10px;">
+                            <div style="font-size: 10px; color: var(--cinza-claro-azulado); font-weight: normal; margin-bottom: 2px;">${titulo}</div>
+                            <div style="font-size: 13px; font-weight: bold; display: flex; align-items: center; color: var(--branco);">${icone}${conteudo}</div>
+                        </td>`;
+                    });
+                    htmlStr += '</tr>';
+                    htmlId30 += htmlStr;
+                    id0Linha1AtivosClass = null;
+                    return; // Trava de proteção: força a saída imediata da linha mestre
+                }
+                if (idRow === 11) {
+                    let htmlStr = `<tr id="bal-at-submenu-bloco-${blocoId30Cont}" class="linha-id1-row row-hidden">`;
+                    dadosRealAtivos.forEach(campo => {
+                        htmlStr += `<td style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                    });
+                    htmlStr += '</tr>';
+                    htmlId30 += htmlStr;
+                    return; // Trava de proteção: força a saída imediata do cabeçalho
+                }
+                if (idRow >= 2 && idRow <= 5) {
+                    let htmlStr = `<tr class="linha-dados bal-at-filhas-bloco-${blocoId30Cont} row-hidden">`;
+                    dadosRealAtivos.forEach((valor, idx) => {
+                        if (idx === 1) {
+                            if (valor === '') {
+                                htmlStr += `<td class="campo-herdado-nulo">${herancaVacanteAtivo}</td>`;
+                            } else {
+                                herancaVacanteAtivo = valor;
+                                htmlStr += `<td>${valor}</td>`;
+                            }
+                        } else {
+                            htmlStr += `<td>${valor}</td>`;
+                        }
+                    });
+                    htmlStr += '</tr>';
+                    htmlId30 += htmlStr;
+                    return; // Trava de proteção: força a saída imediata do ativo
+                }
+            }
         });
 
-        htmlDesejado += '</table>';
-        htmlRealidade += '</table>';
+        htmlId10 += '</table>';
+        htmlId30 += '</table>';
 
-        containerDesejado.innerHTML = htmlDesejado;
-        containerRealidade.innerHTML = htmlRealidade;
+        const coresOficiais = ['#38BDF8', '#E5C495', '#A78BFA', '#F43F5E', '#10B981'];
+
+        let htmlLegendaStr = `<div class="chart-legenda-container">`;
+        labelsGrafico.forEach((classe, index) => {
+            let corItem = coresOficiais[index] || '#94A3B8';
+            let valorFormatado = valoresGrafico[index].toFixed(2).replace('.', ',') + '%';
+            
+            htmlLegendaStr += `
+                <div class="legenda-item">
+                    <div class="legenda-classe-flex">
+                        <div class="legenda-cor-quadrado" style="background-color: ${corItem};"></div>
+                        <span>${classe}</span>
+                    </div>
+                    <span>${valorFormatado}</span>
+                </div>`;
+        });
+        htmlLegendaStr += `</div>`;
+
+        let htmlPainelCompleto = "";
+        htmlPainelCompleto += `<div class="kpi-card"><div class="card-titulo">Patrimônio Total Planejado</div><div class="card-valor" style="color: var(--laranja-claro-dourado);">${kpiPatrimonio}</div><div class="card-sub">Ativos Cadastrados: ${kpiAtivos}</div></div>`;
+        htmlPainelCompleto += `<div class="kpi-card"><div class="card-titulo">Alocação Renda Variável</div><div class="card-valor">${kpiRV}</div><div class="card-sub">Meta Alvo Global: ${pctRV}</div></div>`;
+        htmlPainelCompleto += `<div class="kpi-card"><div class="card-titulo">Alocação Renda Fixa</div><div class="card-valor">${kpiRF}</div><div class="card-sub">Meta Alvo Global: ${pctRF}</div></div>`;
+        htmlPainelCompleto += `
+            <div class="chart-box-card">
+                <div style="width: 90px; height: 90px; flex-shrink: 0; display: flex; justify-content: center; align-items: center;">
+                    <canvas id="chartAlocacaoDesejada"></canvas>
+                </div>
+                ${htmlLegendaStr}
+            </div>`;
+        
+        cardsContainer.innerHTML = htmlPainelCompleto.trim();
+        containerId10.innerHTML = htmlId10;
+        containerId30.innerHTML = htmlId30;
+
+        if (typeof Chart !== 'undefined' && valoresGrafico.length > 0) {
+            const ctx = document.getElementById('chartAlocacaoDesejada').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labelsGrafico,
+                    datasets: [{
+                        data: valoresGrafico,
+                        backgroundColor: coresOficiais,
+                        borderWidth: 1,
+                        borderColor: '#0A192F'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            enabled: true,
+                            backgroundColor: 'transparent',
+                            borderColor: 'transparent',
+                            borderWidth: 0,
+                            shadowColor: 'transparent',
+                            displayColors: true,
+                            boxWidth: 6,
+                            boxHeight: 6,
+                            boxPadding: 4,
+                            padding: 2,
+                            bodyFont: { size: 12, weight: '600', family: "'Segoe UI', sans-serif" },
+                            bodyColor: '#FFFFFF',
+                            callbacks: {
+                                title: function() { return ''; },
+                                label: function(context) { return ' ' + context.label; }
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
 
     } catch (erro) {
-        const painelErro = `<div class="status-msg" style="color: #f87171;">Erro de carga: ${erro.message}</div>`;
-        containerDesejado.innerHTML = painelErro;
-        containerRealidade.innerHTML = painelErro;
+        containerId10.innerHTML = `<div class="status-msg" style="color: #ff6b6b;">Erro de Processamento V3: ${erro.message}</div>`;
     }
 }
 
-// Inicializa a carga usando o escutador de eventos padrão do sistema
-document.addEventListener('DOMContentLoaded', carregarCarteiraPerfil);
+document.addEventListener('DOMContentLoaded', inicializarModuloBalanceamento);
