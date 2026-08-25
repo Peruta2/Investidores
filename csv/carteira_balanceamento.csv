@@ -1,0 +1,93 @@
+60;DESEJADO;;;;;;;
+0;Carteira;;balancea/o (total);;Ativos (total);;Patrimônio Total;
+0;BALANCEAMENTO;;100,00%;;53;;R$ 1.050.000,00;
+10;DESEJADO;;;;;;;
+0;Carteira Renda Variável;Risco por classe;(%) RV;(%) na carteira;Ativos;(%) total;Saldo Renda Variável;
+0;DESEJADO;Qualificado;75,00%;75,00%;43;100,00%;R$ 787.500,00;
+12;Classes de Ativos;Risco;balancea/o;% na carteira;desejado;% por classe;Saldo por Classe;Subtotal (Classes)
+2;AÇÕES;Perene;20,00%;12,00%;11;60,00%;R$ 126.000,00;R$ 210.000,00
+2;AÇÕES;Commodities;;8,00%;5;40,00%;R$ 84.000,00;
+3;FIIS;Ancoragem;40,00%;20,00%;6;50,00%;R$ 210.000,00;R$ 420.000,00
+3;FIIS;Crescimento;;12,00%;4;30,00%;R$ 126.000,00;
+3;FIIS;Cautela;;8,00%;3;20,00%;R$ 84.000,00;
+4;ETFS;ETF-USA;15,00%;6,75%;2;45,00%;R$ 70.875,00;R$ 157.500,00
+4;ETFS;Res.Mercado;;1,50%;2;10,00%;R$ 15.750,00;
+4;BDRS;Stocks;;6,75%;10;45,00%;R$ 70.875,00;
+0;Carteira Renda FIxa;Risco por classe;(%) RF;(%) na carteira;Ativos;(%) total;Saldo Renda Fixa;
+0;DESEJADO;Qualificado;25,00%;25,00%;10;100,00%;R$ 262.500,00;
+12;Classes de Ativos;Risco;balancea/o;% na carteira;desejado;% por classe;Saldo por Classe;Subtotal (Classes)
+5;RF;Inflação BR;4,00%;4,00%;4;40,00%;R$ 42.000,00;R$ 262.500,00
+5;RF;Prefixado BR;4,00%;4,00%;3;40,00%;R$ 42.000,00;
+5;RF;Pós-Fixado BR;2,00%;2,00%;2;20,00%;R$ 21.000,00;
+5;RF;Pós-Fixado USA;15,00%;15,00%;1;100,00%;R$ 157.500,00;
+30;DESEJADO;;;;;;
+0;Classe de Ativo;Risco do Ativo;(%);% na carteira;Ativos;Preço com;Saldo Total
+0;AÇÕES;Qualificado;100,00%;20,00%;16;15min. atraso;R$ 210.000,00
+11;Ativo;Risco;balancea/o;% na carteira;Desejado;Preço Atual;Saldo
+2;BBDC4;Perene;10,00%;1,20%;776;R$ 16,24;R$ 12.600,00
+2;ITUB4;Perene;10,00%;1,20%;326;R$ 38,60;R$ 12.600,00
+2;BBAS3;Perene;10,00%;1,20%;684;R$ 18,43;R$ 12.600,00
+2;CMIG3;Perene;10,00%;1,20%;824;R$ 15,30;R$ 12.600,00
+2;TAEE3;Perene;10,00%;1,20%;1015;R$ 12,41;R$ 12.600,00
+2;SAPR3;Perene;10,00%;1,20%;1700;R$ 7,41;R$ 12.600,00
+2;SBSP3;Perene;10,00%;1,20%;531;R$ 23,75;R$ 12.600,00
+2;CXSE3;Perene;10,00%;1,20%;690;R$ 18,25;R$ 12.600,00
+2;BBSE3;Perene;10,00%;1,20%;339;R$ 37,19;R$ 12.600,00
+2;VIVT3;Perene;5,00%;0,60%;215;R$ 29,33;R$ 6.300,00
+2;FIQE3;Perene;5,00%;0,60%;1385;R$ 4,55;R$ 6.300,00
+2;PETR4;Commodities;30,00%;2,40%;569;R$ 44,30;R$ 25.200,00
+2;VALE3;Commodities;30,00%;2,40%;336;R$ 75,03;R$ 25.200,00
+2;GGBR4;Commodities;10,00%;0,80%;379;R$ 22,15;R$ 8.400,00
+2;KLBN3;Commodities;15,00%;1,20%;3281;R$ 3,84;R$ 12.600,00
+2;WEGE3;Commodities;15,00%;1,20%;256;R$ 49,27;R$ 12.600,00
+0;Classe de Ativo;Risco do Ativo;(%);% na carteira;Ativos;Preço com;Saldo Total
+0;FIIS;Qualificado;100,00%;40,00%;13;15min. atraso;R$ 420.000,00
+11;Ativo;Risco;balancea/o;% na carteira;Desejado;Preço Atual;Saldo
+2;BTLG11;Ancoragem;20,00%;4,00%;427;R$ 98,37;R$ 42.000,00
+2;GGRC11;Ancoragem;20,00%;4,00%;4636;R$ 9,06;R$ 42.000,00
+2;HGLG11;Ancoragem;10,00%;2,00%;143;R$ 147,21;R$ 21.000,00
+2;XPML11;Ancoragem;20,00%;4,00%;427;R$ 98,40;R$ 42.000,00
+2;HGBS11;Ancoragem;20,00%;4,00%;2258;R$ 18,60;R$ 42.000,00
+2;LVBI11;Ancoragem;10,00%;2,00%;213;R$ 98,49;R$ 21.000,00
+2;GARE11;Crescimento;25,00%;3,00%;3832;R$ 8,22;R$ 31.500,00
+2;PMLL11;Crescimento;25,00%;3,00%;312;R$ 100,83;R$ 31.500,00
+2;XPLG11;Crescimento;25,00%;3,00%;350;R$ 90,00;R$ 31.500,00
+2;VISC11;Crescimento;25,00%;3,00%;310;R$ 101,70;R$ 31.500,00
+2;HSLG11;Cautela;25,00%;2,00%;279;R$ 75,17;R$ 21.000,00
+2;VILG11;Cautela;25,00%;2,00%;229;R$ 91,65;R$ 21.000,00
+2;RECR11;Cautela;50,00%;4,00%;557;R$ 75,44;R$ 42.000,00
+0;Classe de Ativo;Risco do Ativo;(%);% na carteira;Ativos;Preço com;Saldo Total
+0;ETFS;Qualificado;100,00%;8,25%;4;15min. atraso;R$ 86.625,00
+11;Ativo;Risco;balancea/o;% na carteira;Desejado;Preço Atual;Saldo
+2;IVVB11;ETF-USA;90,00%;6,08%;143;R$ 445,85;R$ 63.787,50
+2;SPXB11;ETF-USA;0,00%;0,00%;0;R$ 17,41;R$ 0,00
+2;NASD11;ETF-USA;0,00%;0,00%;0;R$ 21,03;R$ 0,00
+2;WRLD11;ETF-USA;10,00%;0,68%;47;R$ 149,45;R$ 7.087,50
+2;GOLD11;Res.Mercado;50,00%;0,75%;319;R$ 24,69;R$ 7.875,00
+2;BTCBRL;Res.Mercado;50,00%;0,75%;0,01960306;R$ 401.723,00;R$ 7.875,00
+0;Classe de Ativo;Risco do Ativo;(%);% na carteira;Ativos;Preço com;Saldo Total
+0;BDRS;Qualificado;100,00%;6,75%;10;15min. atraso;R$ 70.875,00
+11;Ativo;Risco;balancea/o;% na carteira;Desejado;Preço Atual;Saldo
+2;NVDC34;Stocks;15,00%;1,01%;461;R$ 23,05;R$ 10.631,25
+2;MSFT34;Stocks;12,00%;0,81%;82;R$ 103,59;R$ 8.505,00
+2;GOGL34;Stocks;12,00%;0,81%;57;R$ 148,35;R$ 8.505,00
+2;AMZO34;Stocks;12,00%;0,81%;128;R$ 66,59;R$ 8.505,00
+2;AAPL34;Stocks;12,00%;0,81%;107;R$ 79,68;R$ 8.505,00
+2;NFLX34;Stocks;10,00%;0,68%;869;R$ 8,16;R$ 7.087,50
+2;JPMC34;Stocks;12,00%;0,81%;47;R$ 180,98;R$ 8.505,00
+2;PGCO34;Stocks;5,00%;0,34%;67;R$ 53,01;R$ 3.543,75
+2;ATTB34;Stocks;5,00%;0,34%;82;R$ 43,22;R$ 3.543,75
+2;EXXO34;Stocks;5,00%;0,34%;34;R$ 105,71;R$ 3.543,75
+0;Classe de Ativo;Risco do Ativo;(%);% na carteira;Ativos;Preço com;Saldo Total
+0;RF;Qualificado;100,00%;25,00%;10;15min. atraso;R$ 262.500,00
+11;Ativo;Risco;balancea/o;% na carteira;Desejado;Preço Atual;Saldo
+2;IPCA+2029;Inflação BR;25,00%;1,00%;2,74;R$ 3.829,37;R$ 10.500,00
+2;IPCA+2040;Inflação BR;25,00%;1,00%;6,18;R$ 1.697,78;R$ 10.500,00
+2;IPCA+2050;Inflação BR;25,00%;1,00%;12,15;R$ 864,30;R$ 10.500,00
+2;Renda+2065;Inflação BR;25,00%;1,00%;58,67;R$ 178,98;R$ 10.500,00
+2;Prefixado2028;Prefixado BR;35,00%;1,40%;17,62;R$ 834,09;R$ 14.700,00
+2;Prefixado2029;Prefixado BR;35,00%;1,40%;20,11;R$ 730,89;R$ 14.700,00
+2;Prefixado2032;Prefixado BR;30,00%;1,20%;26,14;R$ 482,02;R$ 12.600,00
+2;CDB100%DI;Pós-Fixado BR;50,00%;1,00%;10.500;R$ 1,00;R$ 10.500,00
+2;LFTB11;Pós-Fixado BR;50,00%;1,00%;84;R$ 125,49;R$ 10.500,00
+2;TFLO;Pós-Fixado USA;100,00%;15,00%;117,49;R$ 260,49;R$ 157.500,00
