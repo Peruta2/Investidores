@@ -1,0 +1,74 @@
+80;REALIDADE;;;;;;;;;;;;;;;
+0;Carteira;;;;Patrimonio Total;(%) Patrimônio;;Investimento;Ganho de Capital;(%) Ganho;Ativos Investidos;;Total;;Em Oportunidade;
+0;BALANCEAMENTO;;;;R$ 4.249,91;5,67%;;R$ 4.008,75;R$ 241,16;6,02%;0;;44;;7;
+50;OPORTUNIDADE;;;;;;;;;;SIMULADOR;;;;;
+0;Classe de Ativo;Risco do Ativo;Cálculo;Compras;Ativos;(PM/PA);Ganho/Perda;Valuation;;;Simule a compra;Total Investido;Ativos;Preço Alvo;Margem Segurança;
+0;AÇÕES;Qualificado;Patrimônio;Realizadas;16;9,86%;R$ 153,42;Preço Teto Projetivo;;;Aqui;R$ 0,00;0;Chegou;(PM/PA);(PM/PT)
+11;Ativo;Risco;Desejado;Realidade;Preço Médio;Variação;ganho/perda;Preço Atual;Preço Teto;Upside;Comprar;Investi/o;Novo (PM);Avisar;Variação;upside
+2;BBDC4;Perene;9;5;R$ 12,18;37,03%;R$ 22,55;R$ 16,69;R$ 19,20;13,05%;0;R$ 0,00;R$ 12,18;R$ 0,00;37,03%;36,55%
+2;ITUB4;Perene;4;2;R$ 31,57;24,17%;R$ 15,26;R$ 39,20;R$ 43,03;8,91%;0;R$ 0,00;R$ 31,57;R$ 0,00;24,17%;26,64%
+2;BBAS3;Perene;8;3;R$ 21,88;-11,97%;-R$ 7,86;R$ 19,26;R$ 25,88;25,59%;0;R$ 0,00;R$ 21,88;R$ 20,80;-11,97%;15,47%
+2;CMIG3;Perene;9;4;R$ 14,03;14,90%;R$ 8,36;R$ 16,12;R$ 18,79;14,23%;0;R$ 0,00;R$ 14,03;R$ 0,00;14,90%;25,35%
+2;TAEE3;Perene;12;4;R$ 11,58;10,10%;R$ 4,68;R$ 12,75;R$ 13,71;6,99%;0;R$ 0,00;R$ 11,58;R$ 0,00;10,10%;15,53%
+2;SAPR3;Perene;21;8;R$ 6,58;10,94%;R$ 5,76;R$ 7,30;R$ 10,17;28,19%;0;R$ 0,00;R$ 6,58;R$ 0,00;10,94%;35,27%
+2;SBSP3;Perene;6;2;R$ 23,00;6,22%;R$ 2,86;R$ 24,43;R$ 33,76;27,63%;0;R$ 0,00;R$ 23,00;R$ 0,00;6,22%;31,86%
+2;CXSE3;Perene;8;3;R$ 14,33;32,45%;R$ 13,95;R$ 18,98;R$ 19,75;3,89%;0;R$ 0,00;R$ 14,33;R$ 0,00;32,45%;27,43%
+2;BBSE3;Perene;4;1;R$ 33,77;13,83%;R$ 4,67;R$ 38,44;R$ 43,87;12,39%;0;R$ 0,00;R$ 33,77;R$ 0,00;13,83%;23,03%
+2;VIVT3;Perene;3;1;R$ 28,74;3,48%;R$ 1,00;R$ 29,74;R$ 35,23;15,59%;0;R$ 0,00;R$ 28,74;R$ 0,00;3,48%;18,43%
+2;FIQE3;Perene;16;6;R$ 3,97;16,62%;R$ 3,96;R$ 4,63;R$ 7,42;37,64%;0;R$ 0,00;R$ 3,97;R$ 0,00;16,62%;46,53%
+2;PETR4;Commodities;7;3;R$ 30,90;33,62%;R$ 31,17;R$ 41,29;R$ 45,83;9,91%;0;R$ 0,00;R$ 30,90;R$ 0,00;33,62%;32,58%
+2;VALE3;Commodities;4;1;R$ 52,82;47,75%;R$ 25,22;R$ 78,04;R$ 77,83;-0,27%;0;R$ 0,00;R$ 52,82;R$ 0,00;47,75%;32,13%
+2;GGBR4;Commodities;4;2;R$ 15,58;43,07%;R$ 13,42;R$ 22,29;R$ 23,58;5,48%;0;R$ 0,00;R$ 15,58;R$ 0,00;43,07%;33,93%
+2;KLBN3;Commodities;39;15;R$ 3,65;4,66%;R$ 2,55;R$ 3,82;R$ 3,86;1,09%;0;R$ 0,00;R$ 3,65;R$ 0,00;4,66%;5,49%
+2;WEGE3;Commodities;3;1;R$ 43,83;13,39%;R$ 5,87;R$ 49,70;R$ 43,70;-13,72%;0;R$ 0,00;R$ 43,83;R$ 0,00;13,39%;-0,29%
+0;Classe de Ativo;Risco do Ativo;Cálculo;Compras;Ativos;(PM/PA);Ganho/Perda;Valuation;;;Simule a compra;Total Investido;Ativos;Preço Alvo;Margem Segurança;
+0;FIIS;Qualificado;Patrimônio;Realizadas;13;-2,49%;-R$ 58,96;Valor Patrimonial por Cota;;;Aqui;R$ 0,00;0;Chegou;(PM/PA);(PM/PT)
+11;Ativo;Risco;Desejado;Adquirido;Preço Médio;Variação;ganho/perda;Preço Atual;Preço Teto;P/VP;Comprar;Investi/o;Novo (PM);Avisar;Variação;upside
+2;BTLG11;Ancoragem;3;2;R$ 97,59;0,80%;R$ 1,56;R$ 98,37;R$ 102,42;0,984;0;R$ 0,00;R$ 97,59;R$ 0,00;0,80%;4,72%
+2;GGRC11;Ancoragem;33;22;R$ 9,86;-8,62%;-R$ 18,70;R$ 9,01;R$ 11,06;0,875;0;R$ 0,00;R$ 9,86;R$ 0,00;-8,62%;10,86%
+2;HGLG11;Ancoragem;1;1;R$ 150,02;-2,18%;-R$ 3,27;R$ 146,75;R$ 170,50;0,862;0;R$ 0,00;R$ 150,02;R$ 0,00;-2,18%;12,01%
+2;XPML11;Ancoragem;3;2;R$ 106,04;-7,01%;-R$ 14,86;R$ 98,61;R$ 110,49;0,946;0;R$ 0,00;R$ 106,04;R$ 0,00;-7,01%;4,02%
+2;HGBS11;Ancoragem;16;11;R$ 19,75;-5,87%;-R$ 12,76;R$ 18,59;R$ 20,68;0,920;0;R$ 0,00;R$ 19,75;R$ 0,00;-5,87%;4,48%
+2;LVBI11;Ancoragem;2;1;R$ 98,43;0,30%;R$ 0,30;R$ 98,73;R$ 120,36;0,854;0;R$ 0,00;R$ 98,43;R$ 0,00;0,30%;18,22%
+2;GARE11;Crescimento;27;17;R$ 8,62;-4,64%;-R$ 6,80;R$ 8,22;R$ 9,41;0,864;0;R$ 0,00;R$ 8,62;R$ 0,00;-4,64%;8,35%
+2;PMLL11;Crescimento;2;1;R$ 103,88;-2,54%;-R$ 2,64;R$ 101,24;R$ 117,29;0,863;0;R$ 0,00;R$ 103,88;R$ 0,00;-2,54%;11,44%
+2;XPLG11;Crescimento;2;1;R$ 99,16;-8,16%;-R$ 8,09;R$ 91,07;R$ 105,47;0,868;0;R$ 0,00;R$ 99,16;R$ 0,00;-8,16%;5,98%
+2;VISC11;Crescimento;2;1;R$ 99,09;3,01%;R$ 2,98;R$ 102,07;R$ 116,20;0,894;0;R$ 0,00;R$ 99,09;R$ 0,00;3,01%;14,73%
+2;HSLG11;Cautela;2;1;R$ 75,48;2,52%;R$ 1,90;R$ 77,38;R$ 109,79;0,782;0;R$ 0,00;R$ 75,48;R$ 0,00;2,52%;31,25%
+2;VILG11;Cautela;2;1;R$ 80,10;14,33%;R$ 11,48;R$ 91,58;R$ 112,02;0,807;0;R$ 0,00;R$ 80,10;R$ 0,00;14,33%;28,49%
+2;RECR11;Cautela;4;2;R$ 81,14;-6,20%;-R$ 10,06;R$ 76,11;R$ 88,87;0,884;0;R$ 0,00;R$ 81,14;R$ 0,00;-6,20%;8,70%
+0;Classe de Ativo;Risco do Ativo;Cálculo;Compras;Ativos;(PM/PA);Ganho/Perda;Valuation;;;Simule a compra;Total Investido;Ativos;Preço Alvo;Margem Segurança;
+0;ETFS;Qualificado;Patrimônio;Realizadas;2;18,78%;R$ 39,92;Índices;;;Aqui;R$ 0,00;0;Chegou;(PM/PA);(PM/PT)
+11;Ativo;Risco;Desejado;Adquirido;Preço Médio;Variação;ganho/perda;Preço Atual;Preço Teto;TEC;Comprar;Investi/o;Novo (PM);Avisar;Variação;upside
+2;IVVB11;ETF-USA;2;1;R$ 406,27;9,78%;R$ 39,73;R$ 446,00;R$ 502,98;20,00%;0;R$ 0,00;R$ 406,27;R$ 0,00;9,78%;19,23%
+2;SPXB11;ETF-USA;0;0;R$ 0,00;0,00%;R$ 0,00;R$ 17,41;R$ 19,67;20,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;NASD11;ETF-USA;0;0;R$ 0,00;0,00%;R$ 0,00;R$ 20,89;R$ 22,94;20,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;WRLD11;ETF-USA;1;0;R$ 0,00;0,00%;R$ 0,00;R$ 149,80;R$ 168,50;20,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;GOLD11;Res.Mercado;5;0;R$ 0,00;0,00%;R$ 0,00;R$ 24,87;R$ 22,32;20,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;BTCBRL;Res.Mercado;0,00030631;0,00009000;R$ 406.004,90;0,51%;R$ 0,19;R$ 408.079,00;R$ 360.000,00;20,00%;0;R$ 0,00;R$ 406.004,90;R$ 0,00;0,51%;-12,78%
+0;Classe de Ativo;Risco do Ativo;Cálculo;Compras;Ativos;(PM/PA);Ganho/Perda;Valuation;;;Simule a compra;Total Investido;Ativos;Preço Alvo;Margem Segurança;
+0;BDRS;Qualificado;Patrimônio;Realizadas;8;12,54%;R$ 78,64;Preço Teto Projetivo;;;Aqui;R$ 0,00;0;Chegou;(PM/PA);(PM/PT)
+11;Ativo;Risco;Desejado;Adquirido;Preço Médio;Variação;ganho/perda;Preço Atual;Preço Teto;Upside;Comprar;Investi/o;Novo (PM);Avisar;Variação;upside
+2;NVDC34;Stocks;7;2;R$ 19,83;14,73%;R$ 5,84;R$ 22,75;R$ 25,30;10,08%;0;R$ 0,00;R$ 19,83;R$ 0,00;14,73%;21,62%
+2;MSFT34;Stocks;1;1;R$ 88,72;18,42%;R$ 16,34;R$ 105,06;R$ 125,53;16,31%;0;R$ 0,00;R$ 88,72;R$ 0,00;18,42%;29,32%
+2;GOGL34;Stocks;1;1;R$ 133,20;11,63%;R$ 15,49;R$ 148,69;R$ 194,96;23,73%;0;R$ 0,00;R$ 133,20;R$ 0,00;11,63%;31,68%
+2;AMZO34;Stocks;2;1;R$ 59,93;12,05%;R$ 7,22;R$ 67,15;R$ 67,06;-0,13%;0;R$ 0,00;R$ 59,93;R$ 0,00;12,05%;10,64%
+2;AAPL34;Stocks;2;0;R$ 0,00;0,00%;R$ 0,00;R$ 79,65;R$ 76,49;-4,12%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;NFLX34;Stocks;13;4;R$ 7,63;10,62%;R$ 3,24;R$ 8,44;R$ 19,64;57,03%;0;R$ 0,00;R$ 7,63;R$ 0,00;10,62%;61,16%
+2;JPMC34;Stocks;1;1;R$ 160,30;14,55%;R$ 23,33;R$ 183,63;R$ 222,25;17,38%;0;R$ 0,00;R$ 160,30;R$ 0,00;14,55%;27,88%
+2;PGCO34;Stocks;1;1;R$ 52,72;1,63%;R$ 0,86;R$ 53,58;R$ 67,56;20,69%;0;R$ 0,00;R$ 52,72;R$ 0,00;1,63%;21,97%
+2;ATTB34;Stocks;1;1;R$ 37,83;16,71%;R$ 6,32;R$ 44,15;R$ 28,93;-52,60%;0;R$ 0,00;R$ 37,83;R$ 0,00;16,71%;-30,75%
+2;EXXO34;Stocks;1;0;R$ 0,00;0,00%;R$ 0,00;R$ 103,90;R$ 115,77;10,25%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+0;Classe de Ativo;Risco do Ativo;Cálculo;Compras;Ativos;(PM/PA);Ganho/Perda;Valuation;;;Simule a compra;Total Investido;Ativos;Preço Alvo;Margem Segurança;
+0;RF;Qualificado;Patrimônio;Realizadas;5;10,57%;R$ 28,15;Títulos Públicos Soberano;;;Aqui;R$ 0,00;0;Chegou;(PM/PA);(PM/PT)
+11;Ativo;Risco;Desejado;Adquirido;Preço Médio;Variação;ganho/perda;Preço Atual;Preço Teto;TEC;Comprar;Investi/o;Novo (PM);Avisar;Variação;upside
+2;IPCA+2029;Inflação BR;0,05;0,01;R$ 3.389,94;12,96%;R$ 4,39;R$ 3.829,37;R$ 4.077,81;14,00%;0;R$ 0,00;R$ 3.389,94;R$ 0,00;12,96%;16,87%
+2;IPCA+2040;Inflação BR;0,12;0,03;R$ 1.600,35;6,09%;R$ 2,92;R$ 1.697,78;R$ 1.935,61;14,00%;0;R$ 0,00;R$ 1.600,35;R$ 0,00;6,09%;17,32%
+2;IPCA+2050;Inflação BR;0,23;0,00;R$ 0,00;0,00%;R$ 0,00;R$ 864,30;R$ 1.013,46;14,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;Renda+2065;Inflação BR;1,12;0,00;R$ 0,00;0,00%;R$ 0,00;R$ 178,98;R$ 207,79;14,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;Prefixado2028;Prefixado BR;0,34;0,08;R$ 717,32;16,28%;R$ 9,34;R$ 834,09;R$ 894,32;14,00%;0;R$ 0,00;R$ 717,32;R$ 0,00;16,28%;19,79%
+2;Prefixado2029;Prefixado BR;0,38;0,00;R$ 0,00;0,00%;R$ 0,00;R$ 730,89;R$ 808,26;14,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;Prefixado2032;Prefixado BR;0,50;0,12;R$ 423,46;13,83%;R$ 7,03;R$ 482,02;R$ 534,50;14,00%;0;R$ 0,00;R$ 423,46;R$ 0,00;13,83%;20,77%
+2;CDB100%DI;Pós-Fixado BR;200;0;R$ 0,00;0,00%;R$ 0,00;R$ 1,00;R$ 1,14;14,00%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
+2;LFTB11;Pós-Fixado BR;2;1;R$ 121,20;3,68%;R$ 4,46;R$ 125,66;R$ 131,90;14,00%;0;R$ 0,00;R$ 121,20;R$ 0,00;3,68%;8,11%
+2;TFLO;Pós-Fixado USA;0,00;0,00;R$ 0,00;0,00%;R$ 0,00;R$ 260,67;R$ 271,65;4,50%;0;R$ 0,00;R$ 0,00;R$ 0,00;0,00%;0,00%
