@@ -157,7 +157,8 @@ async function inicializarModuloBalanceamento() {
                 if (idRow === 12) {
                     let htmlStr = `<tr id="bal-cl-submenu-bloco-${blocoId10Cont}" class="linha-id1-row row-hidden">`;
                     dadosCorte10.forEach(campo => {
-                        htmlStr += `<td style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                        // id12 cor do fundo e fonte controlados no CSS 
+                        htmlStr += `<td style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">${campo}</td>`;
                     });
                     htmlStr += '</tr>';
                     htmlId10 += htmlStr;
@@ -226,7 +227,8 @@ async function inicializarModuloBalanceamento() {
                 if (idRow === 11) {
                     let htmlStr = `<tr id="bal-at-submenu-bloco-${blocoId30Cont}" class="linha-id1-row row-hidden">`;
                     dadosRealAtivos.forEach(campo => {
-                        htmlStr += `<td style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                        // id11 cor do fundo e fonte controlados no CSS 
+                        htmlStr += `<td style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">${campo}</td>`;
                     });
                     htmlStr += '</tr>';
                     htmlId30 += htmlStr;

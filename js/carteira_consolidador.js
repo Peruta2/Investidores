@@ -169,7 +169,8 @@ async function inicializarModuloConsolidador() {
                 if (idRow === 12) {
                     let htmlStr = `<tr id="real-cl-submenu-bloco-${blocoId20Cont}" class="linha-id1-row row-hidden">`;
                     dadosCorte20.forEach(campo => {
-                        htmlStr += `<td style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                        // id11 Cor de Fundo (dourado) e letra (preta) busca do projeto
+                        htmlStr += `<td style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">${campo}</td>`;
                     });
                     htmlStr += '</tr>';
                     htmlId20 += htmlStr;
@@ -240,7 +241,8 @@ async function inicializarModuloConsolidador() {
                 if (idRow === 11) {
                     let htmlStr = `<tr id="real-at-submenu-bloco-${blocoId40Cont}" class="linha-id1-row row-hidden">`;
                     dadosRealAtivos.forEach(campo => {
-                        htmlStr += `<td style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                        // id11 Cor de Fundo (dourado) e letra (preta) busca do projeto
+                        htmlStr += `<td style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">${campo}</td>`;
                     });
                     htmlStr += '</tr>';
                     htmlId40 += htmlStr;

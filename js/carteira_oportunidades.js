@@ -170,10 +170,11 @@ function renderizarMatrizOportunidades() {
                     let classeOculta = i >= 10 ? 'col-simulador' : '';
                     
                     if (i === 10) {
-                        htmlStr += `<td class="coluna-acao-tres-pontos" style="font-size: 11px; color: var(--laranja-claro-dourado); font-weight: bold; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">MENU</td>`;
+                        htmlStr += `<td class="coluna-acao-tres-pontos" style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">MENU</td>`;
                     }
                     
-                    htmlStr += `<td class="${classeOculta}" style="font-size: 11px; color: var(--cinza-claro-azulado); font-weight: normal; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent !important;">${campo}</td>`;
+                    // ➔ LIMPO: Removido o background forçado para o CSS dourado assumir o controle!
+                    htmlStr += `<td class="${classeOculta}" style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">${campo}</td>`;
                 });
                 htmlStr += `</tr>`;
                 htmlId50 += htmlStr;
