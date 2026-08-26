@@ -1,8 +1,9 @@
-// Memória local para registrar quais ativos estão com o simulador expandido na tela
+if (typeof window.simulacoesUsuario === 'undefined') {
+    window.simulacoesUsuario = {};
+}
 let linhasExpandidasSimulador = {}; 
 let dadosOriginaisCSV = [];
 
-// MOTOR DE COLAPSO REPARADO: Localiza as filhas com base no contador sequencial do bloco mestre do ID 50
 window.alternarBloco = function(prefixoId, indexBloco) {
     const linhasFilhas = document.querySelectorAll(`.${prefixoId}-filhas-bloco-${indexBloco}`);
     const linhaSubmenu = document.getElementById(`${prefixoId}-submenu-bloco-${indexBloco}`);
@@ -31,11 +32,9 @@ window.alternarBloco = function(prefixoId, indexBloco) {
     }
 };
 
-// INTELIGÊNCIA DE EXPANSÃO SINCRONIZADA: Expande o ID 11 apenas e estritamente no clique do botão 3 pontos
 window.alternarColunasSimuladorLinha = function(e, ticker, indexBloco) {
-    e.stopPropagation(); // Impede o clique de interferir nos colapsos pais da tabela
+    e.stopPropagation(); 
     
-    // 1. Altera a classe na linha de dados do ativo clicado
     const linhasAtivo = document.querySelectorAll(`.linha-simulacao-${ticker}`);
     if (!linhasAtivo || linhasAtivo.length === 0) return;
 
@@ -43,7 +42,6 @@ window.alternarColunasSimuladorLinha = function(e, ticker, indexBloco) {
         linha.classList.toggle('mostrar-simulador');
     });
 
-    // 2. Controla o cabeçalho do ID 11: Se houver qualquer ativo simulando, expande; se todos fecharem, recolhe
     const cabecalhoId11 = document.getElementById(`op-cl-submenu-bloco-${indexBloco}`);
     if (cabecalhoId11) {
         const ativosAtivosNesseBloco = document.querySelectorAll(`.op-cl-filhas-bloco-${indexBloco}.mostrar-simulador`);
@@ -93,7 +91,6 @@ function renderizarMatrizOportunidades() {
     let blocoId50Cont = 0;
     let herancaVacanteOportunidade = "";
 
-    // ➔ REVISADO: Declarações travadas 100% em português
     let dadosCardsSimulacao = [];
     let linhasCabecalho50 = 0; 
     let linhasCabecalho80 = 0; 
@@ -106,7 +103,6 @@ function renderizarMatrizOportunidades() {
         const idRow = parseInt(campos);
         if (isNaN(idRow)) return;
 
-        // ➔ REVISADO: Zeragem das variáveis corrigida estritamente para o português
         if (idRow === 80 || idRow === 50) {
             idEscopoAtual = idRow;
             linhasCabecalho50 = 0;
@@ -122,7 +118,7 @@ function renderizarMatrizOportunidades() {
                     return;
                 }
                 dadosCardsSimulacao = [...dadosCorte80];
-                linhasCabecalho80 = 0; // ➔ REVISADO: Português
+                linhasCabecalho80 = 0; 
             }
             return;
         }
@@ -159,7 +155,7 @@ function renderizarMatrizOportunidades() {
                 
                 htmlStr += `</tr>`;
                 htmlId50 += htmlStr;
-                linhasCabecalho50 = 0; // ➔ REVISADO: Português
+                linhasCabecalho50 = 0; 
                 return;
             }
 
@@ -173,7 +169,6 @@ function renderizarMatrizOportunidades() {
                         htmlStr += `<td class="coluna-acao-tres-pontos" style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">MENU</td>`;
                     }
                     
-                    // ➔ LIMPO: Removido o background forçado para o CSS dourado assumir o controle!
                     htmlStr += `<td class="${classeOculta}" style="font-size: 11px; padding: 12px 10px 4px 10px; border-bottom: 1px solid rgba(255,255,255,0.05);">${campo}</td>`;
                 });
                 htmlStr += `</tr>`;
@@ -182,8 +177,14 @@ function renderizarMatrizOportunidades() {
             }
 
             if (idRow >= 2 && idRow <= 5) {
-                let ticker = dadosCorte50[0]; // Extrai estritamente o ticker puro (BBDC4)
+                let ticker = dadosCorte50[0]; // ➔ FIXADO: Resgata estritamente a posição 0 do array útil
                 let estadoExpandido = linhasExpandidasSimulador[ticker] ? 'mostrar-simulador' : '';
+                let qtdSalvaSimulada = window.simulacoesUsuario[ticker] || 0;
+
+                let adquiridoNum = window.converterParaNumero(dadosCorte50[3]); 
+                let pmNum = window.converterParaNumero(dadosCorte50[4]);         
+                let paNum = window.converterParaNumero(dadosCorte50[7]);         
+                let ptNum = window.converterParaNumero(dadosCorte50[8]);         
                 
                 let htmlStr = `<tr class="linha-dados op-cl-filhas-bloco-${blocoId50Cont} linha-simulacao-${ticker} ${estadoExpandido} row-hidden">`;
                 dadosCorte50.forEach((valor, idx) => {
@@ -197,7 +198,20 @@ function renderizarMatrizOportunidades() {
                             </td>`;
                     }
                     
-                    if (idx === 1) {
+                    // ➔ TRAVA DE GAPPING PRECISÃO MILIMÉTRICA CONSOLIDADA (Coluna física menos 1)
+                    if (idx === 7) { 
+                        htmlStr += `<td class="${classeOculta}" id="preco-atual-val-${ticker}">${valor}</td>`;
+                    } else if (idx === 10) { 
+                        htmlStr += `<td class="${classeOculta}"><input type="number" class="input-simulador-qtd" value="${qtdSalvaSimulada}" min="0" oninput="computarSimulacaoAporte(this, '${ticker}', ${pmNum}, ${paNum}, ${adquiridoNum}, ${ptNum})"></td>`;
+                    } else if (idx === 11) { 
+                        htmlStr += `<td class="${classeOculta}" id="custo-${ticker}">R$ 0,00</td>`;
+                    } else if (idx === 12) { 
+                        htmlStr += `<td class="${classeOculta}" id="novopm-${ticker}">${valor}</td>`;
+                    } else if (idx === 14) { 
+                        htmlStr += `<td class="${classeOculta}" id="novavar-${ticker}">${valor}</td>`;
+                    } else if (idx === 15) { 
+                        htmlStr += `<td class="${classeOculta}" id="novoupside-${ticker}">${valor}</td>`;
+                    } else if (idx === 1) {
                         if (valor === '') htmlStr += `<td class="${classeOculta} campo-herdado-nulo">${herancaVacanteOportunidade}</td>`;
                         else { herancaVacanteOportunidade = valor; htmlStr += `<td class="${classeOculta}">${valor}</td>`; }
                     } else {
@@ -217,31 +231,35 @@ function renderizarMatrizOportunidades() {
     let htmlCards = "";
     if (dadosCardsSimulacao.length > 0 && id80Linha1Titulos) {
         
-        // Slot 1: Patrimônio Total (Coluna física 5 -> Índice 4 do corte útil)
+        // Slot 1: Patrimônio Total (Coluna física 5 -> Índice 4)
         let t1 = id80Linha1Titulos[4] || "Patrimônio Total";
         let v1 = dadosCardsSimulacao[4] || "-";
 
-        // Slot 2: Investimento (Coluna física 8 -> Índice 7 do corte útil)
+        // Slot 2: Investimento (Coluna física 8 -> Índice 7)
         let t2 = id80Linha1Titulos[7] || "Investimento";
         let v2 = dadosCardsSimulacao[7] || "-";
 
-        // Slot 3: Ganho de Capital (Coluna física 9 -> Índice 8 do corte útil)
+        // Slot 3: Ganho de Capital (Coluna física 9 -> Índice 8)
         let t3 = id80Linha1Titulos[8] || "Ganho de Capital";
         let v3 = dadosCardsSimulacao[8] || "-";
 
-        // Slot 4: (%) Ganho (Coluna física 10 -> Índice 9 do corte útil)
+        // Slot 4: (%) Ganho (Coluna física 10 -> Índice 9)
         let t4 = id80Linha1Titulos[9] || "(%) Ganho";
         let v4 = dadosCardsSimulacao[9] || "-";
 
-        // Slot 5: Carteira Mestre (Coluna física 1 -> Índice 0 do corte útil)
-        let t5 = id80Linha1Titulos[0] || "Carteira";
-        let v5 = dadosCardsSimulacao[0] || "-";
-
+        // ➔ RENDERIZAÇÃO DOS 4 CARDS ESTÁTICOS DO CSV
         htmlCards += `<div class="kpi-card" style="border-left: 4px solid var(--azul-claro-brilhoso);"><div class="card-titulo">${t1}</div><div class="card-valor" style="color: var(--azul-claro-brilhoso); font-size:18px;">${v1}</div><div class="card-sub">Radar</div></div>`;
         htmlCards += `<div class="kpi-card" style="border-left: 4px solid #38BDF8;"><div class="card-titulo">${t2}</div><div class="card-valor" style="color: #38BDF8; font-size:18px;">${v2}</div><div class="card-sub">Radar</div></div>`;
         htmlCards += `<div class="kpi-card" style="border-left: 4px solid #E5C495;"><div class="card-titulo">${t3}</div><div class="card-valor" style="color: #E5C495; font-size:18px;">${v3}</div><div class="card-sub">Radar</div></div>`;
         htmlCards += `<div class="kpi-card" style="border-left: 4px solid #10B981;"><div class="card-titulo">${t4}</div><div class="card-valor" style="color: #10B981; font-size:18px;">${v4}</div><div class="card-sub">Radar</div></div>`;
-        htmlCards += `<div class="kpi-card" style="border-left: 4px solid var(--laranja-claro-dourado);"><div class="card-titulo">${t5}</div><div class="card-valor" style="color: var(--laranja-claro-dourado); font-size:18px;">${v5}</div><div class="card-sub">Radar</div></div>`;
+        
+        // ➔ SLOT 5 RECALIBRADO: Totalmente independente do CSV e com o ID ativo para o simulador injetar os valores!
+        htmlCards += `
+            <div class="kpi-card" style="border-left: 4px solid var(--laranja-claro-dourado);">
+                <div class="card-titulo">Aporte Simulado Total</div>
+                <div class="card-valor" id="card-valor-aporte-simulado" style="color: var(--laranja-claro-dourado); font-size:18px;">R$ 0,00</div>
+                <div class="card-sub">Capital Requerido</div>
+            </div>`;
 
     } else {
         for (let idx = 1; idx <= 5; idx++) {
@@ -249,6 +267,11 @@ function renderizarMatrizOportunidades() {
         }
     }
     cardsContainer.innerHTML = htmlCards;
+
+    // Atualiza o card de imediato se já houver dados guardados na memória do simulador
+    if (typeof window.recalcularCardAporteGlobal === 'function') {
+        window.recalcularCardAporteGlobal();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', inicializarModuloOportunidades);
